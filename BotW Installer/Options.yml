@@ -1,0 +1,28 @@
+Advanced Options:
+
+Python: String # Path to python
+Path To Base: String
+Path To Update: String
+Path To DLC: String
+Path To mlc01: String
+Path To BCML Data: String
+
+Create Start Shortcut: Bool # Installs Cemu StartMenu shortcut.
+Create Cemu Shortcut: Bool # Install Cemu Shortcut
+Install To Programs: Bool # Adds Cemu to the users process registry.
+Create BotW Shortcut: Bool # Install BotW Shortcut
+Create Start Shortcut: Bool # Installs BotW StartMenu shortcut.
+
+Cut Game Dump : Bool # Moves the Update and DLC rather than copying it to mlc01.
+Skip Python Install: Bool # Skips installing Python
+Python Docs: Bool # Install the Python Docs (Default: false)
+Skip Visual C++: Bool # Skips installing Visual C++
+Enable Best Preformance: Bool # Enables Vulkan and FPS++
+Skip BCML Install: Bool
+
+Python Version: Option # Version of Python (3.8, 3.7)
+
+
+
+
+
