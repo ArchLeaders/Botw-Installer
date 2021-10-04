@@ -17,7 +17,6 @@
     <None Remove="Resource\lnk.resource" />
     <None Remove="Resource\py7.resource" />
     <None Remove="Resource\py8.resource" />
-    <None Remove="Resource\settings.resource" />
     <None Remove="Resource\uninstall.resource" />
     <None Remove="Resource\vc.resource" />
     <None Remove="Resource\zip.resource" />
@@ -28,7 +27,6 @@
     <EmbeddedResource Include="Resource\lnk.resource" />
     <EmbeddedResource Include="Resource\py7.resource" />
     <EmbeddedResource Include="Resource\py8.resource" />
-    <EmbeddedResource Include="Resource\settings.resource" />
     <EmbeddedResource Include="Resource\uninstall.resource" />
     <EmbeddedResource Include="Resource\vc.resource" />
     <EmbeddedResource Include="Resource\zip.resource" />
