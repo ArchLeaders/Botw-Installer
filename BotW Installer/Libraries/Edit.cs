@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotW_Dataer.Libraries
+namespace BotW_Installer.Libraries
 {
     public class Edit
     {

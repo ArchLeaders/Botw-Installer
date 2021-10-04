@@ -461,7 +461,7 @@ namespace BotW_Installer
             File.WriteAllLines("config.index", vs);
 
             // Initialize installer.
-            await Libraries.Install.BotW_Cemu(vs);
+            await Libraries.Install.BotW(vs);
         }
 
         void Add(CheckBox cb)
