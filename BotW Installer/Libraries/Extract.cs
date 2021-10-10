@@ -20,7 +20,7 @@ namespace BotW_Installer.Libraries
 
             Process extract = new();
             extract.StartInfo.FileName = $"{Data.temp}\\7z.resource";
-            extract.StartInfo.Arguments = $"x -y -o\"{outFolder}\" {zip}";
+            extract.StartInfo.Arguments = $"x -y -o\"{outFolder}\" \"{zip}\"";
             extract.StartInfo.CreateNoWindow = true;
 
             extract.Start();

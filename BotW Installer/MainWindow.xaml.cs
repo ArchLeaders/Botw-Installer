@@ -23,6 +23,9 @@ namespace BotW_Installer
         {
             InitializeComponent();
 
+            btnExit.Click += (s, e) => Environment.Exit(-1);
+            btnMinimize.Click += (s, e) => WindowState = WindowState.Minimized;
+
             cbAdv_AddBcmlToPrograms.IsChecked = true;
 
             tbCemuWatermark = tbBasic_CemuPath.Text;
@@ -251,7 +254,6 @@ namespace BotW_Installer
 
             cbBasic_RunAfterInstall.IsChecked = true;
             cbAdv_CPlusPlus.IsChecked = true;
-            cbAdv_EnableBestPreformance.IsChecked = true;
 
             tbAdvBCML_Data_Path.Text = user + "\\AppData\\Local\\bcml";
             tbBasic_CemuPath.Text = user + "\\Games\\Cemu";
@@ -296,7 +298,37 @@ namespace BotW_Installer
                 tbBasic_DumpPath.Foreground = (Brush)new BrushConverter().ConvertFromString("#3D0000");
         }
 
+        private void PathTextBox_Check(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
 
+            if (tb.Name == "tbAdvBase_Game_Path")
+            {
+                if (Libraries.GameData.Check.Base(tb.Text) == true)
+                    tb.Foreground = (Brush)new BrushConverter().ConvertFromString("#2AAB0B");
+            }
+            else if (tb.Name == "tbAdvUpdate_Path")
+            {
+                if (Libraries.GameData.Check.Update(tb.Text) == true)
+                    tb.Foreground = (Brush)new BrushConverter().ConvertFromString("#2AAB0B");
+            }
+            else if(tb.Name == "tbAdvDLC_Path")
+            {
+                if (Libraries.GameData.Check.DLC(tb.Text) == true)
+                    tb.Foreground = (Brush)new BrushConverter().ConvertFromString("#2AAB0B");
+            }
+        }
+
+        private void TextBox_Browse(object sender, MouseButtonEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog browse = new();
+
+            if (browse.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                TextBox tb = (TextBox)sender;
+                tb.Text = browse.SelectedPath;
+            }
+        }
         #endregion
 
         #region CheckBox groups handling
@@ -371,6 +403,8 @@ namespace BotW_Installer
 
         #endregion
 
+        #region Generate Index Config
+
         static List<string> vs = new();
 
         private async void btnBasic_Install_Click(object sender, RoutedEventArgs e)
@@ -383,7 +417,11 @@ namespace BotW_Installer
 
             vs.Add(tbAdvBase_Game_Path.Text);
             vs.Add(tbAdvUpdate_Path.Text);
-            vs.Add(tbAdvDLC_Path.Text);
+
+            if (tbAdvDLC_Path.Text == "Path To DLC")
+                vs.Add("");
+            else
+                vs.Add(tbAdvDLC_Path.Text);
 
             #region python
 
@@ -402,7 +440,14 @@ namespace BotW_Installer
             #region Other Apps
 
             Add(cbAdv_CPlusPlus);
-            Add(cbBasic_InstallDS4Windows);
+
+            if (cbBasic_InstallDS4Windows.SelectedIndex == 0)
+                vs.Add("");
+            else if (cbBasic_InstallDS4Windows.SelectedIndex == 1)
+                vs.Add("oa1"); // DS4Windows
+            else if (cbBasic_InstallDS4Windows.SelectedIndex == 2)
+                vs.Add("oa2"); // BetterJoy
+
 
             #endregion
 
@@ -443,9 +488,9 @@ namespace BotW_Installer
 
             #region Other
 
-            Add(cbAdv_EnableBestPreformance);
+            Add(cbAdv_InstallTools);
             Add(cbBasic_RunAfterInstall);
-            vs.Add("5");
+            vs.Add(Libraries.Game.Region(vs[0]));
 
             #endregion
 
@@ -510,7 +555,7 @@ namespace BotW_Installer
                 if (gameFound == false && updateFound == false)
                 {
                     string[] spt = root.Split("\\");
-                    string parentFolder = root.Replace(spt[spt.Length - 1], "").Replace(spt[spt.Length - 2], "");
+                    string parentFolder = root.Replace(spt[spt.Length - 1], "").Replace($"\\{spt[spt.Length - 2]}", "");
 
                     Loop(parentFolder);
                 }
@@ -523,5 +568,7 @@ namespace BotW_Installer
             else
                 return false;
         }
+
+        #endregion
     }
 }

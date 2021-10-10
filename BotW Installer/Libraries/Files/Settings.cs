@@ -154,7 +154,7 @@
                 "</content>";
         }
 
-        public static string Json(string cemuDir, string baseGame, string update, string storeDir, string dlc = null)
+        public static string Json(string cemuDir, string baseGame, string update, string storeDir, string dlc)
         {
             string exportDir = "";
             string lang = null;

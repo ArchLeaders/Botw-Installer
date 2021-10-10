@@ -186,21 +186,29 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"
+                    <Grid>
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true" CornerRadius="8">
-                        <Grid>
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            <Grid>
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                               Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
-                            <TextBlock Text="✔" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Right"
-                                       Margin="0, 0, 10, 0" Foreground="#FFFFFF" Opacity="0" x:Name="check"/>
+                            </Grid>
+                        </Border>
+                        <Border x:Name="isCheckedBorder" Background="#083D00" BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true" CornerRadius="8" Opacity="0">
+                            <Grid>
+                                <ContentPresenter x:Name="isCheckedContentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
-                        </Grid>
-                    </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="check" Property="Opacity" Value="1"/>
+                            <Setter TargetName="isCheckedBorder" Property="Opacity" Value="1"/>
                         </Trigger>
 
                         <EventTrigger RoutedEvent="MouseEnter">
@@ -210,6 +218,11 @@
                                                     Storyboard.TargetProperty="Background.Color"
                                                     From="#104673"
                                                     To="#1C7CC9"
+                                                    Duration="0:0:0:0.3"/>
+                                    <ColorAnimation Storyboard.TargetName="isCheckedBorder"
+                                                    Storyboard.TargetProperty="Background.Color"
+                                                    From="#083D00"
+                                                    To="#0A5400"
                                                     Duration="0:0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -222,6 +235,11 @@
                                                     From="#1C7CC9"
                                                     To="#104673"
                                                     Duration="0:0:0:0.3"/>
+                                    <ColorAnimation Storyboard.TargetName="isCheckedBorder"
+                                                    Storyboard.TargetProperty="Background.Color"
+                                                    From="#0A5400"
+                                                    To="#083D00"
+                                                    Duration="0:0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -233,7 +251,7 @@
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="check"
+                                        <DoubleAnimation Storyboard.TargetName="isCheckedBorder"
                                                      Storyboard.TargetProperty="Opacity"
                                                      From="0"
                                                      To="1.0"
@@ -244,7 +262,7 @@
                             <MultiTrigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="check"
+                                        <DoubleAnimation Storyboard.TargetName="isCheckedBorder"
                                                      Storyboard.TargetProperty="Opacity"
                                                      From="1.0"
                                                      To="0"
@@ -423,5 +441,50 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    
+    <Style x:Key="TextBox_Paths_NB" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="8" SnapsToDevicePixels="True">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                    <Condition Property="IsSelectionActive" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+            </MultiTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

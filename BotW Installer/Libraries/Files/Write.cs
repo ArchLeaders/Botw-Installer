@@ -10,9 +10,9 @@ namespace BotW_Installer.Libraries.Settings
             await Task.Run(() => File.WriteAllText(Files.Settings.Xml(botw_entry_point, titleId, region, path_to_uking), outputXml));
         }
 
-        public static async Task Json(string outputJson, string cemuDir, string baseGame, string update, string storeDir, string dlc = null)
+        public static async Task Json(string outputJson, string cemuDir, string baseGame, string update, string storeDir, string dlc)
         {
-            await Task.Run(() => File.WriteAllText(Files.Settings.Json(cemuDir, baseGame, update, storeDir), outputJson));
+            await Task.Run(() => File.WriteAllText(outputJson, Files.Settings.Json(cemuDir, baseGame, update, storeDir, dlc)));
         }
     }
 }

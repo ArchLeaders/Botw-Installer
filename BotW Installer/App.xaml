@@ -11,6 +11,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/GlobalOverride.xaml"/>
                 <ResourceDictionary Source="Theme/ContextMenuOverride.xaml"/>
+                <ResourceDictionary Source="Theme/ComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

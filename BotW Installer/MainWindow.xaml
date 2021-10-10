@@ -7,11 +7,7 @@
         mc:Ignorable="d"
         Title="BotW Installer" Height="500" Width="800"
         WindowStyle="None" AllowsTransparency="True"
-        Background="Transparent" ResizeMode="NoResize">
-
-    <!--<WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="100"/>
-    </WindowChrome.WindowChrome>-->
+        Background="Transparent" ResizeMode="CanMinimize">
 
     <Border Background="#c0171717" Margin="15"
             CornerRadius="8" x:Name="background">
@@ -89,7 +85,7 @@
                           Click="tabAdv_Click"/>
             </Grid> <!--Tabs-->
 
-            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="grid_BasicPanel">
+            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="grid_BasicPanel" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="320"/>
                     <ColumnDefinition Width="*"/>
@@ -128,11 +124,16 @@
                           HorizontalContentAlignment="Left"
                           Padding="20, 0, 0, 0" x:Name="cbBasic_RunAfterInstall"/>
 
-                    <CheckBox Content="DS4 Windows" Margin="0, 10, 0, 0"
+                    <ComboBox Margin="0, 10, 0, 0"
                           Background="#104673" FontSize="30" Grid.Row="3"
                           Foreground="White" FontFamily="Artifakt Element Book"
                           HorizontalContentAlignment="Left"
-                          Padding="20, 0, 0, 0" x:Name="cbBasic_InstallDS4Windows"/>
+                          Padding="20, 0, 0, 0" x:Name="cbBasic_InstallDS4Windows"
+                              VerticalContentAlignment="Center" SelectedIndex="0">
+                        <ComboBoxItem Content="None"/>
+                        <ComboBoxItem Content="DS4 Windows"/>
+                        <ComboBoxItem Content="BetterJoy"/>
+                    </ComboBox>
 
                     <Button Content="Install" Margin="0, 10, 0, 0"
                         Background="#1f1f1f" FontSize="34" Grid.Row="4"
@@ -394,12 +395,13 @@
                               Padding="15, 0, 0, 0"
                               x:Name="cbAdv_InstallBcml"/>
 
-                    <CheckBox Content="Enable Best Preformance" Margin="5, 5, 5, 0"
+                    <CheckBox Content="BotW Modding Tools" Margin="5, 5, 5, 0"
                               Background="#104673" FontSize="20" Grid.Row="6"
                               Foreground="White" FontFamily="Artifakt Element Book"
                               HorizontalContentAlignment="Left"
                               Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_EnableBestPreformance"/>
+                              x:Name="cbAdv_InstallTools"
+                              ToolTip="Installs serveral primary modding tools. (~14GB)&#x0a;Included Tools:&#x0a;&#x0a;- Bars Tool&#x0a;- BotW-Actor-Tool (Ginder Avalanche)&#x0a;- BotW-Havok (Martin. K)&#x0a;- Event Editor (Léo. L)&#x0a;- FooBar2000&#x0a;- HKX2 (Martin. K)&#x0a;- Hyrule Builder (Caleb. S)&#x0a;- Ice-Spear (Max. B)&#x0a;- Looping Audio Converter&#x0a;- Standalone Items Creator (banan039pl)&#x0a;- Switch-Toolbox (KilzXGaming)&#x0a;- WildBits (Caleb. S)"/>
                 </Grid>
 
                 <Grid VerticalAlignment="Bottom">
@@ -439,12 +441,12 @@
                     </Grid.RowDefinitions>
 
 
-                    <TextBox Style="{DynamicResource TextBox_Paths}" Grid.Row="1"
+                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="1"
                              VerticalAlignment="Stretch"
                              Margin="5, 5, 5, 0"
                              VerticalContentAlignment="Center"
                              Text="Base Game Path"
-                             Padding="15, 0, 0, 0"
+                             Padding="15, 0, 15, 0"
                              FontSize="20"
                              FontFamily="Artifakt Element"
                              Background="#1f1f1f"
@@ -452,14 +454,17 @@
                              x:Name="tbAdvBase_Game_Path"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
+                             MouseDoubleClick="TextBox_Browse"
+                             TextChanged="PathTextBox_Check"
+                             ContextMenu="{x:Null}"
                              ToolTip="Path to your base game dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Breath of the Wild [101c9#00]\content'"/>
 
-                    <TextBox Style="{DynamicResource TextBox_Paths}" Grid.Row="2"
+                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="2"
                              VerticalAlignment="Stretch"
                              Margin="5, 5, 5, 0"
                              VerticalContentAlignment="Center"
                              Text="Update Path"
-                             Padding="15, 0, 0, 0"
+                             Padding="15, 0, 15, 0"
                              FontSize="20"
                              FontFamily="Artifakt Element"
                              Background="#1f1f1f"
@@ -467,14 +472,17 @@
                              x:Name="tbAdvUpdate_Path"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
+                             MouseDoubleClick="TextBox_Browse"
+                             TextChanged="PathTextBox_Check"
+                             ContextMenu="{x:Null}"
                              ToolTip="Path to your update dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Update v208\content'"/>
 
-                    <TextBox Style="{DynamicResource TextBox_Paths}" Grid.Row="3"
+                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="3"
                              VerticalAlignment="Stretch"
                              Margin="5, 5, 5, 0"
                              VerticalContentAlignment="Center"
                              Text="DLC Path"
-                             Padding="15, 0, 0, 0"
+                             Padding="15, 0, 15, 0"
                              FontSize="20"
                              FontFamily="Artifakt Element"
                              Background="#1f1f1f"
@@ -482,14 +490,17 @@
                              x:Name="tbAdvDLC_Path"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
+                             MouseDoubleClick="TextBox_Browse"
+                             TextChanged="PathTextBox_Check"
+                             ContextMenu="{x:Null}"
                              ToolTip="Path to your DLC dump. [Optional]&#x0a;This will end in 'content\0010'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\DLC\content\0010'"/>
 
-                    <TextBox Style="{DynamicResource TextBox_Paths}" Grid.Row="4"
+                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="4"
                              VerticalAlignment="Stretch"
                              Margin="5, 5, 5, 0"
                              VerticalContentAlignment="Center"
                              Text="Python Path"
-                             Padding="15, 0, 0, 0"
+                             Padding="15, 0, 15, 0"
                              FontSize="20"
                              FontFamily="Artifakt Element"
                              Background="#1f1f1f"
@@ -497,14 +508,16 @@
                              x:Name="tbAdvPython_Path"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
+                             MouseDoubleClick="TextBox_Browse"
+                             ContextMenu="{x:Null}"
                              ToolTip="Path to new/existing Python.&#x0a;This is where python and python scripts will be stored.&#x0a;&#x0a;E.g. 'C:\Python 3.7-64'"/>
 
-                    <TextBox Style="{DynamicResource TextBox_Paths}" Grid.Row="5"
+                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="5"
                              VerticalAlignment="Stretch"
                              Margin="5, 5, 5, 0"
                              VerticalContentAlignment="Center"
                              Text="mlc01 Path"
-                             Padding="15, 0, 0, 0"
+                             Padding="15, 0, 15, 0"
                              FontSize="20"
                              FontFamily="Artifakt Element"
                              Background="#1f1f1f"
@@ -512,14 +525,16 @@
                              x:Name="tbAdvmlc01_Path"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
+                             MouseDoubleClick="TextBox_Browse"
+                             ContextMenu="{x:Null}"
                              ToolTip="Path to mlc01.&#x0a;This is where Cemu stores games and&#x0a;other WiiU related stuff I'm unfamiliar with.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\Cemu\mlc01'"/>
 
-                    <TextBox Style="{DynamicResource TextBox_Paths}" Grid.Row="6"
+                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="6"
                              VerticalAlignment="Stretch"
                              Margin="5, 5, 5, 0"
                              VerticalContentAlignment="Center"
                              Text="BCML Data Path"
-                             Padding="15, 0, 0, 0"
+                             Padding="15, 0, 15, 0"
                              FontSize="20"
                              FontFamily="Artifakt Element"
                              Background="#1f1f1f"
@@ -527,6 +542,8 @@
                              x:Name="tbAdvBCML_Data_Path"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
+                             MouseDoubleClick="TextBox_Browse"
+                             ContextMenu="{x:Null}"
                              ToolTip="Path to BCML Data.&#x0a;This is where BCML stores mods&#x0a;and most of the externall files required to merge mods.&#x0a;&#x0a;E.g. 'C:\Users\username\AppData\Local\bcml'"/>
                 </Grid>
 

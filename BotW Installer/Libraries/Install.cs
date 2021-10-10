@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -23,9 +24,9 @@ namespace BotW_Installer.Libraries
             {
                 copy.Add(Archive.CopyDirectory(Edit.RemoveLast(vs[1]), $"{Data.temp}\\-mlc\\mlc01\\usr\\title\\0005000e\\101c9{vs[25]}00\\"));
 
-                if (vs[2] != "_null") // Check Use DLC
+                if (vs[2] != "") // Check Use DLC
                     copy.Add(Archive.CopyDirectory(Edit.RemoveLast(vs[2]), $"{Data.temp}\\-mlc\\mlc01\\usr\\title\\0005000c\\101c9{vs[25]}00\\"));
-                
+
                 /// Write settings.xml
             }
 
@@ -41,8 +42,14 @@ namespace BotW_Installer.Libraries
             #region THREAD_3
 
             // THREAD_3: Download Cemu, GFX, etc.
-            if (Data.Check(vs[8]))
+            if (vs[8] == "oa1")
+            {
                 await Download.GitInfo("https://api.github.com/repos/Ryochan7/DS4Windows/releases/latest", $"{Data.temp}\\ds4.json"); // Download DS4Windows JSON Release Data
+            }
+            else if (vs[8] == "oa2")
+            {
+                await Download.GitInfo("https://api.github.com/repos/Davidobot/BetterJoy/releases/latest", $"{Data.temp}\\oa2.json"); // Download BetterJoy JSON Release Data
+            }
 
             if (Data.Check(vs[11]))
                 await Download.GitInfo("https://api.github.com/repos/ActualMandM/cemu_graphic_packs/releases/latest", $"{Data.temp}\\gfx.json"); // Download GFX JSON Release Data
@@ -53,7 +60,17 @@ namespace BotW_Installer.Libraries
             if (Data.Check(vs[11]))
             {
                 download.Add(Download.WebLink("https://cemu.info/api/cemu_latest.php", $"{Data.temp}\\cemu.zip"));
+            }
+
+            if (vs[8] == "oa1")
+            {
+                Extract.Embed("bd.resource", $"{Data.temp}\\bd.msi");
                 download.Add(Download.WebLink(Download.Latest($"{Data.temp}\\ds4.json"), $"{Data.temp}\\ds4.7z"));
+            }
+            if (vs[8] == "oa2")
+            {
+                Extract.Embed("bd.resource", $"{Data.temp}\\bd.msi");
+                download.Add(Download.WebLink(Download.Latest($"{Data.temp}\\oa2.json"), $"{Data.temp}\\oa2.zip"));
             }
 
             await Task.WhenAll(download); // End THREAD_3
@@ -62,8 +79,16 @@ namespace BotW_Installer.Libraries
 
             #region THREAD_4
             // THREAD_4: Extract Cemu, GFX, etc.
-            if (Data.Check(vs[3]))
+            if (vs[8] == "oa1") // DS4Windows
+            {
+                extract.Add(Task.Run(() => CmdLine($"\"{Data.temp}\\bd.msi\" /quiet")));
                 extract.Add(Extract.SevenZip($"{Data.temp}\\ds4.7z", $"{Data.root}"));
+            }
+            else if (vs[8] == "oa2") // BetterJoy
+            {
+                extract.Add(Task.Run(() => CmdLine($"\"{Data.temp}\\bd.msi\" /quiet")));
+                extract.Add(Extract.Zip($"{Data.temp}\\oa2.zip", $"{Data.root}\\BetterJoy"));
+            }
 
             if (Data.Check(vs[11]))
             {
@@ -83,9 +108,10 @@ namespace BotW_Installer.Libraries
             #endregion
 
             if (Data.Check(vs[9]))
+            {
                 copy.Add(Pip("bcml", $"{vs[4]}\\Scripts\\pip.exe"));
-
-            /// Additional BCML Setup (settings.json)
+                copy.Add(Settings.Write.Json($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\bcml\\settings.json", vs[12], vs[0], vs[1], vs[10], vs[2]));
+            }
 
             await Task.WhenAll(copy); // End THREAD_1
 
@@ -101,7 +127,7 @@ namespace BotW_Installer.Libraries
 
             Process run = new();
             run.StartInfo.FileName = $"{Data.temp}\\py.resource";
-            run.StartInfo.Arguments = $"{quiet} TargetDir={path} PrependPath=1 Include_doc={includeDocs}";
+            run.StartInfo.Arguments = $"{quiet} TargetDir={path} DefaultJustForMeTargetDir={path} DefaultCustomTargetDir={path} PrependPath=1 Include_doc={includeDocs}";
             run.StartInfo.CreateNoWindow = true;
 
             run.Start();
@@ -124,13 +150,25 @@ namespace BotW_Installer.Libraries
 
         public static async Task Pip(string name, string pip)
         {
-            // Extract Embeded File
             await Task.Run(() => Extract.Embed($"vc.resource", $"{Data.temp}\\vc.resource"));
 
             Process run = new();
             run.StartInfo.FileName = pip;
             run.StartInfo.Arguments = $"install {name}";
             run.StartInfo.CreateNoWindow = true;
+
+            run.Start();
+            await run.WaitForExitAsync();
+        }
+
+        public static async Task CmdLine(string args, bool quiet = true)
+        {
+            await Task.Run(() => Extract.Embed($"vc.resource", $"{Data.temp}\\vc.resource"));
+
+            Process run = new();
+            run.StartInfo.FileName = "cmd.exe";
+            run.StartInfo.Arguments = $"/c {args} & EXIT";
+            run.StartInfo.CreateNoWindow = quiet;
 
             run.Start();
             await run.WaitForExitAsync();

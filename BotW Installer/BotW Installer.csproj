@@ -8,28 +8,31 @@
     <ApplicationIcon>Install_Icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
 	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<SignAssembly>true</SignAssembly>
+	<DelaySign>false</DelaySign>
+	<AssemblyOriginatorKeyFile>BOTWInstallerCerteSign.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Fonts\WindowsBasic.ttf" />
     <None Remove="Images\Icon.png" />
     <None Remove="Resource\7z.resource" />
+    <None Remove="Resource\bd.resource" />
     <None Remove="Resource\lnk.resource" />
     <None Remove="Resource\py7.resource" />
     <None Remove="Resource\py8.resource" />
     <None Remove="Resource\uninstall.resource" />
     <None Remove="Resource\vc.resource" />
-    <None Remove="Resource\zip.resource" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resource\7z.resource" />
+    <EmbeddedResource Include="Resource\bd.resource" />
     <EmbeddedResource Include="Resource\lnk.resource" />
     <EmbeddedResource Include="Resource\py7.resource" />
     <EmbeddedResource Include="Resource\py8.resource" />
     <EmbeddedResource Include="Resource\uninstall.resource" />
     <EmbeddedResource Include="Resource\vc.resource" />
-    <EmbeddedResource Include="Resource\zip.resource" />
   </ItemGroup>
 
   <ItemGroup>
