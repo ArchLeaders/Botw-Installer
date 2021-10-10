@@ -55,16 +55,36 @@ namespace BotW_Installer.Libraries.Batch
                     "pause"));
             }
 
-            public static async Task Cemu()
+            public static async Task Cemu(string cemu)
             {
-                await Task.Run(() => File.WriteAllText($"{Data.root}", ""));
+                await Task.Run(() => File.WriteAllText($"{Data.root}",
+                    "@echo off\n" +
+                    "echo Removing Cemu...\n" +
+                    $"rmdir \"{cemu}\" /s /q\n" +
+                    "echo Done!\n" +
+                    "pause"));
             }
 
             public static async Task DS4Windows()
             {
-                await Task.Run(() => File.WriteAllText($"{Data.root}", ""));
+                await Task.Run(() => File.WriteAllText($"{Data.root}",
+                    "@echo off\n" +
+                    "echo Removing BetterJoy\n" +
+                    "rmdir \"%LOCALAPPDATA%\\.botw\\DS4Windows\" /s /q\n" +
+                    "echo Done!\n" +
+                    "pause"));
             }
+        }
 
+        public class Shortcuts
+        {
+            public static async Task BotW(string uking, string cemu)
+            {
+                await Task.Run(() => File.WriteAllText($"{Data.root}",
+                    "@echo off\n" +
+                    $"start /b \"BotW\" \"{cemu}\" -g \"{uking}\"\n" +
+                    $"start \"DS4Windows\" \"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\.botw\\DS4Windows\\DS4Windows.exe\""));
+            }
         }
     }
 }
