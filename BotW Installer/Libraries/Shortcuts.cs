@@ -16,7 +16,7 @@ namespace BotW_Installer.Libraries
             // Create lnk file.
             Process run = new();
             run.StartInfo.FileName = $"{Data.temp}\\lnk.resource";
-            run.StartInfo.Arguments = $"/F:\"{shortcutName}\" /a:c /T:\"{targetFileLocation}\" /P:\"{args}\" /I:\"{iconPath}\" /D:\"{description}\"";
+            run.StartInfo.Arguments = $"/F:\"{shortcutPath}\\{shortcutName}.lnk\" /a:c /T:\"{targetFileLocation}\" /P:\"{args}\" /I:\"{iconPath}\" /D:\"{description}\"";
             run.StartInfo.CreateNoWindow = true;
 
             run.Start();
@@ -25,13 +25,13 @@ namespace BotW_Installer.Libraries
 
         public static void AddProgramEntry(string name, string version, string uninstall, string icon, string publisher, int size = 0)
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Cemu", "DisplayIcon", icon);
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Cemu", "DisplayName", name);
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Cemu", "DisplayVersion", version);
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Cemu", "NoModify", 1);
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Cemu", "Publisher", publisher);
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Cemu", "UninstallString", uninstall);
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Cemu", "EstimatedSize", size);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "DisplayIcon", icon);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "DisplayName", name);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "DisplayVersion", version);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "NoModify", 1);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "Publisher", publisher);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "UninstallString", uninstall);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "EstimatedSize", size);
         }
     }
 }
