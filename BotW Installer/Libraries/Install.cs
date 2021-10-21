@@ -32,63 +32,112 @@ namespace BotW_Installer.Libraries
 
             #region Shortcuts
 
-            string programsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Microsoft\\Windows\\Start Menu\\Program";
+            string programsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Microsoft\\Windows\\Start Menu\\Programs";
             string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            #region Cemu
+            #region Cemu - Working
 
+            // Create uninstaller and Programs shortcut.
             if (Data.Check(vs[14]))
             {
-                // Working
-
-                await Batch.Write.Uninstaller.Cemu(vs[12]); // Programs
+                copy.Add(Batch.Write.Uninstaller.Cemu(vs[12]));
                 copy.Add(Task.Run(() => Shortcuts.AddProgramEntry("Cemu", "?", $"{Data.root}\\uninstall_cemu.bat", $"{vs[12]}\\Cemu.exe", "Exzap", 9910000)));
+                copy.Add(Shortcuts.Create("Cemu", $"{programsFolder}", $"{vs[12]}\\Cemu.exe", "", $"{vs[12]}\\Cemu.exe", "WiiU Emulator made by Exzap"));
             }
 
-            if (Data.Check(vs[15])) // Desktop
-                copy.Add(Shortcuts.Create("Cemu", $"{desktop}\\Cemu.lnk", $"{vs[12]}\\Cemu.exe", "", $"{vs[12]}\\Cemu.exe", "WiiU Emulator made by Exzap"));
+            // Create desktop shortcut
+            if (Data.Check(vs[15]))
+                copy.Add(Shortcuts.Create("Cemu", $"{desktop}", $"{vs[12]}\\Cemu.exe", "", $"{vs[12]}\\Cemu.exe", "WiiU Emulator made by Exzap"));
 
-            if (Data.Check(vs[16])) // Start
-                copy.Add(Shortcuts.Create("Cemu", $"{programsFolder}\\Cemu.lnk", $"{vs[12]}\\Cemu.exe", "", $"{vs[12]}\\Cemu.exe", "WiiU Emulator made by Exzap"));
+            // Create programs shortcut.
+            if (Data.Check(vs[16]))
+                copy.Add(Shortcuts.Create("Cemu", $"{programsFolder}", $"{vs[12]}\\Cemu.exe", "", $"{vs[12]}\\Cemu.exe", "WiiU Emulator made by Exzap"));
 
             #endregion
 
-            #region BCML
+            #region BCML - Working
 
-            // BCML
-            if (Data.Check(vs[17]) || Data.Check(vs[18]) || Data.Check(vs[19]))
-                await Task.Run(() => Extract.Embed("bcml.ico.resource", $"{Data.root}\\bcml.ico"));
-
-            if (Data.Check(vs[17]))
+            if (File.Exists($"{vs[4]}\\Scripts\\bcml.exe"))
             {
-                await Batch.Write.Uninstaller.BCML(vs[10]);
-                copy.Add(Task.Run(() => Shortcuts.AddProgramEntry("BCML", "?", $"{Data.root}\\uninstall_bcml.bat", $"{Data.root}\\bcml.ico", "Caleb. S", -0)));
+                // Collect Icons
+                if (Data.Check(vs[17]) || Data.Check(vs[18]) || Data.Check(vs[19]))
+                    copy.Add(Task.Run(() => Extract.Embed("bcml.ico.resource", $"{Data.root}\\bcml.ico")));
+
+                // Create uninstaller and Programs shortcut.
+                if (Data.Check(vs[17]))
+                {
+                    copy.Add(Batch.Write.Uninstaller.BCML(vs[10]));
+                    copy.Add(Task.Run(() => Shortcuts.AddProgramEntry("BCML", "?", $"{Data.root}\\uninstall_bcml.bat", $"{Data.root}\\bcml.ico", "Caleb. S", -0)));
+                }
+
+                // Create desktop shortcut
+                if (Data.Check(vs[18]))
+                    copy.Add(Shortcuts.Create("BCML", $"{desktop}", $"{vs[4]}\\Scripts\\bcml.exe", "",
+                        $"{Data.root}\\bcml.ico", "WiiU Emulator made by Exzap"));
+
+                // Create programs shortcut.
+                if (Data.Check(vs[19]))
+                    copy.Add(Shortcuts.Create("BCML", $"{programsFolder}", $"{vs[4]}\\Scripts\\bcml.exe", "", $"{Data.root}\\bcml.ico", "BotW mod loader made by Caleb. S"));
             }
-
-            if (Data.Check(vs[18]))
-                copy.Add(Shortcuts.Create("BCML", $"{desktop}", $"{vs[4]}\\Scripts\\bcml.exe", "", $"{Data.root}\\bcml.ico", "WiiU Emulator made by Exzap"));
-
-            if (Data.Check(vs[19]))
-                copy.Add(Shortcuts.Create("BCML", $"{programsFolder}\\BCML", $"{vs[4]}\\Scripts\\bcml.exe", "", $"{Data.root}\\bcml.ico", "BotW mod loader made by Caleb. S"));
 
             #endregion
 
-            // BotW
-            if (Data.Check(vs[20]) || Data.Check(vs[21]) || Data.Check(vs[22]))
-                await Task.Run(() => Extract.Embed("botw.ico.resource", $"{Data.root}\\botw.ico"));
+            #region BOTW - Working
 
+            // Collect Icons
+            if (Data.Check(vs[20]) || Data.Check(vs[21]) || Data.Check(vs[22]))
+                copy.Add(Task.Run(() => Extract.Embed("botw.ico.resource", $"{Data.root}\\botw.ico")));
+
+            // Create Start Menu (Program) shortcut.
             if (Data.Check(vs[20]))
             {
-                await Batch.Write.Uninstaller.BotW(Edit.RemoveLast(vs[0]), Edit.RemoveLast(vs[1]), Edit.RemoveLast(vs[2]), vs[12], vs[10]);
+                copy.Add(Batch.Write.Uninstaller.BotW(vs[0], vs[12], vs[10]));
                 copy.Add(Task.Run(() => Shortcuts.AddProgramEntry("Breath of the Wild", "?", $"{Data.root}\\uninstall_botw.bat", $"{Data.root}\\botw.ico", "Nintendo", 22000000)));
-            }
-            if (Data.Check(vs[21]))
-                copy.Add(Shortcuts.Create("BotW", $"{desktop}", $"{vs[12]}\\Cemu.exe", $"-g \"{Edit.RemoveLast(vs[0])}\\code\\U-King.rpx\"",
-                    $"{Data.root}\\botw.ico", "The Legend of Zelda: Breath of the Wild"));
 
+                copy.Add(Batch.Write.Shortcuts.BotW($"{Edit.RemoveLast(vs[0])}\\code\\U-King.rpx\"", $"{vs[12]}\\Cemu.exe"));
+                copy.Add(Shortcuts.Create("BotW", $"{programsFolder}", $"{Data.root}\\botw.bat", "",
+                    $"{Data.root}\\botw.ico", "The Legend of Zelda: Breath of the Wild", 7));
+            }
+
+            // Create BotW Desktop Shortcut.
+            if (Data.Check(vs[21]))
+            {
+                copy.Add(Batch.Write.Shortcuts.BotW($"{Edit.RemoveLast(vs[0])}\\code\\U-King.rpx\"", $"{vs[12]}\\Cemu.exe"));
+                copy.Add(Shortcuts.Create("BotW", $"{desktop}", $"{Data.root}\\botw.bat", "",
+                    $"{Data.root}\\botw.ico", "The Legend of Zelda: Breath of the Wild", 7));
+            }
+
+            // Create Programs Folder.
             if (Data.Check(vs[22]))
-                copy.Add(Shortcuts.Create("BotW", $"{programsFolder}\\Cemu.lnk", $"{vs[12]}\\Cemu.exe", $"-g \"{Edit.RemoveLast(vs[0])}\\code\\U-King.rpx\"",
-                    $"{Data.root}\\botw.ico", "The Legend of Zelda: Breath of the Wild"));
+            {
+                copy.Add(Batch.Write.Shortcuts.BotW($"{Edit.RemoveLast(vs[0])}\\code\\U-King.rpx\"", $"{vs[12]}\\Cemu.exe"));
+                copy.Add(Shortcuts.Create("BotW", $"{programsFolder}", $"{Data.root}\\botw.bat", "",
+                    $"{Data.root}\\botw.ico", "The Legend of Zelda: Breath of the Wild", 7));
+            }
+
+            #endregion
+
+            // Create uninstaller and programs shortcut for DS4Windows - UNTESTED
+            if (vs[8] == "oa1")
+            {
+                copy.Add(Batch.Write.Uninstaller.DS4Windows()); // Programs
+                copy.Add(Task.Run(() => Shortcuts.AddProgramEntry("DS4Windows", "?",
+                    $"{Data.root}\\uninstall_ds4.bat", $"{Data.root}\\DS4Windows\\DS4Windows.exe", "ryochan7", 114000)));
+
+                copy.Add(Shortcuts.Create("DS4Windows", $"{programsFolder}", $"{Data.root}\\DS4Windows\\DS4Windows.exe", "",
+                    $"{Data.root}\\DS4Windows\\DS4Windows.exe", "DS4Windows"));
+            }
+
+            // Create uninstaller and program shortcut for BetterJoy - UNTESTED
+            if (vs[8] == "oa2")
+            {
+                copy.Add(Batch.Write.Uninstaller.BetterJoy()); // Programs
+                copy.Add(Task.Run(() => Shortcuts.AddProgramEntry("BetterJoy", "?",
+                    $"{Data.root}\\uninstall_betterjoy.bat", $"{Data.root}\\BetterJoy\\BetterJoyForCemu.exe", "Davidobot", -0)));
+
+                copy.Add(Shortcuts.Create("BetterJoy", $"{programsFolder}", $"{Data.root}\\BetterJoy\\BetterJoyForCemu.exe", "",
+                    $"{Data.root}\\BetterJoy\\BetterJoyForCemu.exe", "BetterJoy"));
+            }
 
             #endregion
 

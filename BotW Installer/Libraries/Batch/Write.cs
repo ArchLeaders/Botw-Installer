@@ -16,14 +16,16 @@ namespace BotW_Installer.Libraries.Batch
                 await Task.Run(() => File.WriteAllText($"{Data.root}\\uninstall_bcml.bat",
                     "@echo off\n" +
                     "echo Removing BCML Data...\n" +
-                    "rmdir \"C:\\Users\\HP USER\\AppData\\Local\\bcml\" /s /qrmdir \"%LOCALAPPDATA%\\bcml\" /s /q\n" +
+                    $"rmdir \"{bcmlData}\\bcml\" /s /q\n" +
+                    "rmdir \"%LOCALAPPDATA%\\bcml\" /s /q\n" +
                     "echo Unistalling PIP package...\n" +
                     "pip uninstall bcml\n" +
                     "echo Done!\n" +
                     "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\BCML /f\n" +
+                    "del %dektop%\\BCML.lnk /f\n" +
+                    "del \"%appdata%\\Microsoft\\Windows\\Start Menu\\Programs\\BCML.lnk\" /f\n" +
                     "PAUSE\n" +
-                    "del {Data.root}\\\\uninstall_bcml.bat"));
-
+                    $"del {Data.root}\\uninstall_bcml.bat"));
             }
 
             public static async Task BetterJoy()
@@ -36,16 +38,12 @@ namespace BotW_Installer.Libraries.Batch
                     "pause"));
             }
 
-            public static async Task BotW(string baseGame, string update, string dlc, string cemu, string bcmlData)
+            public static async Task BotW(string baseGame, string cemu, string bcmlData)
             {
                 await Task.Run(() => File.WriteAllText($"{Data.root}\\uninstall_botw.bat",
                     "@echo off\n" +
-                    "echo Removing Base Game Files...\n" +
-                    $"rmdir \"{baseGame}\" /s\n" +
-                    "echo Removing Update Files...\n" +
-                    $"rmdir \"{update}\" /s\n" +
-                    "echo Removing DLC Files...\n" +
-                    $"rmdir \"{dlc}\" /s\n" +
+                    "echo Removing Game Files...\n" +
+                    $"rmdir \"{Edit.RemoveLast(baseGame, 2)}\" /s\n" +
                     "echo Removing Cemu...\n" +
                     $"rmdir \"{cemu}\" /s /q\n" +
                     "echo Removing BCML PIP package...\n" +
@@ -53,8 +51,10 @@ namespace BotW_Installer.Libraries.Batch
                     "echo Removing Mods...\n" +
                     $"rmdir \"{bcmlData}\" /s /q\n" +
                     "rmdir \"%LOCALAPPDATA%\\bcml\" /s /q\n" +
+                    "reg delete \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Breath of the Wild\" /f" +
                     "echo Done!\n" +
-                    "pause"));
+                    "pause" +
+                    $"del /Q \"{Data.root}\\uninstall_botw.bat\""));
             }
 
             public static async Task Cemu(string cemu)
@@ -84,7 +84,7 @@ namespace BotW_Installer.Libraries.Batch
         {
             public static async Task BotW(string uking, string cemu)
             {
-                await Task.Run(() => File.WriteAllText($"{Data.root}",
+                await Task.Run(() => File.WriteAllText($"{Data.root}\\botw.bat",
                     "@echo off\n" +
                     $"start /b \"BotW\" \"{cemu}\" -g \"{uking}\"\n" +
                     $"start \"DS4Windows\" \"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\.botw\\DS4Windows\\DS4Windows.exe\""));

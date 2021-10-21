@@ -7,7 +7,7 @@ namespace BotW_Installer.Libraries
 {
     public class Shortcuts
     {
-        public static async Task Create(string shortcutName, string shortcutPath, string targetFileLocation, string args, string iconPath = "", string description = "")
+        public static async Task Create(string shortcutName, string shortcutPath, string targetFileLocation, string args, string iconPath = "", string description = "", int windowMode = 1)
         {
             // Extract Shortcuts.exe
             if (!File.Exists($"{Data.temp}\\lnk.resource"))
@@ -16,7 +16,7 @@ namespace BotW_Installer.Libraries
             // Create lnk file.
             Process run = new();
             run.StartInfo.FileName = $"{Data.temp}\\lnk.resource";
-            run.StartInfo.Arguments = $"/F:\"{shortcutPath}\\{shortcutName}.lnk\" /a:c /T:\"{targetFileLocation}\" /P:\"{args}\" /I:\"{iconPath}\" /D:\"{description}\"";
+            run.StartInfo.Arguments = $"/F:\"{shortcutPath}\\{shortcutName}.lnk\" /a:c /T:\"{targetFileLocation}\" /P:\"{args}\" /I:\"{iconPath}\" /D:\"{description}\" /R:{windowMode}";
             run.StartInfo.CreateNoWindow = true;
 
             run.Start();
