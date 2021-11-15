@@ -7,6 +7,8 @@
         <ResourceDictionary>
 
             <FontFamily x:Key="WindowsBasic">pack://application:,,,/Fonts/#Windowcharacters</FontFamily>
+            <FontFamily x:Key="Tajawal">pack://application:,,,/Fonts/#Tajawal</FontFamily>
+            <FontFamily x:Key="NotoSansSymbol">pack://application:,,,/Fonts/#Noto Sans Symbols</FontFamily>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/GlobalOverride.xaml"/>

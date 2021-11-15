@@ -1,6 +1,11 @@
-﻿using System;
+﻿using BotW_Installer.Libraries;
+using BotW_Installer.Libraries.Files;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,6 +30,30 @@ namespace BotW_Installer
 
             btnExit.Click += (s, e) => Environment.Exit(-1);
             btnMinimize.Click += (s, e) => WindowState = WindowState.Minimized;
+            btnDropShadow.Click += (s, e) =>
+            {
+                if (masterDropShadow.Opacity == 0)
+                {
+                    btnDropShadow.ToolTip = "Disable window DropShadow.";
+                    masterDropShadow.Opacity = 1;
+                }
+                else
+                {
+                    btnDropShadow.ToolTip = "Enable window DropShadow.";
+                    masterDropShadow.Opacity = 0;
+                }
+            };
+
+            btnBasic_DumpPath_Search.Click += async (s, e) =>
+            {
+                MessageBoxResult msg = MessageBox.Show("This searches your entire PC for the Botw game files.\n" +
+                    "It does not always work however, it's recomended you manually\nset your game paths.\n\n" +
+                    "Do you still wish to continue?", "Warning!", MessageBoxButton.YesNo);
+
+                if (msg == MessageBoxResult.Yes)
+                    await SetGamePaths();
+
+            };
 
             cbAdv_AddBcmlToPrograms.IsChecked = true;
 
@@ -257,7 +286,7 @@ namespace BotW_Installer
 
             tbAdvBCML_Data_Path.Text = user + "\\AppData\\Local\\bcml";
             tbBasic_CemuPath.Text = user + "\\Games\\Cemu";
-            tbAdvPython_Path.Text = Environment.GetEnvironmentVariable("SystemDrive") + "\\Python";
+            tbAdvPython_Path.Text = Environment.GetEnvironmentVariable("SystemDrive") + "\\Python3";
 
             tbAdvBCML_Data_Path.Foreground = (Brush)new BrushConverter().ConvertFromString("#ffffff");
             tbBasic_CemuPath.Foreground = (Brush)new BrushConverter().ConvertFromString("#ffffff");
@@ -329,6 +358,97 @@ namespace BotW_Installer
                 tb.Text = browse.SelectedPath;
             }
         }
+
+        private async Task SetGamePaths()
+        {
+            List<string> ukings = new();
+
+            grid_BasicPanel.Visibility = Visibility.Hidden;
+            gridLogInfo.Visibility = Visibility.Visible;
+
+            await Task.Run(() => Thread.Sleep(500));
+
+            await Task.Run(() =>
+            {
+                foreach (var drive in DriveInfo.GetDrives())
+                    foreach (var file in GetAllSafeFiles(drive.Name, "*.rpx"))
+                        if (file.EndsWith("code\\U-King.rpx") && !file.EndsWith("00\\code\\U-King.rpx"))
+                            ukings.Add(file);
+            });
+
+            tbFilePass.Text = $"{tbFilePass.Text}\n{ukings.Count}/2 RPX assemblies found.\nVerifying game files...";
+
+            string assumedDlc = null;
+            string assumedBase = null;
+            string assumedUpdate = null;
+
+            if (Directory.Exists($"{Edit.RemoveLast(ukings[0], 2)}content\\Actor\\Pack"))
+                assumedUpdate = $"{Edit.RemoveLast(ukings[0], 2)}content";
+            else if (Directory.Exists($"{Edit.RemoveLast(ukings[0], 2)}content\\Movie"))
+                assumedBase = $"{Edit.RemoveLast(ukings[0], 2)}content";
+
+            if (Directory.Exists($"{Edit.RemoveLast(ukings[1], 2)}content\\Actor\\Pack"))
+                assumedUpdate = $"{Edit.RemoveLast(ukings[1], 2)}content";
+            else if (Directory.Exists($"{Edit.RemoveLast(ukings[1], 2)}content\\Movie"))
+                assumedBase = $"{Edit.RemoveLast(ukings[1], 2)}content";
+
+            foreach (string dir in Directory.GetDirectories(Edit.RemoveLast(ukings[0], 3)))
+                if (Directory.Exists($"{dir}\\content\\0010"))
+                    assumedDlc = dir + "\\content";
+
+            if (assumedBase != null && assumedUpdate != null)
+                tbBasic_DumpPath.Text = Edit.RemoveLast(ukings[0], 3);
+
+            gridLogInfo.Visibility = Visibility.Hidden;
+            grid_BasicPanel.Visibility = Visibility.Visible;
+
+            if (assumedBase != null && assumedUpdate != null)
+                MessageBox.Show("Search succesful.");
+            else
+                MessageBox.Show("Search unsuccesful.");
+        }
+
+        #region Search Methods
+
+        /// <summary>
+        /// Get all files (ignoring the system folders)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="searchPattern"></param>
+        /// <returns></returns>
+        public static string[] GetAllSafeFiles(string path, string searchPattern = "*.*")
+        {
+            List<string> allFiles = new List<string>();
+            string[] root = Directory.GetFiles(path, searchPattern);
+            allFiles.AddRange(root);
+            string[] folders = Directory.GetDirectories(path);
+            foreach (string folder in folders)
+            {
+                try
+                {
+                    if (!IsIgnorable(folder))
+                    {
+                        allFiles.AddRange(Directory.GetFiles(folder, searchPattern, SearchOption.AllDirectories));
+                    }
+                }
+                catch { } // Don't know what the problem is, don't care...
+            }
+            return allFiles.ToArray();
+        }
+        /// <summary>
+        /// Returns true if this is a known folder that should be ignored.
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <returns></returns>
+        private static bool IsIgnorable(string dir)
+        {
+            if (dir.EndsWith("System Volume Information")) return true;
+            if (dir.Contains("$RECYCLE.BIN")) return true;
+            return false;
+        }
+
+        #endregion
+
         #endregion
 
         #region CheckBox groups handling
@@ -497,7 +617,9 @@ namespace BotW_Installer
             File.WriteAllLines("config.index", vs);
 
             // Initialize installer.
-            await Libraries.Install.BotW(vs);
+            // await Install.BotW(vs);
+
+            await Settings.Xml(vs[0], vs[13]);
         }
 
         void Add(CheckBox cb)

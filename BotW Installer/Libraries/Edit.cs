@@ -10,10 +10,21 @@ namespace BotW_Installer.Libraries
 {
     public class Edit
     {
-        public static string RemoveLast(string input, int removeCount = 1)
+        public static string RemoveLast(string path, int removeCount = 1)
         {
-            string[] a1 = input.Split('\\');
-            return input.Replace(a1.Last(), "");
+            string rt = null;
+            string[] a1 = path.Split('\\');
+
+            int i = 0;
+
+            foreach (var item in a1)
+            {
+                if (i < a1.Length - removeCount)
+                    rt = $"{rt}{item}\\";
+                i++;
+            }
+
+            return rt;
         }
 
         public static async Task SettingsXml(string gamePath, string mlc01 = "")

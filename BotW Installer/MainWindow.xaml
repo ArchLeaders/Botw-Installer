@@ -14,7 +14,7 @@
         
         <Border.Effect>
             <DropShadowEffect BlurRadius="15" ShadowDepth="5"
-                              Color="#213033" Opacity="0"
+                              Color="#213033" Opacity="1"
                               x:Name="masterDropShadow"/>
         </Border.Effect>
         
@@ -42,11 +42,17 @@
 
                     <TextBlock Text="Breath of the Wild Installer"
                                VerticalAlignment="Top" FontSize="35"
-                               Margin="15, 15, 0, 0" FontFamily="Artifakt Element"
+                               Margin="15, 15, 0, 0" FontFamily="Tajawal"
                                Foreground="White"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0, 20, 20, 0">
+                    <Button x:Name="btnDropShadow" Content=" ⃣" Width="45"
+                            FontSize="25" VerticalAlignment="Top" Height="45"
+                            FontFamily="{StaticResource NotoSansSymbol}"
+                            Style="{StaticResource btnExit}"
+                            Foreground="White"
+                            ToolTip="Disable window DropShadow."/>
                     <Button x:Name="btnMinimize" Content="!"
                             Width="45" FontSize="30" VerticalAlignment="Top" Height="45"
                             FontFamily="{StaticResource WindowsBasic}"
@@ -85,7 +91,8 @@
                           Click="tabAdv_Click"/>
             </Grid> <!--Tabs-->
 
-            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="grid_BasicPanel" Visibility="Visible">
+            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                  x:Name="grid_BasicPanel" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="320"/>
                     <ColumnDefinition Width="*"/>
@@ -218,10 +225,35 @@
                         Style="{StaticResource btnBrowse}" Background="#104673"
                         Margin="0, 10, 0, 0" BorderThickness="0" FontSize="20"
                         Foreground="White" Click="btnBasic_Browse_Click"/>
+
+                    <Button x:Name="btnBasic_DumpPath_Search" Content="&#xe903;"
+                            Grid.Column="3" Grid.Row="2"
+                            Style="{StaticResource btnSearch}" Background="#104673"
+                            Margin="0, 10, 0, 0" BorderThickness="0" FontSize="20"
+                            Foreground="White"
+                            ToolTip="Search for game files. [Not Recomended]&#x0a;&#x0a;This process can take several minutes&#x0a;depending on the speed of your drive&#x0a;and the amount of files on it."/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="1" Grid.RowSpan="2"
+                               Margin="0, 5, 0, 0" FontSize="19"
+                               FontFamily="Calibri" Foreground="White"
+                               LineHeight="14">
+                        <Run FontWeight="Bold">*Disclaimer</Run>
+                        <LineBreak/>
+                        This tool does not download
+                        <LineBreak/>
+                        The Legend of Zelda: Breath of the Wild
+                        <LineBreak/>
+                        or ANY of it's contents.
+                        <LineBreak/>
+                        To obtain the game you must dump it
+                        <LineBreak/>
+                        from your WiiU console.
+                    </TextBlock>
                 </Grid>
             </Grid> <!--Basic Options-->
 
-            <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="grid_AdvPanel" Visibility="Hidden">
+            <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"
+                  Grid.ColumnSpan="2" x:Name="grid_AdvPanel" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="320"/>
                     <ColumnDefinition Width="20"/>
@@ -548,6 +580,16 @@
                 </Grid>
 
             </Grid> <!--Advanced Options-->
+
+            <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
+                  Visibility="Hidden" x:Name="gridLogInfo">
+                
+                <TextBlock x:Name="tbFilePass"
+                           Text="Searching..." Foreground="White"
+                           Margin="30, 20, 0, 30"
+                           FontSize="25" FontFamily="{StaticResource Tajawal}"
+                           TextWrapping="WrapWithOverflow"/>
+            </Grid>
         </Grid>
     </Border>
 </Window>

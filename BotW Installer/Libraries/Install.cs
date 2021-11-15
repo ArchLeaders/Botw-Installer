@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BotW_Installer.Libraries.Files;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BotW_Installer.Libraries
 {
@@ -22,12 +24,15 @@ namespace BotW_Installer.Libraries
             // THREAD_1: Copy Update/DLC
             if (Data.Check(vs[11]))
             {
+                if (Directory.Exists(vs[12]))
+                    Directory.Delete(vs[12]);
+
                 copy.Add(Archive.CopyDirectory(Edit.RemoveLast(vs[1]), $"{Data.temp}\\-mlc\\mlc01\\usr\\title\\0005000e\\101c9{vs[25]}00\\"));
 
                 if (vs[2] != "") // Check Use DLC
                     copy.Add(Archive.CopyDirectory(Edit.RemoveLast(vs[2]), $"{Data.temp}\\-mlc\\mlc01\\usr\\title\\0005000c\\101c9{vs[25]}00\\"));
 
-                /// Write settings.xml
+                copy.Add(Settings.Xml(vs[0], vs[13]));
             }
 
             #region Shortcuts
@@ -145,7 +150,7 @@ namespace BotW_Installer.Libraries
 
             // THREAD_2: Extract/Setup Python & C++
             if (Data.Check(vs[3])) //Check Install Python
-            setup.Add(Python(vs[4], vs[5], vs[6]));
+                setup.Add(Python(vs[4], vs[5], vs[6]));
 
             if (Data.Check(vs[7])) //Check Install VC++
                 setup.Add(VCRedist());
@@ -220,15 +225,27 @@ namespace BotW_Installer.Libraries
 
             if (Data.Check(vs[9]))
             {
-                copy.Add(Pip("bcml", $"{vs[4]}\\Scripts\\pip.exe"));
-                copy.Add(Settings.Write.Json($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\bcml\\settings.json", vs[12], vs[0], vs[1], vs[10], vs[2]));
+                copy.Add(Pip("bcml", $"pip.exe"));
+                copy.Add(Settings.BcmlSettings(vs[12], vs[0], vs[1], vs[10], vs[2], vs[25]));
             }
 
             await Task.WhenAll(copy); // End THREAD_1
 
             #endregion
 
-            // await Task.Run(() => Directory.Move("", ""));
+            List<Task> clean = new();
+
+            if (Data.Check(vs[11]))
+            {
+                clean.Add(Task.Run(() => Directory.Move($"{Data.temp}\\gfx", $"{vs[12]}\\graphicPacks\\downloadedGraphicPacks")));
+                clean.Add(Task.Run(() => Directory.Move($"{Data.temp}\\-mlc\\mlc01", vs[13])));
+                clean.Add(Task.Run(() => File.Move($"{Data.temp}\\settings.xml", $"{vs[12]}\\settings.xml")));
+                // clean.Add(Task.Run(() => Directory.Delete(Data.temp)));
+            }
+
+            await Task.WhenAll(clean);
+
+            MessageBox.Show("Process Complete. Review Installation...");
         }
 
         public static async Task Python(string path, string version = "7", string includeDocs = "0", string quiet = "/quiet")
@@ -238,7 +255,7 @@ namespace BotW_Installer.Libraries
 
             Process run = new();
             run.StartInfo.FileName = $"{Data.temp}\\py.resource";
-            run.StartInfo.Arguments = $"{quiet} TargetDir={path} DefaultJustForMeTargetDir={path} DefaultCustomTargetDir={path} PrependPath=1 Include_doc={includeDocs}";
+            run.StartInfo.Arguments = $"{quiet} InstallAllUsers=1 TargetDir={path} PrependPath=1 Include_doc={includeDocs} Include_pip=1";
             run.StartInfo.CreateNoWindow = true;
 
             run.Start();
@@ -251,7 +268,7 @@ namespace BotW_Installer.Libraries
             await Task.Run(() => Extract.Embed($"vc.resource", $"{Data.temp}\\vc.resource"));
 
             Process run = new();
-            run.StartInfo.FileName = $"{Data.temp}\\py.resource";
+            run.StartInfo.FileName = $"{Data.temp}\\vc.resource";
             run.StartInfo.Arguments = $"/{quiet} /{no_restart}";
             run.StartInfo.CreateNoWindow = true;
 

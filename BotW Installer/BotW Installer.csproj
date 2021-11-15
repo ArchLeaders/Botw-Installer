@@ -11,9 +11,12 @@
 	<SignAssembly>true</SignAssembly>
 	<DelaySign>false</DelaySign>
 	<AssemblyOriginatorKeyFile>Certificate.snk</AssemblyOriginatorKeyFile>
+	<Authors>M. Smith</Authors>
+	<Company>BotW Installer</Company>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Noto Sans Symbols.ttf" />
     <None Remove="Fonts\WindowsBasic.ttf" />
     <None Remove="Images\Icon.png" />
     <None Remove="Resource\7z.resource" />
@@ -43,12 +46,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Noto Sans Symbols.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Fonts\WindowsBasic.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

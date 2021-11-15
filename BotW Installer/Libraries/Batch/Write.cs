@@ -33,7 +33,7 @@ namespace BotW_Installer.Libraries.Batch
                 await Task.Run(() => File.WriteAllText($"{Data.root}\\uninstall_betterjoy.bat",
                     "@echo off\n" +
                     "echo Removing BetterJoy\n" +
-                    "rmdir \"%LOCALAPPDATA%\\.botw\\BetterJoy\" /s /q\n" +
+                    "rmdir \"%LOCALAPPDATA%\\Botw-MM\\BetterJoy\" /s /q\n" +
                     "echo Done!\n" +
                     "pause"));
             }
@@ -73,8 +73,9 @@ namespace BotW_Installer.Libraries.Batch
             {
                 await Task.Run(() => File.WriteAllText($"{Data.root}\\uninstall_ds4.bat",
                     "@echo off\n" +
-                    "echo Removing BetterJoy\n" +
-                    "rmdir \"%LOCALAPPDATA%\\.botw\\DS4Windows\" /s /q\n" +
+                    "echo Removing DS4Windows\n" +
+                    "rmdir \"%LOCALAPPDATA%\\Botw-MM\\DS4Windows\" /s /q\n" +
+                    "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\DS4Windows /f\n" +
                     "echo Done!\n" +
                     "pause"));
             }
@@ -87,7 +88,7 @@ namespace BotW_Installer.Libraries.Batch
                 await Task.Run(() => File.WriteAllText($"{Data.root}\\botw.bat",
                     "@echo off\n" +
                     $"start /b \"BotW\" \"{cemu}\" -g \"{uking}\"\n" +
-                    $"start \"DS4Windows\" \"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\.botw\\DS4Windows\\DS4Windows.exe\""));
+                    $"start \"DS4Windows\" \"{Data.root}\\DS4Windows\\DS4Windows.exe\""));
             }
         }
     }
