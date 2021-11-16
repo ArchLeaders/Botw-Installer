@@ -9,7 +9,7 @@
 
 ## Setup
 
-Download the latest release and save it anywhere on your PC. (MC Edge thinks it has a virus because it's a `.exe` file. Don't worry, it's safe.)
+Download the latest release and save it anywhere on your PC. (MS Edge thinks it has a virus because it's a `.exe` file. Don't worry, it's safe.)
 
 Windows may also think it's a dangerous file due to it being unsigned.
 
