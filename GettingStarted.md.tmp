@@ -1,0 +1,19 @@
+# Gettings started with Botw Installer
+
+If this is your first time installing Botw, Botw Installer makes it as easy as every to install.
+
+## Requirments
+
+> WiiU Botw game files dumped from your WiiU. (Version 1.5, Update v208)
+>
+> Empty SD Card with at least 15GB of free space.
+>
+> A decent pc. ([See actual requirments](https://wiki.cemu.info/wiki/The_Legend_of_Zelda:_Breath_of_the_Wild))
+> 
+> Windows 10 or 11. (7 & 8 _may_ work but aren't tested)
+
+## Dumping you game files
+
+1. Install homebrew on your WiiU following [this guide](https://wiiu.hacks.guide/).
+2. Download and run [DumplingSetup](). Follow the prompts until it's completed.
+3. Launch CFW and ...
