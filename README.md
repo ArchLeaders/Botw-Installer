@@ -105,5 +105,6 @@ VGEB Driver
 BCML
 Python 3.7.8
 Python 3.8.10
-Edge WebView 2 Runtime 
+Edge WebView 2 Runtime
+And some others probably...
 ```
