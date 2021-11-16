@@ -22,7 +22,7 @@ namespace BotW_Installer.Libraries.Batch
                     "pip uninstall bcml\n" +
                     "echo Done!\n" +
                     "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\BCML /f\n" +
-                    "del %dektop%\\BCML.lnk /f\n" +
+                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BCML.lnk /f\n" +
                     "del \"%appdata%\\Microsoft\\Windows\\Start Menu\\Programs\\BCML.lnk\" /f\n" +
                     "PAUSE\n" +
                     $"del {Data.root}\\uninstall_bcml.bat"));
@@ -52,6 +52,9 @@ namespace BotW_Installer.Libraries.Batch
                     $"rmdir \"{bcmlData}\" /s /q\n" +
                     "rmdir \"%LOCALAPPDATA%\\bcml\" /s /q\n" +
                     "reg delete \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Breath of the Wild\" /f" +
+                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BCML.lnk /f\n" +
+                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\Botw.lnk /f\n" +
+                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\Cemu.lnk /f\n" +
                     "echo Done!\n" +
                     "pause" +
                     $"del /Q \"{Data.root}\\uninstall_botw.bat\""));
@@ -64,6 +67,7 @@ namespace BotW_Installer.Libraries.Batch
                     "echo Removing Cemu...\n" +
                     $"rmdir \"{cemu}\" /s /q\n" +
                     "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Cemu /f\n" +
+                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\Cemu.lnk /f\n" +
                     "echo Done!\n" +
                     "pause\n" +
                     $"del /Q \"{Data.root}\\uninstall_cemu.bat\""));
@@ -83,12 +87,17 @@ namespace BotW_Installer.Libraries.Batch
 
         public class Shortcuts
         {
-            public static async Task BotW(string uking, string cemu)
+            public static async Task BotW(string uking, string cemu, string ctrl)
             {
+                string ctrl0 = null;
+
+                if (ctrl != null)
+                    ctrl0 = $"\nstart \"DS4Windows\" \"{ctrl}\"";
+
                 await Task.Run(() => File.WriteAllText($"{Data.root}\\botw.bat",
                     "@echo off\n" +
-                    $"start /b \"BotW\" \"{cemu}\" -g \"{uking}\"\n" +
-                    $"start \"DS4Windows\" \"{Data.root}\\DS4Windows\\DS4Windows.exe\""));
+                    $"start /b \"BotW\" \"{cemu}\" -g \"{uking}\"" +
+                    $"{ctrl0}"));
             }
         }
     }

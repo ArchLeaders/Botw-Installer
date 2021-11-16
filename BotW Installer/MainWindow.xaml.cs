@@ -608,18 +608,37 @@ namespace BotW_Installer
 
             #region Other
 
-            Add(cbAdv_InstallTools);
+            vs.Add("null");
             Add(cbBasic_RunAfterInstall);
-            vs.Add(Libraries.Game.Region(vs[0]));
+            vs.Add(Game.Region(vs[0]));
 
             #endregion
 
-            File.WriteAllLines("config.index", vs);
+            grid_BasicPanel.Visibility = Visibility.Hidden;
+            gridLogInfo.Visibility = Visibility.Visible;
+
+            tbFilePass.Text = "Installing. Please wait.";
+
+            await Task.Run(() => Thread.Sleep(50));
 
             // Initialize installer.
-            // await Install.BotW(vs);
+            try
+            {
+                await Install.BotW(vs);
+            }
+            catch (Exception ex)
+            {
+                Directory.Delete($"{Data.root}");
+                if (Directory.Exists($"{Edit.RemoveLast(vs[12])}\\botwinstallermlc01data"))
+                    Directory.Delete($"{Edit.RemoveLast(vs[12])}\\botwinstallermlc01data", true);
+                if (Directory.Exists($"{Edit.RemoveLast(vs[12])}\\-gfx"))
+                    Directory.Delete($"{Edit.RemoveLast(vs[12])}\\-gfx", true);
+                MessageBox.Show(ex.Message);
+            }
 
-            await Settings.Xml(vs[0], vs[13]);
+
+            gridLogInfo.Visibility = Visibility.Hidden;
+            grid_BasicPanel.Visibility = Visibility.Visible;
         }
 
         void Add(CheckBox cb)

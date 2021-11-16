@@ -6,9 +6,14 @@ namespace BotW_Installer.Libraries
 {
     public class Game
     {
-        public static async Task Run(string cemu, string rpx)
+        public static void Run(string cemu, string rpx)
         {
-            Process.Start(cemu, $"-g {rpx}");
+            Process pr = new();
+            pr.StartInfo.FileName = cemu;
+            pr.StartInfo.Arguments = $"-g \"{rpx}\"";
+            pr.StartInfo.UseShellExecute = true;
+
+            pr.Start();
         }
 
         public static string Region(string pathToBase)
@@ -39,6 +44,18 @@ namespace BotW_Installer.Libraries
             }
 
             return results;
+        }
+
+        public static bool moveMlc = true;
+
+        public static string Mcl01(string mlc01, string cemuPath, bool temp = false)
+        {
+            if (mlc01 == "mlc01 Path")
+                mlc01 = $"{Edit.RemoveLast(cemuPath)}\\botwinstallermlc01data";
+            else
+                moveMlc = false;
+
+            return mlc01;
         }
     }
 }

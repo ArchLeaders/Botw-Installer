@@ -426,14 +426,6 @@
                               HorizontalContentAlignment="Left"
                               Padding="15, 0, 0, 0"
                               x:Name="cbAdv_InstallBcml"/>
-
-                    <CheckBox Content="BotW Modding Tools" Margin="5, 5, 5, 0"
-                              Background="#104673" FontSize="20" Grid.Row="6"
-                              Foreground="White" FontFamily="Artifakt Element Book"
-                              HorizontalContentAlignment="Left"
-                              Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_InstallTools"
-                              ToolTip="Installs serveral primary modding tools. (~14GB)&#x0a;Included Tools:&#x0a;&#x0a;- Bars Tool&#x0a;- BotW-Actor-Tool (Ginder Avalanche)&#x0a;- BotW-Havok (Martin. K)&#x0a;- Event Editor (Léo. L)&#x0a;- FooBar2000&#x0a;- HKX2 (Martin. K)&#x0a;- Hyrule Builder (Caleb. S)&#x0a;- Ice-Spear (Max. B)&#x0a;- Looping Audio Converter&#x0a;- Standalone Items Creator (banan039pl)&#x0a;- Switch-Toolbox (KilzXGaming)&#x0a;- WildBits (Caleb. S)"/>
                 </Grid>
 
                 <Grid VerticalAlignment="Bottom">
