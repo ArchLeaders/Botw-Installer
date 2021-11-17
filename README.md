@@ -1,9 +1,19 @@
 # Full installer for The Legend of Zelda: Breath of the Wild.
-\**Does not use, download, or include any of the ToZ: BotW game files owned by Nintendo®\**
 
-### ***Note: Because this is only tested by myself, bugs and errors will most likely occur on various other machines until I clean up all of them.***
-### ***So if you can, please report any errors as either a GitHub issue on this repo or a post in my [Discord Channel](https://discord.gg/cbA3AWwfJj)!***
-(Ping Marcus _`ArchLeaders#0903`_)
+> \*Disclaimer
+>
+> This tool does not include, use, or download any part of **The Legend of Zelda: Breath of the Wild**.
+>
+> To play **The Legend of Zelda: Breath of the Wild** legally you must obtain the game from a legitimate
+> retailer and dump the game from your WiiU console.
+>
+> It is illegal to obtain the game files from anywhere else, even if you own the game.
+
+## Notice
+
+***Because this is only tested by myself, bugs and errors will most likely occur on various other machines until I clean up all of them.***
+***So if you can, please report any errors as either a GitHub issue on this repo or a post in my [Discord Channel](https://discord.gg/cbA3AWwfJj)!***
+> Ping Marcus *`ArchLeaders#0903`*
 
 ---
 
@@ -13,98 +23,45 @@ Download the latest release and save it anywhere on your PC. (MS Edge thinks it 
 
 Windows may also think it's a dangerous file due to it being unsigned.
 
-![img1](https://user-images.githubusercontent.com/80713508/141951310-c3408d23-dd57-4e39-b3e8-0bf2a9720061.png)
-
 To allow the installer to run, click `More Info` then `Run Anyway`
+
+![img1](https://user-images.githubusercontent.com/80713508/141951310-c3408d23-dd57-4e39-b3e8-0bf2a9720061.png)
 
 ## Getting started
 
-If you just want to play Botw (maybe with mods too), [this guide](guide) will get you there.
+This short guide will get you up and running Botw as quick as possible. Contact me via [Discord](https://discord.gg/cbA3AWwfJj) if you encountered any issues.
 
-If you want to go further and make a custom install to your machine, short explanations of each button are written under **Usage**.
+### Requirments
 
----
+> Botw v1.5 (WiiU Version)
+>
+> Empty SD Card with at least 15GB of free space.
+>
+> A decent pc. ([See actual requirments](https://wiki.cemu.info/wiki/The_Legend_of_Zelda:_Breath_of_the_Wild))
+> 
+> Windows 10 or 11. (7 & 8 _may_ work but aren't tested)
 
-## Basic Tab Usage
+### Dumping you game files
 
-![basic_tab_img](https://user-images.githubusercontent.com/80713508/141963270-85cecf5a-9226-46f3-af50-3e30cb6c3b93.png)
+1. Insert your empty SD Card and format it as Fat32.
+2. Download [HomebrewSetup](https://github.com/ArchLeaders/Breath-of-the-Wild-Installer-NET-6.0/releases/download/v1.0.0/HomebrewSetup.exe) and point it to your SD Card.
 
-### Use Mods:
-> Installs python (3.7 by default), Edge WebView 2 Runtime, and BCML. This must be checked (green) if you want to play Botw with mods.
+   *Eg. if you have a primary C: drive, and your SD card is drive D:, enter `D` into the console window.*
+   
+3. Open the WebBrowser on your WiiU and go to `wiiuexploit.xyz` click enter hombrew.
+4. Once it's loaded, launch the Dumpling app.
+5. Inside Dumpling, select either `Dump digital games` or `Dump a game disc` depending on whichever Botw is.
+6. Select BotW using the `A` button and press `Start (+)`. (Selection not applicable if dumping the disc copy.)
+7. Set the dump destination to your SD Card.
+8. press the `Start (+)` button to begin dumping. This may take a very long time.
+9. Once it's complete, remove the SD Card and plug it into your pc. Copy the game files of your SD card if you wish, or check the `Copy Base To mlc01` button in Botw Installer.
 
-### Create Shortcuts
-> Fairly self-explanatory, this creates Desktop, Start, and Program shortcuts (uninstallers) for Cemu, BCML, and Botw. The shortcuts created are defined in the advanced tab.
+### Installing With Botw Installer
 
-![img2](https://user-images.githubusercontent.com/80713508/141955758-1541ccb4-7582-42e6-a84e-22b368274d5f.png)
-![e_img3](https://user-images.githubusercontent.com/80713508/141954939-285a6534-8bcb-41d0-84a4-3a8bff6c58a5.png)
+1. If you didn't move the files off your SD Card, open the advanced tab and click `Copy Base To mlc01` so it turns green. 
 
-### Run After Install
-> Runs Botw after installation.
+   *Change any other settings until it's just how you want it. (Read the tooltips for explanations and take note that the Base Game, Update, and DLC paths will be autofilled when you click install or fill out `Dump Path` in the basic tab.)*
 
-### None; DS4Windows; BetterJoy
-> These applications are required to connect unsupported controllers (DualShock4, Switch joycons, etc) to Windows to then use in Cemu.
-To find out if you need one, see [this list](list).
-
-### Cemu Path
-> This is the path to your Cemu folder. (Folder containing Cemu.exe.) This defaults to `C:\Users\%username%\Games\Cemu`.
-It can be changed of course, but it's recommended you don't point it to a folder inside Documents.
-
-### Dump Path
-> This is the path to your game files. (Files dumped from your WiiU.) If you are unsure where these are, you can try the search feature, it will look for your game files, but it takes a while and can be fooled. It's recommended to set your Dump Path manually.
-
----
-
-## Advanced Tab Usage
-
-![adv_tab_img](https://user-images.githubusercontent.com/80713508/141963223-89851ed4-cdb7-4944-b5af-a6d1ddea59c8.png)
-
-### Install Python
-> Installs Python. Can be unchecked if you already have one of the valid versions installed. (3.7 to 3.8)
-
-### 3.8 (x64)
-> Installs python 3.8.10 64 Bit if Install Python is checked.
-
-### 3.7 _x64)
-> Installs python 3.7.8 64 Bit if Install Python is checked.
-
-### Visual C++
-> Installs Visual C++ Redistributable 2015 - 2019 `14.29.30135.0`. Can be unchecked if it's already installed.
-
-### Py Docs
-> Installs the python documentation.
-
-### Install BCML
-> Installs BCML (`pip install bcml`, writes settings.json)
-
-### Base Game Path
-> Autofilled from the basic tab. Can be changed if your game files are not in the standard layout.
-
-### Update Path
-> Autofilled from the basic tab. Can be changed if your game files are not in the standard layout.
-
-### DLC Path
-> Autofilled from the basic tab. Can be changed if your game files are not in the standard layout.
-
-### Python Path
-> Installation path for Python. Only applicable if Install Python is checked.
-
-### mlc01 Path
-> Path to mlc01 for Cemu. Leave empty to have it in the Cemu root directory.
-
-### BCML Data Path
-> Path to BCML data. (Storage for BCML mods, cache, etc.)
-
-## What's installed/downloaded
-```
-Cemu
-DS4Windows
-BetterJoy
-Visual C++ 2015 - 2019
-.NET 5.0 Runtime
-VGEB Driver
-BCML
-Python 3.7.8
-Python 3.8.10
-Edge WebView 2 Runtime
-And some others probably...
-```
+2. Click install. If you **did** move your game files from the SD Card fill out `Dump Path` first.
+3. Let the tool do it's job and wait for the prompt saying it's complete. (If any errors occur please report them to me.)
+4. That's it. Botw is now installed.
