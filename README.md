@@ -23,13 +23,13 @@ Download the latest release and save it anywhere on your PC. (MS Edge thinks it 
 
 Windows may also think it's a dangerous file due to it being unsigned.
 
-![img1](https://user-images.githubusercontent.com/80713508/141951310-c3408d23-dd57-4e39-b3e8-0bf2a9720061.png)
-
 To allow the installer to run, click `More Info` then `Run Anyway`
+
+![img1](https://user-images.githubusercontent.com/80713508/141951310-c3408d23-dd57-4e39-b3e8-0bf2a9720061.png)
 
 ## Getting started
 
-*Unsure what something does? Hover over it with the cursor and read the tip.*
+This short guide will get you up and running Botw as quick as possible. Contact me via [Discord](https://discord.gg/cbA3AWwfJj) if you encountered any issues.
 
 ### Requirments
 
@@ -47,18 +47,21 @@ To allow the installer to run, click `More Info` then `Run Anyway`
 2. Download [HomebrewSetup](https://github.com/ArchLeaders/Breath-of-the-Wild-Installer-NET-6.0/releases/download/v1.0.0/HomebrewSetup.exe) and point it to your SD Card.
 
    *Eg. if you have a primary C: drive, and your SD card is drive D:, enter `D` into the console window.*
-
-3. Follow [this guide](https://wiiu.hacks.guide/#/mocha/online-exploit/browser-exploit) to backup NAND and launch into CFW.
-4. Before exiting, launch the WUP Installer GX2 app and install the Homebrew Launcher.
-5. Return to the WiiU home page and launch the Homebrew Launcher.
-6. Once it's loaded, launch the Dumpling app in Homebrew Channel.
-7. Inside Dumpling, select either `Dump digital games` or `Dump a game disc` depending on whichever Botw is.
-8. Select BotW using the `A` button and press `Start (+)`. (Selection not applicable if dumping the disc copy.)
-9. Set the dump destination to your SD Card.
-10. press the `Start (+)` button to begin dumping. This may take a very long time.
-11. Once it's complete, remove the SD Card and plug it into your pc. Copy them of the SD card if you wish, or check the `Copy Base Game` button in Botw Installer.
+   
+3. Open the WebBrowser on your WiiU and go to `wiiuexploit.xyz` click enter hombrew.
+4. Once it's loaded, launch the Dumpling app.
+5. Inside Dumpling, select either `Dump digital games` or `Dump a game disc` depending on whichever Botw is.
+6. Select BotW using the `A` button and press `Start (+)`. (Selection not applicable if dumping the disc copy.)
+7. Set the dump destination to your SD Card.
+8. press the `Start (+)` button to begin dumping. This may take a very long time.
+9. Once it's complete, remove the SD Card and plug it into your pc. Copy the game files of your SD card if you wish, or check the `Copy Base To mlc01` button in Botw Installer.
 
 ### Installing With Botw Installer
 
+1. If you didn't move the files off your SD Card, open the advanced tab and click `Copy Base To mlc01` so it turns green. 
 
+   *Change any other settings until it's just how you want it. (Read the tooltips for explanations and take note that the Base Game, Update, and DLC paths will be autofilled when you click install or fill out `Dump Path` in the basic tab.)*
 
+2. Click install. If you **did** move your game files from the SD Card fill out `Dump Path` first.
+3. Let the tool do it's job and wait for the prompt saying it's complete. (If any errors occur please report them to me.)
+4. That's it. Botw is now installed.
