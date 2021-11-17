@@ -46,13 +46,19 @@ namespace BotW_Installer
 
             btnBasic_DumpPath_Search.Click += async (s, e) =>
             {
-                MessageBoxResult msg = MessageBox.Show("This searches your entire PC for the Botw game files.\n" +
-                    "It does not always work however, it's recomended you manually\nset your game paths.\n\n" +
-                    "Do you still wish to continue?", "Warning!", MessageBoxButton.YesNo);
+                if (Check(tbBasic_DumpPath.Text) == true)
+                {
+                    Msg.Box("Game paths already set.", "Notice", false);
+                }
+                else
+                {
+                    bool msg = Msg.Box("This searches your entire PC for the Botw game files.\n" +
+                                "It does not always work however, it's recomended you manually\nset your game paths.\n\n" +
+                                "Do you still wish to continue?", "Warning", true);
 
-                if (msg == MessageBoxResult.Yes)
-                    await SetGamePaths();
-
+                    if (msg == true)
+                        await SetGamePaths();
+                }
             };
 
             cbAdv_AddBcmlToPrograms.IsChecked = true;
@@ -295,7 +301,7 @@ namespace BotW_Installer
 
         #endregion
 
-        #region Evaluate Game Paths & Folder Browse Events
+        #region Evaluate Game Paths, Folder Browse Events & Search Methods
 
         private void btnBasic_Browse_Click(object sender, RoutedEventArgs e)
         {
@@ -359,9 +365,13 @@ namespace BotW_Installer
             }
         }
 
-        private async Task SetGamePaths()
+        private async Task SetGamePaths(bool continueInstall = false)
         {
             List<string> ukings = new();
+
+            string assumedDlc = null;
+            string assumedBase = null;
+            string assumedUpdate = null;
 
             grid_BasicPanel.Visibility = Visibility.Hidden;
             gridLogInfo.Visibility = Visibility.Visible;
@@ -370,42 +380,52 @@ namespace BotW_Installer
 
             await Task.Run(() =>
             {
-                foreach (var drive in DriveInfo.GetDrives())
+                foreach (var drive in DriveInfo.GetDrives().Reverse())
                     foreach (var file in GetAllSafeFiles(drive.Name, "*.rpx"))
+                    {
                         if (file.EndsWith("code\\U-King.rpx") && !file.EndsWith("00\\code\\U-King.rpx"))
                             ukings.Add(file);
+                        if (ukings.Count == 2)
+                            if (Verify() == 0)
+                                break;
+                    }
             });
 
-            tbFilePass.Text = $"{tbFilePass.Text}\n{ukings.Count}/2 RPX assemblies found.\nVerifying game files...";
-
-            string assumedDlc = null;
-            string assumedBase = null;
-            string assumedUpdate = null;
-
-            if (Directory.Exists($"{Edit.RemoveLast(ukings[0], 2)}content\\Actor\\Pack"))
-                assumedUpdate = $"{Edit.RemoveLast(ukings[0], 2)}content";
-            else if (Directory.Exists($"{Edit.RemoveLast(ukings[0], 2)}content\\Movie"))
-                assumedBase = $"{Edit.RemoveLast(ukings[0], 2)}content";
-
-            if (Directory.Exists($"{Edit.RemoveLast(ukings[1], 2)}content\\Actor\\Pack"))
-                assumedUpdate = $"{Edit.RemoveLast(ukings[1], 2)}content";
-            else if (Directory.Exists($"{Edit.RemoveLast(ukings[1], 2)}content\\Movie"))
-                assumedBase = $"{Edit.RemoveLast(ukings[1], 2)}content";
-
-            foreach (string dir in Directory.GetDirectories(Edit.RemoveLast(ukings[0], 3)))
-                if (Directory.Exists($"{dir}\\content\\0010"))
-                    assumedDlc = dir + "\\content";
 
             if (assumedBase != null && assumedUpdate != null)
                 tbBasic_DumpPath.Text = Edit.RemoveLast(ukings[0], 3);
 
-            gridLogInfo.Visibility = Visibility.Hidden;
-            grid_BasicPanel.Visibility = Visibility.Visible;
+            if (continueInstall == false)
+            {
+                gridLogInfo.Visibility = Visibility.Hidden;
+                grid_BasicPanel.Visibility = Visibility.Visible;
+            }
 
             if (assumedBase != null && assumedUpdate != null)
-                MessageBox.Show("Search succesful.");
+                Msg.Box("Search succesful.");
             else
-                MessageBox.Show("Search unsuccesful.");
+            {
+                Msg.Box("Search unsuccesful.");
+                return;
+            }
+
+            int Verify()
+            {
+                foreach (var uking in ukings)
+                {
+                    if (Directory.Exists($"{Edit.RemoveLast(uking, 2)}content\\Actor\\Pack"))
+                        assumedUpdate = $"{Edit.RemoveLast(uking, 2)}content";
+                    else if (Directory.Exists($"{Edit.RemoveLast(uking, 2)}content\\Movie"))
+                        assumedBase = $"{Edit.RemoveLast(uking, 2)}content";
+
+                    foreach (string dir in Directory.GetDirectories(Edit.RemoveLast(uking, 3)))
+                        if (Directory.Exists($"{dir}\\content\\0010"))
+                            assumedDlc = dir + "\\content";
+                }
+
+                if (assumedBase != null && assumedUpdate != null) return 1;
+                else return 0;
+            }
         }
 
         #region Search Methods
@@ -483,8 +503,11 @@ namespace BotW_Installer
                     cbAdv_AddCemuToPrograms.IsChecked = true;
                     cbAdv_CemuStartShortcut.IsChecked = true;
                     cbAdv_CemuDesktopShortcut.IsChecked = true;
+
                     cbAdv_BotwDesktopShortcut.IsChecked = true;
                     cbAdv_BotwStartShortcut.IsChecked = true;
+
+                    cbAdv_AddBcmlToPrograms.IsChecked = true;
                     cbAdv_BcmlDesktopShortcut.IsChecked = true;
                     cbAdv_BcmlStartShortcut.IsChecked = true;
                 }
@@ -531,8 +554,24 @@ namespace BotW_Installer
         {
             if (Check(tbBasic_DumpPath.Text) != true)
             {
-                MessageBox.Show("Game Paths Are Not Valid!", "Error");
-                return;
+                await SetGamePaths(true);
+
+                if (Check(tbBasic_DumpPath.Text) != true)
+                {
+                    Msg.Box("Game Paths Are Not Valid!", "Error");
+                    return;
+                }
+            }
+
+            if (cbAdv_InstallPython.IsChecked == false && !File.Exists($"{tbAdvPython_Path.Text}\\python.exe"))
+            {
+                if (Msg.Box($"Python was not found.\nWould you like to install it in {tbAdvPython_Path.Text}?", "Warning", true) == true)
+                    cbAdv_InstallPython.IsChecked = true;
+            }
+            else
+            {
+                if (Msg.Box($"Python was found.\nSkip install?", "Warning", true) == true)
+                    cbAdv_InstallPython.IsChecked = true;
             }
 
             vs.Add(tbAdvBase_Game_Path.Text);
@@ -616,6 +655,8 @@ namespace BotW_Installer
 
             grid_BasicPanel.Visibility = Visibility.Hidden;
             gridLogInfo.Visibility = Visibility.Visible;
+            tabAdv.Visibility = Visibility.Hidden;
+            tabBasic.Visibility = Visibility.Hidden;
 
             tbFilePass.Text = "Installing. Please wait.";
 
@@ -633,12 +674,14 @@ namespace BotW_Installer
                     Directory.Delete($"{Edit.RemoveLast(vs[12])}\\botwinstallermlc01data", true);
                 if (Directory.Exists($"{Edit.RemoveLast(vs[12])}\\-gfx"))
                     Directory.Delete($"{Edit.RemoveLast(vs[12])}\\-gfx", true);
-                MessageBox.Show(ex.Message);
+                Msg.Box(ex.Message, "Error", false);
             }
 
 
             gridLogInfo.Visibility = Visibility.Hidden;
             grid_BasicPanel.Visibility = Visibility.Visible;
+            tabAdv.Visibility = Visibility.Visible;
+            tabBasic.Visibility = Visibility.Visible;
         }
 
         void Add(CheckBox cb)

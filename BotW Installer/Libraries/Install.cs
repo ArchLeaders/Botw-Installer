@@ -276,7 +276,7 @@ namespace BotW_Installer.Libraries
             if (Game.moveMlc && Data.Check(vs[11]))
                 Directory.Delete(Game.Mcl01(vs[13], vs[12]));
 
-            MessageBox.Show("Process Complete. Review Installation...");
+            Msg.Box("Process Complete.");
 
             if (Data.Check(vs[24]))
                 Game.Run($"{vs[12]}\\Cemu.exe", $"{Edit.RemoveLast(vs[0])}\\code\\U-King.rpx");

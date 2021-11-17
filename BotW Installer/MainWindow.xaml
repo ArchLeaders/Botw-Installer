@@ -116,38 +116,43 @@
                               Foreground="White" FontFamily="Artifakt Element Book"
                               HorizontalContentAlignment="Left"
                               Padding="20, 0, 0, 0" x:Name="cbBasic_UseMods"
-                              Click="cbBasic_Click"/>
+                              Click="cbBasic_Click"
+                              ToolTip="Installs the required sofware to use mods with Cemu."/>
 
                     <CheckBox Content="Create Shortcuts" Margin="0, 10, 0, 0"
-                          Background="#104673" FontSize="30" Grid.Row="1"
-                          Foreground="White" FontFamily="Artifakt Element Book"
-                          HorizontalContentAlignment="Left"
-                          Padding="20, 0, 0, 0" x:Name="cbBasic_CreateShortcuts"
-                              Click="cbBasic_Click"/>
+                              Background="#104673" FontSize="30" Grid.Row="1"
+                              Foreground="White" FontFamily="Artifakt Element Book"
+                              HorizontalContentAlignment="Left"
+                              Padding="20, 0, 0, 0" x:Name="cbBasic_CreateShortcuts"
+                              Click="cbBasic_Click"
+                              ToolTip="Creates the default set of shortcuts for Cemu, BCML, and Botw.&#x0a;Customize which are installed in the advanced tab."/> 
 
                     <CheckBox Content="Run After Install" Margin="0, 10, 0, 0"
-                          Background="#104673" FontSize="30" Grid.Row="2"
-                          Foreground="White" FontFamily="Artifakt Element Book"
-                          HorizontalContentAlignment="Left"
-                          Padding="20, 0, 0, 0" x:Name="cbBasic_RunAfterInstall"/>
+                              Background="#104673" FontSize="30" Grid.Row="2"
+                              Foreground="White" FontFamily="Artifakt Element Book"
+                              HorizontalContentAlignment="Left"
+                              Padding="20, 0, 0, 0" x:Name="cbBasic_RunAfterInstall"
+                              ToolTip="Launches Botw after it's been installed."/>
 
                     <ComboBox Margin="0, 10, 0, 0"
-                          Background="#104673" FontSize="30" Grid.Row="3"
-                          Foreground="White" FontFamily="Artifakt Element Book"
-                          HorizontalContentAlignment="Left"
-                          Padding="20, 0, 0, 0" x:Name="cbBasic_InstallDS4Windows"
-                              VerticalContentAlignment="Center" SelectedIndex="0">
-                        <ComboBoxItem Content="None"/>
-                        <ComboBoxItem Content="DS4 Windows"/>
-                        <ComboBoxItem Content="BetterJoy"/>
+                              Background="#104673" FontSize="30" Grid.Row="3"
+                              Foreground="White" FontFamily="Artifakt Element Book"
+                              HorizontalContentAlignment="Left"
+                              Padding="20, 0, 0, 0" x:Name="cbBasic_InstallDS4Windows"
+                              VerticalContentAlignment="Center" SelectedIndex="0"
+                              ToolTip="Installs the software required to connect certain controlers to Windows.">
+                        <ComboBoxItem Content="None" ToolTip="Don't install software"/>
+                        <ComboBoxItem Content="DS4 Windows" ToolTip="Install DS4Windows. (Required for Dualshock controllers.)"/>
+                        <ComboBoxItem Content="BetterJoy" ToolTip="Install BetterJoy. (Required for Switch controllers.)"/>
                     </ComboBox>
 
                     <Button Content="Install" Margin="0, 10, 0, 0"
-                        Background="#1f1f1f" FontSize="34" Grid.Row="4"
-                        Foreground="White" FontFamily="Artifakt Element Book"
-                        BorderThickness="0"
-                        Style="{DynamicResource btnInstall}" x:Name="btnBasic_Install"
-                            Click="btnBasic_Install_Click"/>
+                            Background="#1f1f1f" FontSize="34" Grid.Row="4"
+                            Foreground="White" FontFamily="Artifakt Element Book"
+                            BorderThickness="0"
+                            Style="{DynamicResource btnInstall}" x:Name="btnBasic_Install"
+                            Click="btnBasic_Install_Click"
+                            ToolTip="Installs Botw with your chosen settings"/>
 
                 </Grid>
                 <!--Basic Options-->
@@ -219,12 +224,14 @@
                     <Button x:Name="btnBasic_CemuPath_Browse" Content="&#xe903;" Grid.Column="3"
                         Style="{StaticResource btnBrowse}" Background="#104673"
                         Margin="0, 10, 0, 0" BorderThickness="0" FontSize="20"
-                        Foreground="White" Click="btnBasic_Browse_Click"/>
+                        Foreground="White" Click="btnBasic_Browse_Click"
+                            ToolTip="Browse for Cemu Path"/>
 
                     <Button x:Name="btnBasic_DumpPath_Browse" Content="&#xe903;" Grid.Column="3" Grid.Row="1"
                         Style="{StaticResource btnBrowse}" Background="#104673"
                         Margin="0, 10, 0, 0" BorderThickness="0" FontSize="20"
-                        Foreground="White" Click="btnBasic_Browse_Click"/>
+                        Foreground="White" Click="btnBasic_Browse_Click"
+                            ToolTip="Browse for Dump Path"/>
 
                     <Button x:Name="btnBasic_DumpPath_Search" Content="&#xe903;"
                             Grid.Column="3" Grid.Row="2"
@@ -277,7 +284,8 @@
                               Foreground="White" FontFamily="Artifakt Element Book"
                               HorizontalContentAlignment="Left"
                               Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_AddCemuToPrograms"/>
+                              x:Name="cbAdv_AddCemuToPrograms"
+                              ToolTip="Creates Cemu Uninstaller"/>
 
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -290,14 +298,16 @@
                                   Foreground="White" FontFamily="Artifakt Element Book"
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_CemuStartShortcut"/>
+                                  x:Name="cbAdv_CemuStartShortcut"
+                                  ToolTip="Creates Cemu Start Menu Shortcut"/>
 
                         <CheckBox Content="Desktop" Margin="2.5, 5, 5, 0"
                                   Background="#104673" FontSize="20" Grid.Column="1"
                                   Foreground="White" FontFamily="Artifakt Element Book"
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_CemuDesktopShortcut"/>
+                                  x:Name="cbAdv_CemuDesktopShortcut"
+                                  ToolTip="Creates Cemu Desktop Shortcut"/>
                     </Grid>
 
                     <CheckBox Content="Add Bcml To Programs" Margin="5, 5, 5, 0"
@@ -305,7 +315,8 @@
                               Foreground="White" FontFamily="Artifakt Element Book"
                               HorizontalContentAlignment="Left"
                               Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_AddBcmlToPrograms"/>
+                              x:Name="cbAdv_AddBcmlToPrograms"
+                              ToolTip="Creates BCML Uninstaller"/>
 
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
@@ -318,14 +329,16 @@
                                   Foreground="White" FontFamily="Artifakt Element Book"
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_BcmlStartShortcut"/>
+                                  x:Name="cbAdv_BcmlStartShortcut"
+                                  ToolTip="Creates BCML Start Menu Shortcut"/>
 
                         <CheckBox Content="Desktop" Margin="2.5, 5, 5, 0"
                                   Background="#104673" FontSize="20" Grid.Column="1"
                                   Foreground="White" FontFamily="Artifakt Element Book"
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_BcmlDesktopShortcut"/>
+                                  x:Name="cbAdv_BcmlDesktopShortcut"
+                                  ToolTip="Creates BCML Desktop Shortcut"/>
                     </Grid>
 
                     <CheckBox Content="Add BotW To Programs" Margin="5, 5, 5, 0"
@@ -333,7 +346,8 @@
                               Foreground="White" FontFamily="Artifakt Element Book"
                               HorizontalContentAlignment="Left"
                               Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_AddBotwToPrograms"/>
+                              x:Name="cbAdv_AddBotwToPrograms"
+                              ToolTip="Creates Botw Uninstaller."/>
 
                     <Grid Grid.Row="6">
                         <Grid.ColumnDefinitions>
@@ -346,14 +360,16 @@
                                   Foreground="White" FontFamily="Artifakt Element Book"
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_BotwStartShortcut"/>
+                                  x:Name="cbAdv_BotwStartShortcut"
+                                  ToolTip="Creates Botw Start Menu Shortcut"/>
 
                         <CheckBox Content="Desktop" Margin="2.5, 5, 5, 0"
                                   Background="#104673" FontSize="20" Grid.Column="1"
                                   Foreground="White" FontFamily="Artifakt Element Book"
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_BotwDesktopShortcut"/>
+                                  x:Name="cbAdv_BotwDesktopShortcut"
+                                  ToolTip="Creates Botw Desktop Shortcut"/>
                     </Grid>
                 </Grid>
 
@@ -374,7 +390,8 @@
                               Foreground="White" FontFamily="Artifakt Element Book"
                               HorizontalContentAlignment="Left"
                               Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_InstallPython"/>
+                              x:Name="cbAdv_InstallPython"
+                              ToolTip="Installs python. (3.7.8 by default.)"/>
 
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -388,7 +405,8 @@
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
                                   x:Name="cbAdv_Py8"
-                                  Click="cbAdv_PyVersion_Click"/>
+                                  Click="cbAdv_PyVersion_Click"
+                                  ToolTip="Installs Python 3.8.10 64 Bit if Install Python is checked."/>
 
                         <CheckBox Content="3.7 (x64)" Margin="2.5, 5, 5, 0"
                                   Background="#104673" FontSize="20" Grid.Column="1"
@@ -396,7 +414,8 @@
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
                                   x:Name="cbAdv_Py7"
-                                  Click="cbAdv_PyVersion_Click"/>
+                                  Click="cbAdv_PyVersion_Click"
+                                  ToolTip="Installs Python 3.7.8 64 Bit if Install Python is checked."/>
                     </Grid>
 
                     <Grid Grid.Row="3">
@@ -410,14 +429,16 @@
                                   Foreground="White" FontFamily="Artifakt Element Book"
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_CPlusPlus"/>
+                                  x:Name="cbAdv_CPlusPlus"
+                                  ToolTip="Installs Visual C++&#x0a;Required for Cemu and BCML."/>
 
                         <CheckBox Content="Py Docs" Margin="2.5, 5, 5, 0"
                                   Background="#104673" FontSize="20" Grid.Column="1"
                                   Foreground="White" FontFamily="Artifakt Element Book"
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_PythonDocs"/>
+                                  x:Name="cbAdv_PythonDocs"
+                                  ToolTip="Install the Python documentaion.&#x0a;Required for BCML."/>
                     </Grid>
 
                     <CheckBox Content="Install BCML" Margin="5, 5, 5, 0"
@@ -425,7 +446,16 @@
                               Foreground="White" FontFamily="Artifakt Element Book"
                               HorizontalContentAlignment="Left"
                               Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_InstallBcml"/>
+                              x:Name="cbAdv_InstallBcml"
+                              ToolTip="Installs Botw Cross-Platform Mod Loader (BCML)&#x0a;Requirments&#x0a;   - Python&#x0a;   - Visual C++&#x0a;   - WebView2 Runtime"/>
+
+                    <CheckBox Content="Copy Base To mlc01" Margin="5, 5, 5, 0"
+                              Background="#104673" FontSize="20" Grid.Row="6"
+                              Foreground="White" FontFamily="Artifakt Element Book"
+                              HorizontalContentAlignment="Left"
+                              Padding="15, 0, 0, 0"
+                              x:Name="cbAdv_CopyBase"
+                              ToolTip="Copies the Base Game files to the mlc01 folder.&#x0a;Good to use if you are copying the game off an SD card."/>
                 </Grid>
 
                 <Grid VerticalAlignment="Bottom">
@@ -440,7 +470,8 @@
                             HorizontalAlignment="Right" Width="25"
                             Foreground="White"
                             x:Name="btnAdv_MenuRight"
-                            Click="btnAdv_Menu_Click"/>
+                            Click="btnAdv_Menu_Click"
+                            ToolTip="Slide panel right."/>
 
                     <Button Content="◀" BorderThickness="0"
                             Background="Transparent"
@@ -448,7 +479,8 @@
                             HorizontalAlignment="Left" Width="25"
                             Foreground="White"
                             x:Name="btnAdv_MenuLeft"
-                            Click="btnAdv_Menu_Click"/>
+                            Click="btnAdv_Menu_Click"
+                            ToolTip="Slide panel left."/>
 
                 </Grid>
 
@@ -481,7 +513,7 @@
                              MouseDoubleClick="TextBox_Browse"
                              TextChanged="PathTextBox_Check"
                              ContextMenu="{x:Null}"
-                             ToolTip="Path to your base game dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Breath of the Wild [101c9#00]\content'"/>
+                             ToolTip="Path to your base game dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Breath of the Wild [101c9#00]\content'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="2"
                              VerticalAlignment="Stretch"
@@ -499,7 +531,7 @@
                              MouseDoubleClick="TextBox_Browse"
                              TextChanged="PathTextBox_Check"
                              ContextMenu="{x:Null}"
-                             ToolTip="Path to your update dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Update v208\content'"/>
+                             ToolTip="Path to your update dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Update v208\content'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="3"
                              VerticalAlignment="Stretch"
@@ -517,7 +549,7 @@
                              MouseDoubleClick="TextBox_Browse"
                              TextChanged="PathTextBox_Check"
                              ContextMenu="{x:Null}"
-                             ToolTip="Path to your DLC dump. [Optional]&#x0a;This will end in 'content\0010'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\DLC\content\0010'"/>
+                             ToolTip="Path to your DLC dump. [Optional]&#x0a;This will end in 'content\0010'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\DLC\content\0010'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="4"
                              VerticalAlignment="Stretch"
@@ -534,7 +566,7 @@
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
                              ContextMenu="{x:Null}"
-                             ToolTip="Path to new/existing Python.&#x0a;This is where python and python scripts will be stored.&#x0a;&#x0a;E.g. 'C:\Python 3.7-64'"/>
+                             ToolTip="Path to new/existing Python.&#x0a;This is where python and python scripts will be stored.&#x0a;&#x0a;E.g. 'C:\Python 3.7-64'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="5"
                              VerticalAlignment="Stretch"
@@ -551,7 +583,7 @@
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
                              ContextMenu="{x:Null}"
-                             ToolTip="Path to mlc01.&#x0a;This is where Cemu stores games and&#x0a;other WiiU related stuff I'm unfamiliar with.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\Cemu\mlc01'"/>
+                             ToolTip="Path to mlc01.&#x0a;Folder where Cemu stores games and save files.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\Cemu\mlc01'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="6"
                              VerticalAlignment="Stretch"
@@ -568,7 +600,7 @@
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
                              ContextMenu="{x:Null}"
-                             ToolTip="Path to BCML Data.&#x0a;This is where BCML stores mods&#x0a;and most of the externall files required to merge mods.&#x0a;&#x0a;E.g. 'C:\Users\username\AppData\Local\bcml'"/>
+                             ToolTip="Path to BCML Data.&#x0a;Folder where BCML stores mods and cache.&#x0a;&#x0a;E.g. 'C:\Users\username\AppData\Local\bcml'&#x0a;&#x0a;(Double click text box to browse)"/>
                 </Grid>
 
             </Grid> <!--Advanced Options-->
