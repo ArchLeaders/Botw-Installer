@@ -43,7 +43,22 @@ To allow the installer to run, click `More Info` then `Run Anyway`
 
 ### Dumping you game files
 
-1. Install homebrew on your WiiU following [this guide](https://wiiu.hacks.guide/).
-2. Download and run [DumplingSetup](). Follow the prompts until it's completed.
-3. Launch CFW and ... working on completing guide...
+1. Insert your empty SD Card and format it as Fat32.
+2. Download [HomebrewSetup](https://github.com/ArchLeaders/Breath-of-the-Wild-Installer-NET-6.0/releases/download/v1.0.0/HomebrewSetup.exe) and point it to your SD Card.
+
+   *Eg. if you have a primary C: drive, and your SD card is drive D:, enter `D` into the console window.*
+
+3. Follow [this guide](https://wiiu.hacks.guide/#/mocha/online-exploit/browser-exploit) to backup NAND and launch into CFW.
+4. Before exiting, launch the WUP Installer GX2 app and install the Homebrew Launcher.
+5. Return to the WiiU home page and launch the Homebrew Launcher.
+6. Once it's loaded, launch the Dumpling app in Homebrew Channel.
+7. Inside Dumpling, select either `Dump digital games` or `Dump a game disc` depending on whichever Botw is.
+8. Select BotW using the `A` button and press `Start (+)`. (Selection not applicable if dumping the disc copy.)
+9. Set the dump destination to your SD Card.
+10. press the `Start (+)` button to begin dumping. This may take a very long time.
+11. Once it's complete, remove the SD Card and plug it into your pc. Copy them of the SD card if you wish, or check the `Copy Base Game` button in Botw Installer.
+
+### Installing With Botw Installer
+
+
 
