@@ -391,7 +391,7 @@
                               HorizontalContentAlignment="Left"
                               Padding="15, 0, 0, 0"
                               x:Name="cbAdv_InstallPython"
-                              ToolTip="Installs python. (3.7.8 by default.)"/>
+                              ToolTip="Installs Python.&#x0a;Required for BCML."/>
 
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -438,7 +438,7 @@
                                   HorizontalContentAlignment="Left"
                                   Padding="15, 0, 0, 0"
                                   x:Name="cbAdv_PythonDocs"
-                                  ToolTip="Install the Python documentaion.&#x0a;Required for BCML."/>
+                                  ToolTip="Install the Python documentaion."/>
                     </Grid>
 
                     <CheckBox Content="Install BCML" Margin="5, 5, 5, 0"
@@ -447,7 +447,7 @@
                               HorizontalContentAlignment="Left"
                               Padding="15, 0, 0, 0"
                               x:Name="cbAdv_InstallBcml"
-                              ToolTip="Installs Botw Cross-Platform Mod Loader (BCML)&#x0a;Requirments&#x0a;   - Python&#x0a;   - Visual C++&#x0a;   - WebView2 Runtime"/>
+                              ToolTip="Installs Botw Cross-Platform Mod Loader (BCML)&#x0a;Requirments&#x0a;   - Python&#x0a;   - Visual C++&#x0a;   - WebView2 Runtime (Auto installed)"/>
 
                     <CheckBox Content="Copy Base To mlc01" Margin="5, 5, 5, 0"
                               Background="#104673" FontSize="20" Grid.Row="6"
