@@ -180,20 +180,11 @@
                              Background="#1f1f1f"
                              Foreground="#7f7f7f"
                              x:Name="tbBasic_CemuPath"
-                             
+                             TextChanged="tbBasic_CemuPath_TextChanged"
                              Text="Cemu Path"
-                        
                              GotFocus="tbBasic_CemuPath_GotFocus"
                              LostFocus="tbBasic_CemuPath_LostFocus"
                              ToolTip="Path to the existing or new Cemu folder.&#x0a;Avoid making this folder inside your Documents folder.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\Cemu'">
-                        
-                        <TextBox.ContextMenu>
-                            <ContextMenu x:Name="tbBasic_CemuPath_ContextMenu" MenuItem.Click="tbBasic_CemuPath_ContextMenu_Click">
-                                <MenuItem Header="Copy" InputGestureText="CTRL + C"/>
-                                <MenuItem Header="Cut" InputGestureText="CTRL + X"/>
-                                <MenuItem Header="Paste" InputGestureText="CTRL + V"/>
-                            </ContextMenu>
-                        </TextBox.ContextMenu>
                     </TextBox>
 
                     <TextBox Style="{DynamicResource TextBox_Paths}" Grid.Column="1" Grid.Row="1"
@@ -211,14 +202,6 @@
                              LostFocus="tbBasic_DumpPath_LostFocus"
                              TextChanged="tbBasic_DumpPath_TextChanged"
                              ToolTip="Path to your game dump.&#x0a;This needs to contain the Update, BaseGame and DLC.&#x0a;&#x0a;DLC is optional.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW'">
-
-                        <TextBox.ContextMenu>
-                            <ContextMenu x:Name="tbBasic_DumpPath_ContextMenu" MenuItem.Click="tbBasic_DumpPath_ContextMenu_Click">
-                                <MenuItem Header="Copy" InputGestureText="CTRL + C"/>
-                                <MenuItem Header="Cut" InputGestureText="CTRL + X"/>
-                                <MenuItem Header="Paste" InputGestureText="CTRL + V"/>
-                            </ContextMenu>
-                        </TextBox.ContextMenu>
                     </TextBox>
 
                     <Button x:Name="btnBasic_CemuPath_Browse" Content="&#xe903;" Grid.Column="3"
@@ -512,7 +495,6 @@
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
                              TextChanged="PathTextBox_Check"
-                             ContextMenu="{x:Null}"
                              ToolTip="Path to your base game dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Breath of the Wild [101c9#00]\content'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="2"
@@ -530,7 +512,6 @@
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
                              TextChanged="PathTextBox_Check"
-                             ContextMenu="{x:Null}"
                              ToolTip="Path to your update dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Update v208\content'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="3"
@@ -548,7 +529,6 @@
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
                              TextChanged="PathTextBox_Check"
-                             ContextMenu="{x:Null}"
                              ToolTip="Path to your DLC dump. [Optional]&#x0a;This will end in 'content\0010'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\DLC\content\0010'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="4"
@@ -562,10 +542,10 @@
                              Background="#1f1f1f"
                              Foreground="#7f7f7f"
                              x:Name="tbAdvPython_Path"
+                             TextChanged="tbBasic_CemuPath_TextChanged"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
-                             ContextMenu="{x:Null}"
                              ToolTip="Path to new/existing Python.&#x0a;This is where python and python scripts will be stored.&#x0a;&#x0a;E.g. 'C:\Python 3.7-64'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="5"
@@ -582,7 +562,6 @@
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
-                             ContextMenu="{x:Null}"
                              ToolTip="Path to mlc01.&#x0a;Folder where Cemu stores games and save files.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\Cemu\mlc01'&#x0a;&#x0a;(Double click text box to browse)"/>
 
                     <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="6"
@@ -599,7 +578,6 @@
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
-                             ContextMenu="{x:Null}"
                              ToolTip="Path to BCML Data.&#x0a;Folder where BCML stores mods and cache.&#x0a;&#x0a;E.g. 'C:\Users\username\AppData\Local\bcml'&#x0a;&#x0a;(Double click text box to browse)"/>
                 </Grid>
 

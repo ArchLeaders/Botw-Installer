@@ -117,37 +117,6 @@ namespace BotW_Installer
             }
         }
 
-        //CONTEXT MENU SETUP
-        private void tbBasic_CemuPath_ContextMenu_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem menuItem = e.OriginalSource as MenuItem;
-
-            switch (menuItem.Header)
-            {
-                case "Copy":
-                    break;
-                case "Cut":
-                    break;
-                case "Paste":
-                    break;
-            }
-        }
-
-        private void tbBasic_DumpPath_ContextMenu_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem menuItem = e.OriginalSource as MenuItem;
-
-            switch (menuItem.Header)
-            {
-                case "Copy":
-                    break;
-                case "Cut":
-                    break;
-                case "Paste":
-                    break;
-            }
-        }
-
         #endregion
 
         #region Tabs/Animation
@@ -234,7 +203,7 @@ namespace BotW_Installer
 
         #endregion
 
-        #region Advanced Section Text Box Watermark Event Handlers
+        #region Text Box Watermark Event Handlers
 
         private void tbGotFocus(object sender, RoutedEventArgs e)
         {
@@ -297,6 +266,24 @@ namespace BotW_Installer
             tbAdvBCML_Data_Path.Foreground = (Brush)new BrushConverter().ConvertFromString("#ffffff");
             tbBasic_CemuPath.Foreground = (Brush)new BrushConverter().ConvertFromString("#ffffff");
             tbAdvPython_Path.Foreground = (Brush)new BrushConverter().ConvertFromString("#ffffff");
+
+            if (File.Exists($"{tbAdvPython_Path.Text}\\python.exe"))
+            {
+                if (File.Exists($"{tbAdvPython_Path.Text}\\Scripts\\bcml.exe"))
+                    cbAdv_InstallBcml.IsChecked = false;
+                else cbAdv_InstallBcml.IsChecked = true;
+                tbAdvPython_Path.Foreground = (Brush)new BrushConverter().ConvertFromString("#0CDBAB");
+                cbAdv_InstallPython.IsChecked = false;
+            }
+            else
+                tbAdvPython_Path.Foreground = (Brush)new BrushConverter().ConvertFromString("#2AAB0B");
+
+            if (File.Exists($"{tbBasic_CemuPath.Text}\\Cemu.exe"))
+                tbBasic_CemuPath.Foreground = (Brush)new BrushConverter().ConvertFromString("#0CDBAB");
+            else if (!tbBasic_CemuPath.Text.Contains(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)))
+                tbBasic_CemuPath.Foreground = (Brush)new BrushConverter().ConvertFromString("#3D0000");
+            else
+                tbBasic_CemuPath.Foreground = (Brush)new BrushConverter().ConvertFromString("#2AAB0B");
         }
 
         #endregion
@@ -333,6 +320,45 @@ namespace BotW_Installer
                 tbBasic_DumpPath.Foreground = (Brush)new BrushConverter().ConvertFromString("#3D0000");
         }
 
+        private void tbBasic_CemuPath_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var tb = (TextBox)sender;
+
+            if (tb.Name == "tbBasic_CemuPath")
+            {
+                if (File.Exists($"{tb.Text}\\Cemu.exe"))
+                    tb.Foreground = (Brush)new BrushConverter().ConvertFromString("#0CDBAB");
+                else if (tb.Text.Contains(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)))
+                    tb.Foreground = (Brush)new BrushConverter().ConvertFromString("#3D0000");
+                else
+                    tb.Foreground = (Brush)new BrushConverter().ConvertFromString("#2AAB0B");
+            }
+            else if (tb.Name == "tbAdvPython_Path")
+            {
+                if (File.Exists($"{tb.Text}\\python.exe"))
+                {
+                    if (File.Exists($"{tb.Text}\\Scripts\\bcml.exe"))
+                        cbAdv_InstallBcml.IsChecked = false;
+                    else cbAdv_InstallBcml.IsChecked = true;
+                    tb.Foreground = (Brush)new BrushConverter().ConvertFromString("#0CDBAB");
+                    cbAdv_InstallPython.IsChecked = false;
+                }
+                else
+                {
+                    tb.Foreground = (Brush)new BrushConverter().ConvertFromString("#2AAB0B");
+
+                    if (cbBasic_UseMods.IsChecked == true)
+                    {
+                        cbAdv_InstallBcml.IsChecked = true;
+                        cbAdv_AddBcmlToPrograms.IsChecked = true;
+                        cbAdv_BcmlDesktopShortcut.IsChecked = true;
+                        cbAdv_BcmlStartShortcut.IsChecked = true;
+                        cbAdv_InstallPython.IsChecked = true;
+                    }
+                }
+            }
+        }
+
         private void PathTextBox_Check(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
@@ -367,64 +393,71 @@ namespace BotW_Installer
 
         private async Task SetGamePaths(bool continueInstall = false)
         {
-            List<string> ukings = new();
-
-            string assumedDlc = null;
-            string assumedBase = null;
-            string assumedUpdate = null;
-
-            grid_BasicPanel.Visibility = Visibility.Hidden;
-            gridLogInfo.Visibility = Visibility.Visible;
-
-            await Task.Run(() => Thread.Sleep(500));
-
-            await Task.Run(() =>
+            try
             {
-                foreach (var drive in DriveInfo.GetDrives().Reverse())
-                    foreach (var file in GetAllSafeFiles(drive.Name, "*.rpx"))
-                    {
-                        if (file.EndsWith("code\\U-King.rpx") && !file.EndsWith("00\\code\\U-King.rpx"))
-                            ukings.Add(file);
-                        if (ukings.Count == 2)
-                            if (Verify() == 0)
-                                break;
-                    }
-            });
+                List<string> ukings = new();
 
+                string assumedDlc = null;
+                string assumedBase = null;
+                string assumedUpdate = null;
 
-            if (assumedBase != null && assumedUpdate != null)
-                tbBasic_DumpPath.Text = Edit.RemoveLast(ukings[0], 3);
+                grid_BasicPanel.Visibility = Visibility.Hidden;
+                gridLogInfo.Visibility = Visibility.Visible;
 
-            if (continueInstall == false)
-            {
-                gridLogInfo.Visibility = Visibility.Hidden;
-                grid_BasicPanel.Visibility = Visibility.Visible;
-            }
+                await Task.Run(() => Thread.Sleep(500));
 
-            if (assumedBase != null && assumedUpdate != null)
-                Msg.Box("Search succesful.");
-            else
-            {
-                Msg.Box("Search unsuccesful.");
-                return;
-            }
-
-            int Verify()
-            {
-                foreach (var uking in ukings)
+                await Task.Run(() =>
                 {
-                    if (Directory.Exists($"{Edit.RemoveLast(uking, 2)}content\\Actor\\Pack"))
-                        assumedUpdate = $"{Edit.RemoveLast(uking, 2)}content";
-                    else if (Directory.Exists($"{Edit.RemoveLast(uking, 2)}content\\Movie"))
-                        assumedBase = $"{Edit.RemoveLast(uking, 2)}content";
+                    foreach (var drive in DriveInfo.GetDrives().Reverse())
+                        foreach (var file in GetAllSafeFiles(drive.Name, "*.rpx"))
+                        {
+                            if (file.EndsWith("code\\U-King.rpx") && !file.EndsWith("00\\code\\U-King.rpx"))
+                                ukings.Add(file);
+                            if (ukings.Count == 2)
+                                if (Verify() == 0)
+                                    break;
+                        }
+                });
 
-                    foreach (string dir in Directory.GetDirectories(Edit.RemoveLast(uking, 3)))
-                        if (Directory.Exists($"{dir}\\content\\0010"))
-                            assumedDlc = dir + "\\content";
+
+                if (assumedBase != null && assumedUpdate != null)
+                    tbBasic_DumpPath.Text = Edit.RemoveLast(ukings[0], 3);
+
+                if (continueInstall == false)
+                {
+                    gridLogInfo.Visibility = Visibility.Hidden;
+                    grid_BasicPanel.Visibility = Visibility.Visible;
                 }
 
-                if (assumedBase != null && assumedUpdate != null) return 1;
-                else return 0;
+                if (assumedBase != null && assumedUpdate != null)
+                    Msg.Box("Search succesful.");
+                else
+                {
+                    Msg.Box("Search unsuccesful.");
+                    return;
+                }
+
+                int Verify()
+                {
+                    foreach (var uking in ukings)
+                    {
+                        if (Directory.Exists($"{Edit.RemoveLast(uking, 2)}content\\Actor\\Pack"))
+                            assumedUpdate = $"{Edit.RemoveLast(uking, 2)}content";
+                        else if (Directory.Exists($"{Edit.RemoveLast(uking, 2)}content\\Movie"))
+                            assumedBase = $"{Edit.RemoveLast(uking, 2)}content";
+
+                        foreach (string dir in Directory.GetDirectories(Edit.RemoveLast(uking, 3)))
+                            if (Directory.Exists($"{dir}\\content\\0010"))
+                                assumedDlc = dir + "\\content";
+                    }
+
+                    if (assumedBase != null && assumedUpdate != null) return 1;
+                    else return 0;
+                }
+            }
+            catch (Exception e)
+            {
+                return;
             }
         }
 
@@ -728,18 +761,18 @@ namespace BotW_Installer
             {
                 Loop(root);
 
-                if (gameFound == false && updateFound == false)
+                if (gameFound == false && updateFound == false && root.Split("\\").Length > 2)
                 {
                     string[] spt = root.Split("\\");
-                    string parentFolder = root.Replace(spt[spt.Length - 1], "");
+                    string parentFolder = Edit.RemoveLast(root);
 
                     Loop(parentFolder);
                 }
 
-                if (gameFound == false && updateFound == false)
+                if (gameFound == false && updateFound == false && root.Split("\\").Length > 3)
                 {
                     string[] spt = root.Split("\\");
-                    string parentFolder = root.Replace(spt[spt.Length - 1], "").Replace($"\\{spt[spt.Length - 2]}", "");
+                    string parentFolder = Edit.RemoveLast(root, 2);
 
                     Loop(parentFolder);
                 }
