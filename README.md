@@ -33,7 +33,7 @@ To allow the installer to run, click `More Info` then `Run Anyway`
 
 ### Requirments
 
-> WiiU Botw game files dumped from your WiiU. (Version 1.5, Update v208)
+> Botw v1.5 (WiiU Version)
 >
 > Empty SD Card with at least 15GB of free space.
 >
