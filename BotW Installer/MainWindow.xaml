@@ -11,13 +11,13 @@
 
     <Border Background="#c0171717" Margin="15"
             CornerRadius="8" x:Name="background">
-        
+
         <Border.Effect>
             <DropShadowEffect BlurRadius="15" ShadowDepth="5"
                               Color="#213033" Opacity="1"
                               x:Name="masterDropShadow"/>
         </Border.Effect>
-        
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25"/>
@@ -33,7 +33,7 @@
 
             <Grid Grid.ColumnSpan="5" WindowChrome.IsHitTestVisibleInChrome="True"
                   MouseDown="Grid_MouseDown" Background="Transparent">
-                
+
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal"
                             WindowChrome.IsHitTestVisibleInChrome="False">
 
@@ -64,7 +64,8 @@
                             Style="{StaticResource btnExit}"
                             Foreground="White"/>
                 </StackPanel>
-            </Grid> <!--WindowChrome/Icon etc...-->
+            </Grid>
+            <!--WindowChrome/Icon etc...-->
 
             <Grid Grid.Row="0" Grid.Column="1" Height="25"
                   VerticalAlignment="Bottom" Margin="80, 0, 0, 5" WindowChrome.IsHitTestVisibleInChrome="True">
@@ -89,7 +90,8 @@
                           BorderThickness="0" Foreground="White"
                           IsChecked="False"
                           Click="tabAdv_Click"/>
-            </Grid> <!--Tabs-->
+            </Grid>
+            <!--Tabs-->
 
             <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                   x:Name="grid_BasicPanel" Visibility="Visible">
@@ -101,7 +103,7 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
+
                 <Grid Grid.Row="1" Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -125,7 +127,7 @@
                               HorizontalContentAlignment="Left"
                               Padding="20, 0, 0, 0" x:Name="cbBasic_CreateShortcuts"
                               Click="cbBasic_Click"
-                              ToolTip="Creates the default set of shortcuts for Cemu, BCML, and Botw.&#x0a;Customize which are installed in the advanced tab."/> 
+                              ToolTip="Creates the default set of shortcuts for Cemu, BCML, and Botw.&#x0a;Customize which are installed in the advanced tab."/>
 
                     <CheckBox Content="Run After Install" Margin="0, 10, 0, 0"
                               Background="#104673" FontSize="30" Grid.Row="2"
@@ -240,7 +242,8 @@
                         from your WiiU console.
                     </TextBlock>
                 </Grid>
-            </Grid> <!--Basic Options-->
+            </Grid>
+            <!--Basic Options-->
 
             <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"
                   Grid.ColumnSpan="2" x:Name="grid_AdvPanel" Visibility="Hidden">
@@ -581,16 +584,61 @@
                              ToolTip="Path to BCML Data.&#x0a;Folder where BCML stores mods and cache.&#x0a;&#x0a;E.g. 'C:\Users\username\AppData\Local\bcml'&#x0a;&#x0a;(Double click text box to browse)"/>
                 </Grid>
 
-            </Grid> <!--Advanced Options-->
+            </Grid>
+            <!--Advanced Options-->
 
             <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
                   Visibility="Hidden" x:Name="gridLogInfo">
-                
+
                 <TextBlock x:Name="tbFilePass"
-                           Text="Searching..." Foreground="White"
+                           Text="Searching . . ." Foreground="White"
                            Margin="30, 20, 0, 30"
-                           FontSize="25" FontFamily="{StaticResource Tajawal}"
-                           TextWrapping="WrapWithOverflow"/>
+                           FontSize="45" FontFamily="{StaticResource Tajawal}"
+                           HorizontalAlignment="Center"/>
+                <Grid x:Name="animParent">
+                    <Ellipse x:Name="ep1" StrokeThickness="4"
+                             Height="200" Width="200" Margin="0, 70, 0, 0">
+                        <Ellipse.Stroke>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#1993D6"/>
+                                <GradientStop Color="Transparent" Offset="0.6"
+                                              x:Name="ep1_grad"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Stroke>
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="90" CenterX="100" CenterY="100"
+                                             x:Name="ep1_angle"/>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse x:Name="ep2" StrokeThickness="4"
+                             Height="170" Width="170" Margin="0, 70, 0, 0">
+                        <Ellipse.Stroke>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#1993D6"/>
+                                <GradientStop Color="Transparent" Offset="0.6"
+                                              x:Name="ep2_grad"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Stroke>
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="60" CenterX="85" CenterY="85"
+                                             x:Name="ep2_angle"/>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse x:Name="ep3" StrokeThickness="4"
+                             Height="140" Width="140" Margin="0, 70, 0, 0">
+                        <Ellipse.Stroke>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#1993D6"/>
+                                <GradientStop Color="Transparent" Offset="0.6"
+                                              x:Name="ep3_grad"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Stroke>
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="30" CenterX="70" CenterY="70"
+                                             x:Name="ep3_angle"/>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                </Grid>
             </Grid>
         </Grid>
     </Border>

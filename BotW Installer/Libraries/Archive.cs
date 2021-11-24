@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace BotW_Installer.Libraries
                     var di = new DirectoryInfo(fi.DirectoryName);
 
                     Directory.CreateDirectory(di.FullName.Replace(inputDir, outputDir));
-                    tasks.Add(Task.Run(() => File.Copy(file, file.Replace(inputDir, outputDir))));
+                    tasks.Add(Task.Run(() => File.Copy(file, file.Replace(inputDir, outputDir), true)));
                 }
             });
 

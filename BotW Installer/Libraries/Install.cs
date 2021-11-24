@@ -10,6 +10,7 @@ namespace BotW_Installer.Libraries
 {
     public class Install
     {
+        public static MainWindow main = new();
         public static async Task BotW(List<string> vs)
         {
             await Task.Run(() => Directory.CreateDirectory(Data.temp));
@@ -275,11 +276,6 @@ namespace BotW_Installer.Libraries
                     
             if (Game.moveMlc && Data.Check(vs[11]))
                 Directory.Delete(Game.Mcl01(vs[13], vs[12]));
-
-            Msg.Box("Process Complete.");
-
-            if (Data.Check(vs[24]))
-                Game.Run($"{vs[12]}\\Cemu.exe", $"{Edit.RemoveLast(vs[0])}\\code\\U-King.rpx");
         }
 
         public static async Task Python(string path, string version = "7", string includeDocs = "0", string quiet = "/quiet")
