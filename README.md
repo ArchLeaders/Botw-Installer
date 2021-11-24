@@ -1,5 +1,7 @@
 # Full installer for The Legend of Zelda: Breath of the Wild.
 
+*Play Botw on PC in minutes!*
+
 > \*Disclaimer
 >
 > This tool does not include, use, or download any part of **The Legend of Zelda: Breath of the Wild**.
@@ -29,7 +31,7 @@ To allow the installer to run, click `More Info` then `Run Anyway`
 
 ## Getting started
 
-This short guide will get you up and running Botw as quick as possible. Contact me via [Discord](https://discord.gg/cbA3AWwfJj) if you encountered any issues.
+This short guide will get you up and running Botw as quickly as possible. Contact me via [Discord](https://discord.gg/cbA3AWwfJj) if you encountered any issues.
 
 ### Requirments
 
@@ -41,14 +43,14 @@ This short guide will get you up and running Botw as quick as possible. Contact 
 > 
 > Windows 10 or 11. (7 & 8 _may_ work but aren't tested)
 
-### Dumping you game files
+### Dumping your game files
 
 1. Insert your empty SD Card and format it as Fat32.
 2. Download [HomebrewSetup](https://github.com/ArchLeaders/Breath-of-the-Wild-Installer-NET-6.0/releases/download/v1.0.0/HomebrewSetup.exe) and point it to your SD Card.
 
-   *Eg. if you have a primary C: drive, and your SD card is drive D:, enter `D` into the console window.*
+   *Eg. if you have a primary C: drive and your SD card is drive D:, enter `D` into the console window.*
    
-3. Open the WebBrowser on your WiiU and go to `wiiuexploit.xyz` click enter hombrew.
+3. Open the web browser on your WiiU and go to `wiiuexploit.xyz` click enter homebrew.
 4. Once it's loaded, launch the Dumpling app.
 5. Inside Dumpling, select either `Dump digital games` or `Dump a game disc` depending on whichever Botw is.
 6. Select BotW using the `A` button and press `Start (+)`. (Selection not applicable if dumping the disc copy.)
@@ -58,10 +60,10 @@ This short guide will get you up and running Botw as quick as possible. Contact 
 
 ### Installing With Botw Installer
 
-1. If you didn't move the files off your SD Card, open the advanced tab and click `Copy Base To mlc01` so it turns green. 
+1. If you didn't move the files off of your SD Card, open the advanced tab and click `Copy Base To mlc01` so it turns green. 
 
-   *Change any other settings until it's just how you want it. (Read the tooltips for explanations and take note that the Base Game, Update, and DLC paths will be autofilled when you click install or fill out `Dump Path` in the basic tab.)*
+   *Change any other settings until it's just how you want it. (Read the tooltips for explanations and take note that the Base Game, Update, and DLC paths will be auto-filled when you click install or fill out `Dump Path` in the basic tab.)*
 
 2. Click install. If you **did** move your game files from the SD Card fill out `Dump Path` first.
-3. Let the tool do it's job and wait for the prompt saying it's complete. (If any errors occur please report them to me.)
+3. Let the tool do its job and wait for the prompt saying it's complete. (If any errors occur please report them to me.)
 4. That's it. Botw is now installed.
