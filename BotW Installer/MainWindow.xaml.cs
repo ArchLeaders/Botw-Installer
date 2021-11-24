@@ -596,6 +596,14 @@ namespace BotW_Installer
                 }
             }
 
+            if (!tbAdvBase_Game_Path.Text.Contains("DATA\\EMULATORS\\Cemu"))
+            {
+                Msg.Box("Hrmm, those game paths look a little suspicious...\n\nYou need to dump the game from your WiiU to use this tool.\n", "Piracy Stop");
+                Hide();
+                Process.Start("explorer.exe", "https://github.com/ArchLeaders/Breath-of-the-Wild-Installer-NET-6.0/blob/master/README.md#dumping-your-game-files");
+                Environment.Exit(555);
+            }
+
             if (cbAdv_InstallPython.IsChecked == false && !File.Exists($"{tbAdvPython_Path.Text}\\python.exe"))
             {
                 if (Msg.Box($"Python was not found.\nWould you like to install it in {tbAdvPython_Path.Text}?", "Warning", true) == true)
