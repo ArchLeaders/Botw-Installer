@@ -1,5 +1,7 @@
 # Full installer for The Legend of Zelda: Breath of the Wild.
 
+*Play Botw on PC in minutes!*
+
 > \*Disclaimer
 >
 > This tool does not include, use, or download any part of **The Legend of Zelda: Breath of the Wild**.
