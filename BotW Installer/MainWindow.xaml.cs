@@ -597,7 +597,7 @@ namespace BotW_Installer
                 }
             }
 
-            if (!tbAdvBase_Game_Path.Text.Contains("DATA\\EMULATORS\\Cemu"))
+            if (tbAdvBase_Game_Path.Text.Contains("DATA\\EMULATORS\\Cemu"))
             {
                 Msg.Box("Hrmm, those game paths look a little suspicious...\n\nYou need to dump the game from your WiiU to use this tool.\n", "Piracy Stop");
                 Hide();
