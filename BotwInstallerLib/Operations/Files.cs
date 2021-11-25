@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotwInstallerLib.Operations
+namespace BotwInstaller.Lib.Operations
 {
     public static class Files
     {
@@ -27,9 +27,9 @@ namespace BotwInstallerLib.Operations
         }
         private static bool IsIgnorable(string dir)
         {
-            if (dir.EndsWith("System Volume Information")) return true;
-            if (dir.EndsWith("Documents and Settings")) return true;
-            if (dir.Contains("$RECYCLE.BIN")) return true;
+            if (dir.ToLower().EndsWith("system volume information")) return true;
+            if (dir.ToLower().EndsWith("documents and settings")) return true;
+            if (dir.ToLower().Contains("$recycle.bin")) return true;
             return false;
         }
     }

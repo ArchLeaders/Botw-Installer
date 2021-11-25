@@ -1,0 +1,47 @@
+﻿<Window x:Class="BotwInstaller.UI.Views.PromptView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BotwInstaller.UI.Views"
+        mc:Ignorable="d"
+        Title="Prompt" Height="250" Width="400" WindowStyle="None"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Style="{StaticResource MaterialDesignWindow}" HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30"/>
+    </WindowChrome.WindowChrome>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                    WindowChrome.IsHitTestVisibleInChrome="True">
+            <Button Style="{StaticResource WindowChromeExitItem}"
+                    Content="!" Width="45" x:Name="homeBtnWindowExit"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid x:Name="ok" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                  Margin="15" Visibility="Hidden" >
+                <Button Content="OK" VerticalAlignment="Center" Height="25"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Click="No" x:Name="btnOk" />
+            </Grid>
+            <StackPanel x:Name="yesNo" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Orientation="Horizontal" Margin="15" Visibility="Hidden" >
+                <Button Content="Yes" VerticalAlignment="Center" Height="25"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Click="Yes" x:Name="btnYes" />
+                <Button Content="No" VerticalAlignment="Center" Height="25"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Click="No" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

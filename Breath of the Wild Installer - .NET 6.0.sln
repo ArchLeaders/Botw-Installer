@@ -3,13 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstallerUI", "BotW Installer\BotwInstallerUI.csproj", "{8E3ABF82-C8E8-4214-8947-B557A11ABEFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstallerUI", "Other Projects\OldBotwInstaller\BotwInstallerUI.csproj", "{8E3ABF82-C8E8-4214-8947-B557A11ABEFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumplingSetup", "DumplingSetup\DumplingSetup.csproj", "{A9ECFD08-BDC7-4483-A79A-7A94E28624D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DumplingSetup", "Other Projects\DumplingSetup\DumplingSetup.csproj", "{A9ECFD08-BDC7-4483-A79A-7A94E28624D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotwInstallerLite", "BotwInstallerLite\BotwInstallerLite.csproj", "{79C2EA83-99A5-479B-83C1-C85C962CA307}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Console", "BotwInstallerLite\BotwInstaller.Console.csproj", "{79C2EA83-99A5-479B-83C1-C85C962CA307}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotwInstallerLib", "BotwInstallerLib\BotwInstallerLib.csproj", "{00C3BFEB-5FE1-47AD-AB2A-1E48B0CB3C2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Lib", "BotwInstallerLib\BotwInstaller.Lib.csproj", "{00C3BFEB-5FE1-47AD-AB2A-1E48B0CB3C2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other Projects", "Other Projects", "{5AE7354A-4EB0-4EE7-A333-63C38F5AB9C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotwInstaller.UI", "BotwInstaller.UI\BotwInstaller.UI.csproj", "{502D971E-E314-42C3-BEA8-69DA36A43A61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotwInstaller.Wiz", "BotwInstaller.Wiz\BotwInstaller.Wiz.csproj", "{657B8210-BFF7-436E-94F5-1AB2AE8EB14A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotwInstaller.Res", "BotwInstaller.Res\BotwInstaller.Res.csproj", "{3F956FBF-E1C0-4BCE-88B9-6CA85C9E2C08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +41,25 @@ Global
 		{00C3BFEB-5FE1-47AD-AB2A-1E48B0CB3C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00C3BFEB-5FE1-47AD-AB2A-1E48B0CB3C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00C3BFEB-5FE1-47AD-AB2A-1E48B0CB3C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{502D971E-E314-42C3-BEA8-69DA36A43A61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{502D971E-E314-42C3-BEA8-69DA36A43A61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{502D971E-E314-42C3-BEA8-69DA36A43A61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{502D971E-E314-42C3-BEA8-69DA36A43A61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{657B8210-BFF7-436E-94F5-1AB2AE8EB14A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{657B8210-BFF7-436E-94F5-1AB2AE8EB14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{657B8210-BFF7-436E-94F5-1AB2AE8EB14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{657B8210-BFF7-436E-94F5-1AB2AE8EB14A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F956FBF-E1C0-4BCE-88B9-6CA85C9E2C08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F956FBF-E1C0-4BCE-88B9-6CA85C9E2C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F956FBF-E1C0-4BCE-88B9-6CA85C9E2C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F956FBF-E1C0-4BCE-88B9-6CA85C9E2C08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8E3ABF82-C8E8-4214-8947-B557A11ABEFC} = {5AE7354A-4EB0-4EE7-A333-63C38F5AB9C8}
+		{A9ECFD08-BDC7-4483-A79A-7A94E28624D5} = {5AE7354A-4EB0-4EE7-A333-63C38F5AB9C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE98C54E-D37E-40ED-A41E-580088F71DF7}

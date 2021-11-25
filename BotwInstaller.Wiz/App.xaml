@@ -1,0 +1,26 @@
+﻿<Application x:Class="BotwInstaller.Wiz.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:BotwInstaller.Wiz"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:s="https://github.com/canton7/Stylet">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <s:ApplicationLoader x:Key="Bootstrapper">
+                        <s:ApplicationLoader.Bootstrapper>
+                            <local:AppBootstrapper/>
+                        </s:ApplicationLoader.Bootstrapper>
+                    </s:ApplicationLoader>
+                </ResourceDictionary>
+                
+                <md:BundledTheme BaseTheme="Dark" PrimaryColor="BlueGrey" SecondaryColor="DeepOrange"/>
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+                <ResourceDictionary Source="/ViewThemes/ControlStyles/ChromeButtonsStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="Windows">pack://application:,,,/ViewThemes/Fonts/#Glyph</FontFamily>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

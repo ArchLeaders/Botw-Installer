@@ -1,23 +1,44 @@
-﻿using BotwInstallerLib;
-using BotwInstallerLib.Operations;
+﻿using BotwInstaller.Lib;
+using BotwInstaller.Lib.Operations.Configure;
+using BotwInstaller.Lib.Shell;
+using System.Text.Json;
+using static BotwInstaller.Lib.Prompts.ConsoleMsg;
 
-foreach (var drive in DriveInfo.GetDrives().Reverse())
-    foreach (var item in await Task.Run(() => Files.GetSafeFiles(drive.Name, "U-King.rpx")))
+namespace BotwInstaller.Shell
+{
+    public static class Program
     {
-        BotwInstallerLib.Exceptions.ConsoleMessage.PrintLine(item.EditPath(3), ConsoleColor.DarkCyan);
-
-        foreach (var dir in Directory.EnumerateDirectories(item.EditPath(3)))
+        public static async Task Main()
         {
-            if (Directory.Exists($"{dir}\\content\\Actor\\Pack"))
-                Data.vs.update = $"{dir}\\content";
-            if (Directory.Exists($"{dir}\\content\\Movie"))
-                Data.vs.base_game = $"{dir}\\content";
-            if (Directory.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC"))
-                Data.vs.dlc = $"{dir}\\content";
+            string[]? args = Environment.GetCommandLineArgs();
+
+            // CLI starts at 1, 0 is filepath\\executableName.dll
+            // args = "filepath\\executableName.dll" "config"
+            // -bcml "bcmlData" -vc -py8 -dsk -srt
+            // -cemu "path" -vc -dsk -srt
+            // -g "D:\Botw\Files"
+
+            if (args.Length >= 2)
+            {
+                // Configure commands?
+                if (!File.Exists(args[1]))
+                {
+                    PrintLine("Config Not Found.", ConsoleColor.DarkRed);
+                    return;
+                }
+            }
+            else
+            {
+                if (!File.Exists("./config.json"))
+                {
+                    PrintLine("Config Not Found.", ConsoleColor.DarkRed);
+                    return;
+                }
+            }
+
+            Config? config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Initialize.temp}\\config.json"));
+
+            await Initialize.Install(config);
         }
-
-        if (Data.vs.base_game != null && Data.vs.update != null)
-            break;
     }
-
-Console.WriteLine("Complete");
+}

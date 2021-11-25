@@ -1,8 +1,8 @@
 ﻿#pragma warning disable CS8603
 
-using BotwInstallerLib.Exceptions;
+using BotwInstaller.Lib.Prompts;
 
-namespace BotwInstallerLib.Operations
+namespace BotwInstaller.Lib.Operations
 {
     public static class FolderPaths
     {
@@ -26,7 +26,7 @@ namespace BotwInstallerLib.Operations
             }
             catch (Exception e)
             {
-                ConsoleMessage.Error("BotwInstallerLite.Lib.Operations.FolderPaths.EditPath", new string[] { $"path;{path}", $"removeCount;{removeCount}" }, e.Message, rt);
+                ConsoleMsg.Error("BotwInstallerLite.Lib.Operations.FolderPaths.EditPath", new string[] { $"path;{path}", $"removeCount;{removeCount}" }, e.Message, rt);
                 return null;
             }
         }

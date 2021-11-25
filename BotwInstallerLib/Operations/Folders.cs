@@ -1,8 +1,8 @@
 ﻿#pragma warning disable CS8604
 
-using BotwInstallerLib.Exceptions;
+using BotwInstaller.Lib.Prompts;
 
-namespace BotwInstallerLib.Operations
+namespace BotwInstaller.Lib.Operations
 {
     internal class Folders
     {
@@ -22,7 +22,7 @@ namespace BotwInstallerLib.Operations
                         await Task.Run(() => Directory.CreateDirectory(directoryInfo.FullName.Replace(inputDir, outputDir)));
                         tasks.Add(Task.Run(() => File.Copy(file, file.Replace(inputDir, outputDir), overwrite)));
 
-                        ConsoleMessage.Print($"{id} :: Copied {file} to {file.Replace(inputDir, outputDir)}", ConsoleColor.DarkCyan, false);
+                        ConsoleMsg.Print($"{id} :: Copied {file} to {file.Replace(inputDir, outputDir)}", ConsoleColor.DarkCyan, false, false);
                     }
                 });
 
@@ -30,7 +30,7 @@ namespace BotwInstallerLib.Operations
             }
             catch (Exception e)
             {
-                ConsoleMessage.Error("BotwInstallerLite.Lib.Operations.CopyAsync", new string[] { $"inputDir;{inputDir}", $"outputDir;{outputDir}", $"id;{id}", $"overwrite;{overwrite.ToString()}" }, e.Message);
+                ConsoleMsg.Error("BotwInstallerLite.Lib.Operations.CopyAsync", new string[] { $"inputDir;{inputDir}", $"outputDir;{outputDir}", $"id;{id}", $"overwrite;{overwrite.ToString()}" }, e.Message);
             }
         }
     }
