@@ -1,0 +1,73 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf">
+    
+    <Style x:Key="MaterialDesignCharacterCounterTextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Opacity" Value="0.56"/>
+        <Setter Property="Margin" Value="0,0,16,0"/>
+        <Setter Property="Visibility" Value="{Binding (wpf:TextFieldAssist.CharacterCounterVisibility), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"/>
+        <Setter Property="Text">
+            <Setter.Value>
+                <MultiBinding>
+                    <Binding Path="Text.Length" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TextBoxBase}}"/>
+                    <Binding Path="MaxLength" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TextBoxBase}}"/>
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="MaterialDesignHelperTextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="{Binding (wpf:HintAssist.HelperTextFontSize), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+        <Setter Property="Opacity" Value="{Binding (wpf:HintAssist.HintOpacity), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+        <Setter Property="Text" Value="{Binding (wpf:HintAssist.HelperText), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+    </Style>
+    <Style x:Key="BasicTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="{Binding (TextElement.Foreground), RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignTextBoxBorder}"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Value="{x:Static wpf:Constants.DefaultTextBoxViewMargin}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource PrimaryHueMidBrush}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="Padding" Value="{x:Static wpf:Constants.TextBoxDefaultPadding}"/>
+        <Setter Value="{DynamicResource MaterialDesignValidationErrorTemplate}"/>
+        <Setter Value="{DynamicResource PrimaryHueMidBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}"/>
+        <Setter Property="ContextMenu" Value="{StaticResource MaterialDesignDefaultContextMenu}"/>
+        <Setter Property="Cursor" Value="IBeam"/>
+        <Setter Value="{Binding (SpellCheck.IsEnabled), RelativeSource={RelativeSource Self}}"/>
+        <Setter Value="{StaticResource MaterialDesignCharacterCounterTextBlock}"/>
+        <Setter Value="{StaticResource MaterialDesignHelperTextBlock}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Grid>
+                        
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                    <Condition Property="IsSelectionActive" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

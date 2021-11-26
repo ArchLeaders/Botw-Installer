@@ -23,8 +23,8 @@ namespace BotwInstaller.UI.Views
     /// </summary>
     public partial class ShellView : Window
     {
-        public static int minHeight = 400;
-        public static int minWidth = 600;
+        public static int minHeight = 450;
+        public static int minWidth = 700;
 
         #region Fix Window Sixe in fullscreen.
 
@@ -149,8 +149,6 @@ namespace BotwInstaller.UI.Views
         public ShellView()
         {
             InitializeComponent();
-
-            // drives.ItemsSource = DriveInfo.GetDrives();
 
             if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwInstaller.UI\\settings.ini"))
                 if (File.ReadAllLines($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwInstaller.UI\\settings.ini")[0].ToLower() == "light")

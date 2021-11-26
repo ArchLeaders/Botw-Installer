@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+      <TargetFramework>net6.0-windows</TargetFramework>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <PlatformTarget>x64</PlatformTarget>
+      <DebugType>none</DebugType>
+	  <PublishTrimmed>true</PublishTrimmed>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Res\bcml.ico.res" />
+    <None Remove="Res\botw.ico.res" />
+    <None Remove="Res\lnk.res" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Res\bcml.ico.res" />
+    <EmbeddedResource Include="Res\botw.ico.res" />
+    <EmbeddedResource Include="Res\lnk.res" />
+  </ItemGroup>
+
+</Project>

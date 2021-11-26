@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstallerUI", "Other Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DumplingSetup", "Other Projects\DumplingSetup\DumplingSetup.csproj", "{A9ECFD08-BDC7-4483-A79A-7A94E28624D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Console", "BotwInstallerLite\BotwInstaller.Console.csproj", "{79C2EA83-99A5-479B-83C1-C85C962CA307}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Console", "BotwInstaller.Console\BotwInstaller.Console.csproj", "{79C2EA83-99A5-479B-83C1-C85C962CA307}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Lib", "BotwInstallerLib\BotwInstaller.Lib.csproj", "{00C3BFEB-5FE1-47AD-AB2A-1E48B0CB3C2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Lib", "BotwInstaller.Lib\BotwInstaller.Lib.csproj", "{00C3BFEB-5FE1-47AD-AB2A-1E48B0CB3C2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other Projects", "Other Projects", "{5AE7354A-4EB0-4EE7-A333-63C38F5AB9C8}"
 EndProject

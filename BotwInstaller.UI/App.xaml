@@ -20,6 +20,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
                 <ResourceDictionary Source="/ViewThemes/ControlStyles/ChromeButtonsStyles.xaml"/>
                 <ResourceDictionary Source="/ViewThemes/ControlStyles/TabButtonStyles.xaml"/>
+                <ResourceDictionary Source="/ViewThemes/ControlStyles/CheckBoxes.xaml"/>
+                <ResourceDictionary Source="/ViewThemes/ControlStyles/BasicTextBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="Windows">pack://application:,,,/ViewThemes/Fonts/#Glyph</FontFamily>
         </ResourceDictionary>

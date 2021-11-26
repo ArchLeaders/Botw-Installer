@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:BotwInstaller.UI.Views"
         xmlns:s="https://github.com/canton7/Stylet"
         mc:Ignorable="d"
-        Title="Botw Installer" Height="450" Width="650"
+        Title="Botw Installer" Height="450" Width="750"
         x:Name="shellView" Style="{StaticResource MaterialDesignWindow}"
-        WindowStyle="None" FontFamily="Calibri" FontSize="20" TextOptions.TextFormattingMode="Display">
+        WindowStyle="None" FontFamily="Calibri" FontSize="20"
+        TextOptions.TextFormattingMode="Display" RenderOptions.BitmapScalingMode="HighQuality">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="30"/>
@@ -98,7 +99,7 @@
                     FontSize="25" FontWeight="Bold" FontFamily="Calibri" Height="35"
                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
                     Click="{s:Action Help}">
-                <StackPanel Orientation="Horizontal" ToolTip="Help Installing Page">
+                <StackPanel Orientation="Horizontal" ToolTip="GitHub README-">
                     <Image Source="../ViewThemes/Icons/help.png" Margin="6, 6, 4, 4"/>
                 </StackPanel>
             </Button>
@@ -111,19 +112,66 @@
                     <Image Source="../ViewThemes/Icons/sd.png" Margin="6, 6, 4, 4"/>
                 </StackPanel>
             </Button>
-
-            <ComboBox x:Name="drives" HorizontalAlignment="Left"
-                      Grid.Row="1" Height="35" VerticalContentAlignment="Center"
-                      Width="60" Margin="120, 0, 0, 0" FontSize="18" Padding="5, 0, 0, 0"
-                      FontFamily="Calibri" TextOptions.TextFormattingMode="Display"
-                      FontWeight="Bold">
-                <ComboBoxItem Content="E:\" IsSelected="True"/>
-            </ComboBox>
         </Grid>
 
         <Grid Grid.Row="3" x:Name="gridBasicTab" Visibility="Visible" VerticalAlignment="Top" Margin="25">
-            <CheckBox Content="Use Mods" Style="{StaticResource MaterialDesignAccentCheckBox}"
-                      VerticalContentAlignment="Bottom" Padding="5, 0, 0, -2"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <CheckBox Content="Use Mods" Style="{StaticResource BasicSelection}"
+                          Margin="0, 5" FontSize="25"/>
+                <CheckBox Content="Basic Shortcuts" Style="{StaticResource BasicSelection}"
+                          Margin="0, 5" FontSize="25"/>
+                <CheckBox Content="DS4Windows" Style="{StaticResource BasicSelection}"
+                          Margin="0, 5" FontSize="25"/>
+                <CheckBox Content="BetterJoy" Style="{StaticResource BasicSelection}"
+                          Margin="0, 5" FontSize="25"/>
+                <CheckBox Content="Run After Install" Style="{StaticResource BasicSelection}"
+                          Margin="0, 5" FontSize="25"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="45, 0, 0, 0">
+                <Grid>
+                    <TextBlock Text="Path to Cemu:" Width="150" HorizontalAlignment="Left"
+                               VerticalAlignment="Center" FontWeight="Bold"
+                               FontFamily="Noto Sans Mono"/>
+                    <TextBox x:Name="tbbasic_CemuPath" Margin="150, 8, 60, 8" Padding="8"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <Button HorizontalAlignment="Right"
+                            Content="· · ·" Height="41"/>
+
+                </Grid>
+                <Grid Margin="0, 5, 0, 0">
+                    <TextBlock Text="Path to Botw:" Width="150" HorizontalAlignment="Left"
+                               VerticalAlignment="Center" FontWeight="Bold"
+                               FontFamily="Noto Sans Mono"/>
+                    <TextBox x:Name="tbbasic_BotwPath" Margin="150, 8, 60, 8" Padding="8"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <Button HorizontalAlignment="Right"
+                            Content="· · ·" Height="41"/>
+
+                </Grid>
+                <Grid Margin="0, 5, 0, 0">
+                    <TextBlock Text="Controller Profiles:" HorizontalAlignment="Left"
+                               VerticalAlignment="Top" FontWeight="Bold"
+                               FontFamily="Noto Sans Mono"/>
+                    <StackPanel Margin="0, 33, 0, 0" Orientation="Horizontal">
+                        <CheckBox Height="91" Width="91" Margin="0, 0, 10, 0" Style="{StaticResource BasicSelection}">
+                            <Image Source="../ViewThemes/Icons/ctrl_jp.png"
+                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </CheckBox>
+                        <CheckBox Height="91" Width="91" Margin="0, 0, 10, 0" Style="{StaticResource BasicSelection}">
+                            <Image Source="../ViewThemes/Icons/ctrl_we.png"
+                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </CheckBox>
+                        <CheckBox Height="91" Width="91" Margin="0, 0, 10, 0" Style="{StaticResource BasicSelection}">
+                            <Image Source="../ViewThemes/Icons/ctrl_pe.png"
+                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </CheckBox>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="3" x:Name="gridAdvTab" Background="Blue"

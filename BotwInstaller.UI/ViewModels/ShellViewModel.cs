@@ -47,19 +47,42 @@ namespace BotwInstaller.UI.ViewModels
 
         public async void Dump()
         {
-            SaveFileDialog save = new();
-            save.FileName = "wiiu";
+            var drives = DriveInfo.GetDrives();
+            string? dv = null;
+            foreach (var drive in drives.Reverse())
+            {
+                if (drive.DriveType == DriveType.Removable)
+                    if (Directory.EnumerateFiles(drive.Name).Count() == 0)
+                    {
 
-            if (save.ShowDialog() == true)
-                await Dumpling.Start(save.FileName.EditPath());
+                        dv = drive.Name;
+                    }
+            }
 
+            if (dv != null)
+            {
+                await Dumpling.Start(dv);
+                // Message - All Good
+            }
+            else
+            {
+                SaveFileDialog save = new();
 
+                save.Filter = "wiiu|wiiu";
+                save.FileName = "wiiu";
+
+                if (save.ShowDialog() == true)
+                {
+                    await Dumpling.Start(save.FileName.EditPath());
+                    // Message - All Good
+                }
+                else { } // Error Failed
+            }
         }
 
         public void Help()
         {
-            HelpView help = new();
-            help.Show();
+            _ = Proc.Start("explorer.exe", "https://github.com/ArchLeaders/Breath-of-the-Wild-Installer-NET-6.0#dumping-your-game-files");
         }
         public static async Task Install()
         {

@@ -12,6 +12,12 @@
     <None Remove="ViewThemes\Fonts\Glyph.ttf" />
     <None Remove="ViewThemes\Icons\app.png" />
     <None Remove="ViewThemes\Icons\back.png" />
+    <None Remove="ViewThemes\Icons\ControllerProfile_Jap.svg" />
+    <None Remove="ViewThemes\Icons\ControllerProfile_PE.svg" />
+    <None Remove="ViewThemes\Icons\ControllerProfile_West.svg" />
+    <None Remove="ViewThemes\Icons\ctrl_jp.png" />
+    <None Remove="ViewThemes\Icons\ctrl_pe.png" />
+    <None Remove="ViewThemes\Icons\ctrl_we.png" />
     <None Remove="ViewThemes\Icons\discord.png" />
     <None Remove="ViewThemes\Icons\help.png" />
     <None Remove="ViewThemes\Icons\install.png" />
@@ -27,6 +33,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ViewThemes\Icons\back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ViewThemes\Icons\ctrl_jp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ViewThemes\Icons\ctrl_pe.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ViewThemes\Icons\ctrl_we.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ViewThemes\Icons\discord.png">
@@ -49,11 +64,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\BotwInstaller.Lib\BotwInstaller.Lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BotwInstallerLib\BotwInstaller.Lib.csproj" />
+    <Folder Include="ViewThemes\Controls\" />
   </ItemGroup>
 
 </Project>
