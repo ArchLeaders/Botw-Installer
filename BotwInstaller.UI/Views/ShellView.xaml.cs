@@ -1,4 +1,5 @@
-﻿using BotwInstaller.Lib.GameData;
+﻿using BotwInstaller.Lib;
+using BotwInstaller.Lib.GameData;
 using BotwInstaller.Lib.Operations;
 using BotwInstaller.Lib.Prompts;
 using BotwInstaller.UI.ViewThemes.ControlStyles;
@@ -23,6 +24,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace BotwInstaller.UI.Views
 {
@@ -33,9 +35,8 @@ namespace BotwInstaller.UI.Views
     {
         private bool isVerified = false;
         private bool isDebug = false;
-        private string tmpBaseGame = "";
-        private string tmpUpdate = "";
-        private string tmpDlc = "";
+
+        Config c = new Config();
 
         public static int minHeight = 450;
         public static int minWidth = 750;
@@ -166,117 +167,14 @@ namespace BotwInstaller.UI.Views
 
             InitializeComponent();
 
-            Setup();
-
             if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini"))
                 if (File.ReadAllLines($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini")[0].ToLower() == "light") AppTheme.Change(true);
                 else AppTheme.Change();
             else AppTheme.Change(false);
 
-            SourceInitialized += (s, e) =>
-            {
-                IntPtr handle = new WindowInteropHelper(this).Handle;
-                HwndSource.FromHwnd(handle).AddHook(new HwndSourceHook(WindowProc));
-            };
+            SetupUserInterface();
 
-            homeBtnWindowExit.Click += (s, e) => { Hide(); Environment.Exit(1); };
-            homeBtnWindowMin.Click += (s, e) => WindowState = WindowState.Minimized;
-
-            btnBasicTab.Click += (s, e) =>
-            {
-                ocDebug.Visibility = Visibility.Hidden;
-                ocSearch.Visibility = Visibility.Hidden;
-                gridAdvTab.Visibility = Visibility.Hidden;
-                gridLnkTab.Visibility = Visibility.Hidden;
-                gridBasicTab.Visibility = Visibility.Visible;
-            };
-
-            btnAdvTab.Click += (s, e) =>
-            {
-                gridLnkTab.Visibility = Visibility.Hidden;
-                gridBasicTab.Visibility = Visibility.Hidden;
-                ocDebug.Visibility = Visibility.Visible;
-                ocSearch.Visibility = Visibility.Visible;
-                gridAdvTab.Visibility = Visibility.Visible;
-            };
-
-            btnLnkTab.Click += (s, e) =>
-            {
-                ocDebug.Visibility = Visibility.Hidden;
-                ocSearch.Visibility = Visibility.Hidden;
-                gridAdvTab.Visibility = Visibility.Hidden;
-                gridBasicTab.Visibility = Visibility.Hidden;
-                gridLnkTab.Visibility = Visibility.Visible;
-            };
-
-            ocDebug.Click += (s, e) => isDebug = true;
-
-            #endregion
-
-            #region FolderBrowse Click Events
-
-            ocBrowseBotw.Click += (s, e) => Browse(tbBasic_BotwPath, "Browse For Botw /content");
-
-            ocBrowseCemu.Click += (s, e) => Browse(tbBasic_CemuPath, "Browse For Cemu Folder");
-
-            tbAdv_Mlc01Path.MouseDoubleClick += (s, e) =>
-            {
-                if (Keyboard.IsKeyDown(Key.LeftCtrl))
-                    Browse((TextBox)s, "Browse For mlc01 Folder");
-            };
-
-            tbAdv_DS4Path.MouseDown += (s, e) =>
-            {
-                if (Keyboard.IsKeyDown(Key.LeftCtrl))
-                    Browse((TextBox)s, "Browse For DS4Windows Install Folder");
-            };
-
-            tbAdv_BetterJoyPath.MouseDown += (s, e) =>
-            {
-                if (Keyboard.IsKeyDown(Key.LeftCtrl))
-                    Browse((TextBox)s, "Browse For BetterJoy Install Folder");
-            };
-
-            tbAdv_BcmlData.MouseDown += (s, e) =>
-            {
-                if (Keyboard.IsKeyDown(Key.LeftCtrl))
-                    Browse((TextBox)s, "Browse For BCML Data Folder");
-            };
-
-            tbAdv_PythonPath.MouseDown += (s, e) =>
-            {
-                if (Keyboard.IsKeyDown(Key.LeftCtrl))
-                    Browse((TextBox)s, "Browse For Python Install Folder");
-            };
-
-            #endregion
-
-            #region Control Sets, Checks, & Events
-
-            // Mods Configuration
-            cbConfigBasic_Mods.Click += (s, e) => ControlSet(cbConfigBasic_Mods.IsChecked, new List<CheckBox> { cbAdv_InstallBcml, cbAdv_InstallPython, _cbAdv_WebviewRuntime, _cbAdv_VisualRuntime });
-
-            // Shortcut Configuration
-            cbConfigBasic_Shortcuts.Click += (s, e) => ControlSet(cbConfigBasic_Shortcuts.IsChecked, new List<CheckBox> { cbLnkDsk_Botw, cbLnkDsk_Cemu, cbLnkSrt_Bcml, cbLnkSrt_BetterJoy,
-                cbLnkSrt_Botw, cbLnkSrt_Cemu, cbLnkSrt_DS4Windows});
-
-            // DS4Windows Configuration
-            cbAdv_InstallDs4.Click += (s, e) => ControlSet(cbAdv_InstallDs4.IsChecked, new List<CheckBox> { _cbAdv_NetRuntime });
-
-            // VCRuntime Configuration
-            cbAdv_InstallCemu.Click += (s, e) =>
-            {
-                if (cbAdv_InstallBcml.IsChecked == false)
-                    ControlSet(cbAdv_InstallCemu.IsChecked, new List<CheckBox> { _cbAdv_VisualRuntime });
-            };
-
-            cbAdv_InstallBcml.Click += (s, e) =>
-            {
-                if (cbAdv_InstallCemu.IsChecked == false)
-                    ControlSet(cbAdv_InstallBcml.IsChecked, new List<CheckBox> { _cbAdv_VisualRuntime, _cbAdv_WebviewRuntime });
-            };
-
-            // Cemu & Botw Path Checks
+            RegisterEvents();
 
             #endregion
 
@@ -309,15 +207,131 @@ namespace BotwInstaller.UI.Views
 
         #region Setup & Control Events
 
-        private async void btnSearch_Click(object? sender , EventArgs e)
+        /// <summary>
+        /// Registers UI click events and handling
+        /// </summary>
+        private void RegisterEvents()
         {
-            bool show = false;
+            // Load window fix
+            SourceInitialized += async (s, e) =>
+            {
+                IntPtr handle = new WindowInteropHelper(this).Handle;
+                HwndSource.FromHwnd(handle).AddHook(new HwndSourceHook(WindowProc));
+            };
+
+            // Assign exit & minimize clicks
+            homeBtnWindowExit.Click += (s, e) => { Hide(); Environment.Exit(1); };
+            homeBtnWindowMin.Click += (s, e) => WindowState = WindowState.Minimized;
+
+            // Assign tab functions
+            btnBasicTab.Click += (s, e) =>
+            {
+                ocDebug.Visibility = Visibility.Hidden;
+                ocSearch.Visibility = Visibility.Hidden;
+                gridAdvTab.Visibility = Visibility.Hidden;
+                gridLnkTab.Visibility = Visibility.Hidden;
+                gridBasicTab.Visibility = Visibility.Visible;
+            };
+
+            btnAdvTab.Click += (s, e) =>
+            {
+                gridLnkTab.Visibility = Visibility.Hidden;
+                gridBasicTab.Visibility = Visibility.Hidden;
+                ocDebug.Visibility = Visibility.Visible;
+                ocSearch.Visibility = Visibility.Visible;
+                gridAdvTab.Visibility = Visibility.Visible;
+            };
+
+            btnLnkTab.Click += (s, e) =>
+            {
+                ocDebug.Visibility = Visibility.Hidden;
+                ocSearch.Visibility = Visibility.Hidden;
+                gridAdvTab.Visibility = Visibility.Hidden;
+                gridBasicTab.Visibility = Visibility.Hidden;
+                gridLnkTab.Visibility = Visibility.Visible;
+            };
+
+            // Assign debug click event
+            ocDebug.Click += (s, e) => isDebug = true;
+
+            // Assign browse buttons | ShellView.Basic
+            ocBrowseBotw.Click += (s, e) => BrowseEvent(tbBasic_BotwPath, "Browse For Botw /content");
+            ocBrowseCemu.Click += (s, e) => BrowseEvent(tbBasic_CemuPath, "Browse For Cemu Folder");
+
+            // Assign textBox double click events
+            tbAdv_Mlc01Path.MouseDoubleClick += (s, e) =>
+            {
+                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    BrowseEvent((TextBox)s, "Browse For mlc01 Folder");
+            };
+
+            tbAdv_DS4Path.MouseDown += (s, e) =>
+            {
+                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    BrowseEvent((TextBox)s, "Browse For DS4Windows Install Folder");
+            };
+
+            tbAdv_BetterJoyPath.MouseDown += (s, e) =>
+            {
+                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    BrowseEvent((TextBox)s, "Browse For BetterJoy Install Folder");
+            };
+
+            tbAdv_BcmlData.MouseDown += (s, e) =>
+            {
+                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    BrowseEvent((TextBox)s, "Browse For BCML Data Folder");
+            };
+
+            tbAdv_PythonPath.MouseDown += (s, e) =>
+            {
+                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    BrowseEvent((TextBox)s, "Browse For Python Install Folder");
+            };
+
+            /// Configurations
+
+            // Mods Configuration
+            cbConfigBasic_Mods.Click += (s, e) =>
+                SyncCheckBox(cbConfigBasic_Mods.IsChecked, new List<CheckBox> { cbAdv_InstallBcml, cbAdv_InstallPython, _cbAdv_WebviewRuntime, _cbAdv_VisualRuntime });
+
+            // Shortcut Configuration
+            cbConfigBasic_Shortcuts.Click += (s, e) =>
+                SyncCheckBox(cbConfigBasic_Shortcuts.IsChecked, new List<CheckBox> { cbLnkDsk_Botw, cbLnkDsk_Cemu, cbLnkSrt_Bcml, cbLnkSrt_BetterJoy, cbLnkSrt_Botw, cbLnkSrt_Cemu, cbLnkSrt_DS4Windows});
+
+            // DS4Windows Configuration
+            cbAdv_InstallDs4.Click += (s, e) => SyncCheckBox(cbAdv_InstallDs4.IsChecked, new List<CheckBox> { _cbAdv_NetRuntime });
+
+            // VCRuntime Configuration
+            cbAdv_InstallCemu.Click += (s, e) =>
+            {
+                if (cbAdv_InstallBcml.IsChecked == false)
+                    SyncCheckBox(cbAdv_InstallCemu.IsChecked, new List<CheckBox> { _cbAdv_VisualRuntime }); };
+            cbAdv_InstallBcml.Click += (s, e) =>
+            {
+                if (cbAdv_InstallCemu.IsChecked == false)
+                    SyncCheckBox(cbAdv_InstallBcml.IsChecked, new List<CheckBox> { _cbAdv_VisualRuntime, _cbAdv_WebviewRuntime }); };
+        }
+
+        /// <summary>
+        /// Searches for Botw and updates the UI accordingly.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void SearchEvent(object? sender , EventArgs e)
+        {
             try
             {
+                bool show = false;
+
+                c.base_game = "";
+                c.update = "";
+                c.dlc = "";
+
                 // Find out if this is being called via button click or app launch
                 // null: App launch
                 // anything else: Button Click
-                if (sender != null) show = true; 
+                if (sender != null) show = true;
 
                 // Get the theme colors
                 PaletteHelper helper = new();
@@ -329,7 +343,7 @@ namespace BotwInstaller.UI.Views
                 tbBasic_BotwPath.IsReadOnly = true;
 
                 // Call Search/Verify logic.
-                var check = await Query.VerifyLogic(tmpBaseGame, tmpUpdate, tmpDlc);
+                var check = await Query.VerifyLogic(c.base_game, c.update, c.dlc);
 
                 // Return errors based on verify return.
                 // return[0] == null: Files not found
@@ -339,7 +353,7 @@ namespace BotwInstaller.UI.Views
                     MessageBox.Show("Game files not found.", "Error");
                 else if (check[0] == "Error")
                     MessageBox.Show(check[1], check[0]);
-                else Set(check[0], check[1], check[2], show);
+                else SetGameConfig(check[0], check[1], check[2], show);
 
                 // Revert text box color and text.
                 if (!isVerified)
@@ -348,77 +362,146 @@ namespace BotwInstaller.UI.Views
                     tbBasic_BotwPath.IsReadOnly = false;
                 }
                 tbBasic_BotwPath.Foreground = new SolidColorBrush(theme.Body);
-
-                /// Sets the tbBasic_BotwPath text and tooltip with the found game paths.
-                void Set(string b, string u, string d, bool showComplete = false)
-                {
-                    isVerified = true;
-                    tbBasic_BotwPath.Text = b.EditPath(2);
-                    tbBasic_BotwPath.ToolTip = $"Verified.\nBase Game: \"{b}\"\n\nUpdate: \"{u}\"\n\nDLC: \"{d}\"";
-                    tmpBaseGame = b;
-                    tmpUpdate = u;
-                    tmpDlc = d;
-
-                    if (showComplete) MessageBox.Show("Game paths found and verified.", "Notification");
-                }
             }
             catch (Exception ex)
             {
-                ConsoleMsg.Error("BotwInstaller.UI.Views.btnSearch_Click", new string[] { "" }, ex.Message);
+                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.btnSearch_Click", new string[] { "" }, ex.Message);
             }
         }
 
-
-        private void Browse(TextBox tb, string? title = null)
+        /// <summary>
+        /// Sets the tbBasic_BotwPath text and tooltip with the found game paths.
+        /// <para>Handled: ConsoleMsg.Error</para>
+        /// </summary>
+        /// <param name="bC">BaseGame Content</param>
+        /// <param name="uC">Update Content</param>
+        /// <param name="dC">DLC Content</param>
+        /// <param name="showComplete">Show a message box when complete.</param>
+        private void SetGameConfig(string bC, string uC, string dC, bool showComplete = false)
         {
-            VistaFolderBrowserDialog dialog = new();
-
-            dialog.Description = title;
-            dialog.UseDescriptionForTitle = true;
-
-            if (dialog.ShowDialog() == true)
-                tb.Text = dialog.SelectedPath;
-        }
-
-        private void Setup()
-        {
-            List<CheckBox> vs = new()
+            try
             {
-                cbConfigBasic_Mods,
-                cbConfigBasic_Shortcuts,
-                cbBasic_RunAfterInstall,
+                // Set game config
+                c.base_game = bC;
+                c.update = uC;
+                c.dlc = dC;
 
-                cbLnkDsk_Botw,
-                cbLnkDsk_Cemu,
-                cbLnkSrt_Bcml,
-                cbLnkSrt_BetterJoy,
-                cbLnkSrt_Botw,
-                cbLnkSrt_Cemu,
-                cbLnkSrt_DS4Windows,
+                // Make cd N/A
+                if (dC == "") dC = "N/A";
 
-                _cbAdv_VisualRuntime,
-                _cbAdv_WebviewRuntime,
+                // Set isVerified
+                isVerified = true;
 
-                cbAdv_InstallBcml,
-                cbAdv_InstallCemu,
-                cbAdv_InstallGfx,
-                cbAdv_InstallPython,
+                // Set TextBox and ToolTip
+                tbBasic_BotwPath.Text = bC.EditPath(2);
+                tbBasic_BotwPath.ToolTip = $"Verified.\nBase Game: \"{bC}\"\n\nUpdate: \"{uC}\"\n\nDLC: \"{dC}\"";
 
-                cbBasicCtrl_Standard
-            };
-
-            foreach (var v in vs)
-                v.IsChecked = true;
-
-            tbBasic_CemuPath.Text = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu";
-
-            btnSearch_Click(null, new EventArgs());
+                // Show complete message when applicable
+                if (showComplete) MessageBox.Show("Game paths found and verified.", "Notification");
+            }
+            catch (Exception ex)
+            {
+                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.SetGameConfig", new string[] { $"bC;{bC}", $"uC;{uC}", $"dC;{dC}", $"showComplete;{showComplete}" }, ex.Message);
+            }
         }
 
-        private void ControlSet(bool? isChecked, List<CheckBox> chks)
+        /// <summary>
+        /// Opens a VistaFolderBrowserDialog and sets the result to the sender TextBox.
+        /// <para>Handled: ConsoleMsg.Error</para>
+        /// </summary>
+        /// <param name="textBox">Output TextBox</param>
+        /// <param name="title">Dialog Window Title</param>
+        private static void BrowseEvent(TextBox textBox, string? title = null)
         {
-            foreach (var chk in chks)
-                chk.IsChecked = isChecked;
+            try
+            {
+                VistaFolderBrowserDialog dialog = new();
+
+                dialog.Description = title;
+                dialog.UseDescriptionForTitle = true;
+
+                if (dialog.ShowDialog() == true)
+                    textBox.Text = dialog.SelectedPath;
+            }
+            catch (Exception ex)
+            {
+                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.Browse", new string[] { $"textBox;{textBox}", $"title;{title}" }, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Sets the default UI configuration. (CheckBoxes, TextBoxs, etc.)
+        /// <para>Handled: ConsoleMsg.Error</para>
+        /// </summary>
+        /// <returns></returns>
+        private void SetupUserInterface()
+        {
+            try
+            {
+                // Create a list of *checked CheckBoxes
+                List<CheckBox> vs = new()
+                {
+                    cbConfigBasic_Mods,
+                    cbConfigBasic_Shortcuts,
+                    cbBasic_RunAfterInstall,
+
+                    cbLnkDsk_Botw,
+                    cbLnkDsk_Cemu,
+                    cbLnkSrt_Bcml,
+                    cbLnkSrt_BetterJoy,
+                    cbLnkSrt_Botw,
+                    cbLnkSrt_Cemu,
+                    cbLnkSrt_DS4Windows,
+
+                    _cbAdv_VisualRuntime,
+                    _cbAdv_WebviewRuntime,
+
+                    cbAdv_InstallBcml,
+                    cbAdv_InstallCemu,
+                    cbAdv_InstallGfx,
+                    cbAdv_InstallPython,
+
+                    cbBasicCtrl_Standard
+                };
+
+
+                // Check every CheckBox is the list
+                foreach (var v in vs)
+                    v.IsChecked = true;
+
+                // Set the optimal (default) Cemu path.
+                tbBasic_CemuPath.Text = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu";
+
+                // If Cemu exists don't install it.
+                if (File.Exists($"{tbBasic_CemuPath.Text}\\Cemu.exe"))
+                    cbAdv_InstallCemu.IsChecked = false;
+
+                // Search for Botw files.
+                SearchEvent(null, new EventArgs());
+            }
+            catch (Exception ex)
+            {
+                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.Setup", new string[] { "N/A;N/A" }, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Sets a list of CheckBoxes IsChecked state based on a givin CheckBox
+        /// <para>Handled: ConsoleMsg.Error</para>
+        /// </summary>
+        /// <param name="isChecked">Parent check box IsChecked state</param>
+        /// <param name="checkBoxes">List of check boxes to be effected</param>
+        private void SyncCheckBox(bool? isChecked, List<CheckBox> checkBoxes)
+        {
+            try
+            {
+                foreach (var chk in checkBoxes)
+                    chk.IsChecked = isChecked;
+            }
+            catch (Exception ex)
+            {
+                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.ControlSet", new string[] { $"isChecked;{isChecked}", $"checkBoxes;{checkBoxes}" }, ex.Message);
+            }
         }
 
         #endregion

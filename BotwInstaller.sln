@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Lib", "BotwIn
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other Projects", "Other Projects", "{5AE7354A-4EB0-4EE7-A333-63C38F5AB9C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotwInstaller.UI", "BotwInstaller.UI\BotwInstaller.UI.csproj", "{502D971E-E314-42C3-BEA8-69DA36A43A61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.UI", "BotwInstaller.UI\BotwInstaller.UI.csproj", "{502D971E-E314-42C3-BEA8-69DA36A43A61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotwInstaller.Wiz", "BotwInstaller.Wiz\BotwInstaller.Wiz.csproj", "{657B8210-BFF7-436E-94F5-1AB2AE8EB14A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Wiz", "BotwInstaller.Wiz\BotwInstaller.Wiz.csproj", "{657B8210-BFF7-436E-94F5-1AB2AE8EB14A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotwInstaller.Res", "BotwInstaller.Res\BotwInstaller.Res.csproj", "{3F956FBF-E1C0-4BCE-88B9-6CA85C9E2C08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Res", "BotwInstaller.Res\BotwInstaller.Res.csproj", "{3F956FBF-E1C0-4BCE-88B9-6CA85C9E2C08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -24,8 +24,8 @@ namespace BotwInstaller.UI.ViewModels
             PaletteHelper helper = new();
             ITheme theme = helper.GetTheme();
 
-            string file = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwInstaller.UI\\settings.ini";
-            string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwInstaller.UI\\";
+            string file = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini";
+            string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\";
             Directory.CreateDirectory(folder);
 
             if (theme.GetBaseTheme() == BaseTheme.Light)
@@ -83,10 +83,6 @@ namespace BotwInstaller.UI.ViewModels
         public void Help()
         {
             _ = Proc.Start("explorer.exe", "https://github.com/ArchLeaders/Breath-of-the-Wild-Installer-NET-6.0#dumping-your-game-files");
-        }
-        public static async Task Install()
-        {
-
         }
     }
 }
