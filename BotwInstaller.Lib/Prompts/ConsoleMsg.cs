@@ -19,8 +19,11 @@ namespace BotwInstaller.Lib.Prompts
             if (log) File.AppendAllText($"{Initialize.root}\\install.txt", $"\n{msg}");
         }
 
-        public static void PrintLine(string? msg, ConsoleColor color = ConsoleColor.Gray, bool hideFromConsole = false)
+        public static void PrintLine(string? msg, ConsoleColor color = ConsoleColor.Gray, bool hideFromConsole = false, string logFile = "!set")
         {
+            if (logFile == "!set")
+                logFile = $"{Initialize.root}\\install.txt";
+
             if (!hideFromConsole)
             {
                 Console.ForegroundColor = color;
@@ -28,7 +31,7 @@ namespace BotwInstaller.Lib.Prompts
                 Console.ResetColor();
             }
 
-            File.AppendAllText($"{Initialize.root}\\install.txt", $"\n{msg}");
+            File.AppendAllText(logFile, $"\n{msg}");
         }
 
         public static string Input(string? msg, ConsoleColor color = ConsoleColor.Gray)

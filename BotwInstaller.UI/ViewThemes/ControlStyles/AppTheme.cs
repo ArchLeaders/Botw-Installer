@@ -14,14 +14,26 @@ namespace BotwInstaller.UI.ViewThemes.ControlStyles
             if (toLight)
             {
                 theme.SetBaseTheme(Theme.Light);
-                theme.SetPrimaryColor((Color)ColorConverter.ConvertFromString("#afafaf"));
-                theme.SetSecondaryColor((Color)ColorConverter.ConvertFromString("#0075FF"));
+
+                theme.PrimaryDark = (Color)ColorConverter.ConvertFromString("#fff");
+                theme.PrimaryMid = (Color)ColorConverter.ConvertFromString("#fff");
+                theme.PrimaryLight = (Color)ColorConverter.ConvertFromString("#fff");
+
+                theme.SecondaryDark = (Color)ColorConverter.ConvertFromString("#7FD5FF");
+                theme.SecondaryMid = (Color)ColorConverter.ConvertFromString("#0096E0");
+                theme.SecondaryLight = (Color)ColorConverter.ConvertFromString("#00141F");
             }
             else
             {
                 theme.SetBaseTheme(Theme.Dark);
-                theme.SetPrimaryColor((Color)ColorConverter.ConvertFromString("#1f1f1f"));
-                theme.SetSecondaryColor((Color)ColorConverter.ConvertFromString("#0075FF"));
+
+                theme.PrimaryDark = (Color)ColorConverter.ConvertFromString("#121212");
+                theme.PrimaryMid = (Color)ColorConverter.ConvertFromString("#1A1A1A");
+                theme.PrimaryLight = (Color)ColorConverter.ConvertFromString("#EDEDED");
+
+                theme.SecondaryDark = (Color)ColorConverter.ConvertFromString("#00141F");
+                theme.SecondaryMid = (Color)ColorConverter.ConvertFromString("#00496E");
+                theme.SecondaryLight = (Color)ColorConverter.ConvertFromString("#0096E0");
             }
 
             helper.SetTheme(theme);

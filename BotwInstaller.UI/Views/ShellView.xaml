@@ -1,187 +1,708 @@
 ﻿<Window x:Class="BotwInstaller.UI.Views.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:a="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BotwInstaller.UI.Views"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:s="https://github.com/canton7/Stylet"
-        mc:Ignorable="d"
-        Title="Botw Installer" Height="450" Width="750"
-        x:Name="shellView" Style="{StaticResource MaterialDesignWindow}"
-        WindowStyle="None" FontFamily="Calibri" FontSize="20"
-        TextOptions.TextFormattingMode="Display" RenderOptions.BitmapScalingMode="HighQuality">
+        x:Name="shellView"
+        Title="Botw Installer"
+        MaxWidth="750"
+        Height="460"
+        Background="{DynamicResource PrimaryHueDarkBrush}"
+        FontFamily="Calibri"
+        FontSize="20"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        ResizeMode="CanMinimize"
+        Style="{StaticResource MaterialDesignWindow}"
+        TextOptions.TextFormattingMode="Display"
+        mc:Ignorable="d">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30"/>
+        <WindowChrome CaptionHeight="30" />
     </WindowChrome.WindowChrome>
-    
-    <Grid>
+
+    <Grid x:Name="parentGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition/>
-            <RowDefinition Height="54"/>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="40" />
+            <RowDefinition />
+            <RowDefinition Height="70" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Botw Installer" Margin="40, 0, 0, 0"
-                   VerticalAlignment="Center" FontSize="18"
-                   FontFamily="Calibri" FontWeight="Bold"
+        <TextBlock Margin="30,0,0,0"
+                   VerticalAlignment="Center"
+                   FontFamily="Calibri"
+                   FontSize="18"
+                   FontWeight="Bold"
                    Style="{StaticResource MaterialDesignHeadline1TextBlock}"
-                   TextOptions.TextFormattingMode="Display"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                   Text="Botw Installer"
+                   TextOptions.TextFormattingMode="Display" />
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
                     WindowChrome.IsHitTestVisibleInChrome="True">
-            <Button Style="{StaticResource MaterialDesignFlatAccentButton}"
-                    Content="◓" Width="45" FontSize="20" Padding="0"
-                    Click="{s:Action SwitchTheme}" Height="30"/>
-            <Button Style="{StaticResource MaterialDesignFlatAccentButton}"
-                    Content="-" Width="45" x:Name="homeBtnWindowMin"
-                    FontFamily="{StaticResource Windows}" Height="30"
-                    Padding="0"/>
-            <Button Style="{StaticResource MaterialDesignFlatAccentButton}"
-                    Content=" " Width="45" x:Name="homeBtnWindowSize"
-                    FontFamily="{StaticResource Windows}" Height="30"
-                    Padding="0"/>
-            <Button Style="{StaticResource MaterialDesignFlatAccentButton}"
-                    Content="!" Width="45" x:Name="homeBtnWindowExit"
-                    FontFamily="{StaticResource Windows}" Height="30"
-                    Padding="0"/>
-        </StackPanel>
-        <Image Source="/ViewThemes/Icons/app.png" HorizontalAlignment="Left"
-               Margin="2, 2, 0, 2" RenderOptions.BitmapScalingMode="HighQuality"/>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="2"
-                    HorizontalAlignment="Center">
-            <RadioButton Style="{DynamicResource TabButtonStyle}" Content="Basic"
-                         Margin="25, 0" Width="140"
-                         Height="36" ToolTip="Configure The Basic Install Options"
-                         VerticalAlignment="Top" FontFamily="Calibri" FontSize="22"
-                         FontWeight="Bold" x:Name="btnBasicTab"
-                         IsChecked="True"/>
-            
-            <RadioButton Style="{DynamicResource TabButtonStyle}" Content="Shortcuts"
-                         Margin="25, 0" Width="140"
-                         Height="36" ToolTip="Configure Shortcuts"
-                         VerticalAlignment="Top" FontFamily="Calibri" FontSize="22"
-                         FontWeight="Bold" x:Name="btnLnkTab"/>
-            
-            <RadioButton Style="{DynamicResource TabButtonStyle}" Content="Advanced"
-                         Margin="25, 0" Width="140"
-                         Height="36" ToolTip="Configure The Advanced Install Options"
-                         VerticalAlignment="Top" FontFamily="Calibri" FontSize="22"
-                         FontWeight="Bold" x:Name="btnAdvTab"/>
+            <Button Width="45"
+                    Height="30"
+                    Padding="0"
+                    Click="{s:Action SwitchTheme}"
+                    Content="◓"
+                    FontSize="20"
+                    Foreground="{DynamicResource MaterialDesignBody}"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+            <Button x:Name="homeBtnWindowMin"
+                    Width="45"
+                    Height="30"
+                    Padding="0"
+                    Content="-"
+                    FontFamily="{StaticResource Windows}"
+                    Foreground="{DynamicResource MaterialDesignBody}"
+                    Style="{StaticResource MaterialDesignFlatAccentButton}" />
+            <Button x:Name="homeBtnWindowSize"
+                    Width="45"
+                    Height="30"
+                    Padding="0"
+                    Content=" "
+                    FontFamily="{StaticResource Windows}"
+                    Foreground="{DynamicResource MaterialDesignBody}"
+                    IsEnabled="False"
+                    Style="{StaticResource MaterialDesignFlatAccentButton}" />
+            <Button x:Name="homeBtnWindowExit"
+                    Width="45"
+                    Height="30"
+                    Padding="0"
+                    Content="!"
+                    FontFamily="{StaticResource Windows}"
+                    Foreground="{DynamicResource MaterialDesignBody}"
+                    Style="{StaticResource MaterialDesignFlatAccentButton}" />
         </StackPanel>
 
-        <Grid Grid.Row="4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <Image Margin="5,5,0,5"
+               HorizontalAlignment="Left"
+               RenderOptions.BitmapScalingMode="HighQuality"
+               Source="/ViewThemes/Icons/app.png" />
 
-            <Border Background="#0082C9">
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Direction="90" Opacity="0.5"/>
-                </Border.Effect>
-            </Border>
+        <StackPanel Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+            <RadioButton x:Name="btnBasicTab"
+                         Width="140"
+                         Height="36"
+                         Margin="25,0"
+                         VerticalAlignment="Top"
+                         Content="Basic"
+                         FontFamily="Calibri"
+                         FontSize="22"
+                         FontWeight="Bold"
+                         IsChecked="True"
+                         Style="{DynamicResource TabButtonStyle}"
+                         ToolTip="Configure The Basic Install Options" />
 
-            <Button Grid.Row="1" Margin="15, 5" HorizontalAlignment="Right" Padding="10, 0, 70, 0"
-                    FontSize="25" FontWeight="Bold" FontFamily="Calibri" Height="40" VerticalContentAlignment="Center"
-                    HorizontalContentAlignment="Left" ToolTip="Start Installing"
-                    Click="{s:Action Install}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../ViewThemes/Icons/install.png" Margin="5"/>
-                    <TextBlock Text="Install" VerticalAlignment="Center" FontSize="30"
-                           Margin="15, 0, 0, 0"/>
-                </StackPanel>
-            </Button>
+            <RadioButton x:Name="btnLnkTab"
+                         Width="140"
+                         Height="36"
+                         Margin="25,0"
+                         VerticalAlignment="Top"
+                         Content="Shortcuts"
+                         FontFamily="Calibri"
+                         FontSize="22"
+                         FontWeight="Bold"
+                         Style="{DynamicResource TabButtonStyle}"
+                         ToolTip="Configure Shortcuts" />
 
-            <Button Grid.Row="1" Margin="15, 5" HorizontalAlignment="Left" Padding="0"
-                    FontSize="25" FontWeight="Bold" FontFamily="Calibri" Height="35"
-                    VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
-                    Click="{s:Action Help}">
-                <StackPanel Orientation="Horizontal" ToolTip="GitHub README-">
-                    <Image Source="../ViewThemes/Icons/help.png" Margin="6, 6, 4, 4"/>
-                </StackPanel>
-            </Button>
+            <RadioButton x:Name="btnAdvTab"
+                         Width="140"
+                         Height="36"
+                         Margin="25,0"
+                         VerticalAlignment="Top"
+                         Content="Advanced"
+                         FontFamily="Calibri"
+                         FontSize="22"
+                         FontWeight="Bold"
+                         Style="{DynamicResource TabButtonStyle}"
+                         ToolTip="Configure The Advanced Install Options" />
+        </StackPanel>
 
-            <Button Grid.Row="1" Margin="65, 5" HorizontalAlignment="Left" Padding="0"
-                    FontSize="25" FontWeight="Bold" FontFamily="Calibri" Height="35"
-                    VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
-                    Click="{s:Action Dump}">
-                <StackPanel Orientation="Horizontal" ToolTip="Install Homebrew to a specified SD card.">
-                    <Image Source="../ViewThemes/Icons/sd.png" Margin="6, 6, 4, 4"/>
-                </StackPanel>
-            </Button>
-        </Grid>
+        <!--#region Basic Tab XAML-->
 
-        <Grid Grid.Row="3" x:Name="gridBasicTab" Visibility="Visible" VerticalAlignment="Top" Margin="25">
+        <Grid x:Name="gridBasicTab"
+              Grid.Row="3"
+              Margin="25"
+              VerticalAlignment="Top"
+              Visibility="Visible">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="220" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <StackPanel>
-                <CheckBox Content="Use Mods" Style="{StaticResource BasicSelection}"
-                          Margin="0, 5" FontSize="25"/>
-                <CheckBox Content="Basic Shortcuts" Style="{StaticResource BasicSelection}"
-                          Margin="0, 5" FontSize="25"/>
-                <CheckBox Content="DS4Windows" Style="{StaticResource BasicSelection}"
-                          Margin="0, 5" FontSize="25"/>
-                <CheckBox Content="BetterJoy" Style="{StaticResource BasicSelection}"
-                          Margin="0, 5" FontSize="25"/>
-                <CheckBox Content="Run After Install" Style="{StaticResource BasicSelection}"
-                          Margin="0, 5" FontSize="25"/>
+            <StackPanel Margin="-5">
+                <CheckBox x:Name="cbConfigBasic_Mods"
+                          Content="Use Mods"
+                          FontSize="25"
+                          Style="{StaticResource MaterialDesignCheckBox}"
+                          ToolTip="Installs the required software&#x0a;to use mods with Cemu." />
+                <CheckBox x:Name="cbConfigBasic_Shortcuts"
+                          Content="Basic Shortcuts"
+                          FontSize="25"
+                          Style="{StaticResource MaterialDesignCheckBox}"
+                          ToolTip="Enables basic shortcut creaton.&#x0a;Choose exactly wich ones you want&#x0a;in the Shortcuts tab." />
+                <CheckBox x:Name="cbBasic_InstallDs4Windows"
+                          Content="DS4Windows"
+                          FontSize="25"
+                          Style="{StaticResource MaterialDesignCheckBox}"
+                          ToolTip="Install DS4Windows.&#x0a;Required if you use a Dualshock controler," />
+                <CheckBox x:Name="cbBasic_InstallBetterJoy"
+                          Content="BetterJoy"
+                          FontSize="25"
+                          Style="{StaticResource MaterialDesignCheckBox}"
+                          ToolTip="Install BetterJoy.&#x0a;Required if you use a Switch controler," />
+                <CheckBox x:Name="cbBasic_RunAfterInstall"
+                          Content="Run After Install"
+                          FontSize="25"
+                          Style="{StaticResource MaterialDesignCheckBox}"
+                          ToolTip="Runs Botw, BetterJoy, and DS4Windows once (if) installed." />
             </StackPanel>
-            <StackPanel Grid.Column="1" Margin="45, 0, 0, 0">
+            <StackPanel Grid.Column="1" Margin="45,0,0,0">
                 <Grid>
-                    <TextBlock Text="Path to Cemu:" Width="150" HorizontalAlignment="Left"
-                               VerticalAlignment="Center" FontWeight="Bold"
-                               FontFamily="Noto Sans Mono"/>
-                    <TextBox x:Name="tbbasic_CemuPath" Margin="150, 8, 60, 8" Padding="8"
-                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
-                    <Button HorizontalAlignment="Right"
-                            Content="· · ·" Height="41"/>
+                    <TextBlock Width="150"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontFamily="Noto Sans Mono"
+                               FontWeight="Bold"
+                               Text="Path to Cemu:" />
+                    <TextBox x:Name="tbBasic_CemuPath"
+                             Margin="150,8,60,8"
+                             Padding="8"
+                             Style="{StaticResource Filled}" />
+                    <Button x:Name="ocBrowseCemu"
+                            Height="41"
+                            HorizontalAlignment="Right"
+                            Content="· · ·" />
 
                 </Grid>
-                <Grid Margin="0, 5, 0, 0">
-                    <TextBlock Text="Path to Botw:" Width="150" HorizontalAlignment="Left"
-                               VerticalAlignment="Center" FontWeight="Bold"
-                               FontFamily="Noto Sans Mono"/>
-                    <TextBox x:Name="tbbasic_BotwPath" Margin="150, 8, 60, 8" Padding="8"
-                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
-                    <Button HorizontalAlignment="Right"
-                            Content="· · ·" Height="41"/>
+                <Grid Margin="0,5,0,0">
+                    <TextBlock Width="150"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontFamily="Noto Sans Mono"
+                               FontWeight="Bold"
+                               Text="Path to Botw:" />
+                    <TextBox x:Name="tbBasic_BotwPath"
+                             Margin="150,8,60,8"
+                             Padding="8"
+                             Style="{StaticResource Filled}" />
+                    <Button x:Name="ocBrowseBotw"
+                            Height="41"
+                            HorizontalAlignment="Right"
+                            Content="· · ·" />
 
                 </Grid>
-                <Grid Margin="0, 5, 0, 0">
-                    <TextBlock Text="Controller Profiles:" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" FontWeight="Bold"
-                               FontFamily="Noto Sans Mono"/>
-                    <StackPanel Margin="0, 33, 0, 0" Orientation="Horizontal">
-                        <CheckBox Height="91" Width="91" Margin="0, 0, 10, 0" Style="{StaticResource BasicSelection}">
-                            <Image Source="../ViewThemes/Icons/ctrl_jp.png"
-                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Grid Margin="0,5,0,0">
+                    <TextBlock HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontFamily="Noto Sans Mono"
+                               FontWeight="Bold"
+                               Text="Controller Profiles:"
+                               ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)" />
+                    <StackPanel Margin="0,33,0,0" Orientation="Horizontal">
+
+                        <!--  Check Box: 'Standard Layout' | Name: cbBasicCtrl_Standard | Done  -->
+                        <CheckBox x:Name="cbBasicCtrl_Standard"
+                                  Width="91"
+                                  Height="91"
+                                  Margin="0,0,10,0"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="../ViewThemes/Icons/ctrl_jp.png" />
                         </CheckBox>
-                        <CheckBox Height="91" Width="91" Margin="0, 0, 10, 0" Style="{StaticResource BasicSelection}">
-                            <Image Source="../ViewThemes/Icons/ctrl_we.png"
-                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+
+                        <!--  Check Box: 'Western Layout' | Name: cbBasicCtrl_Western | Done  -->
+                        <CheckBox x:Name="cbBasicCtrl_Western"
+                                  Width="91"
+                                  Height="91"
+                                  Margin="0,0,10,0"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="../ViewThemes/Icons/ctrl_we.png" />
                         </CheckBox>
-                        <CheckBox Height="91" Width="91" Margin="0, 0, 10, 0" Style="{StaticResource BasicSelection}">
-                            <Image Source="../ViewThemes/Icons/ctrl_pe.png"
-                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+
+                        <!--  Check Box: 'PE Layout' | Name: cbBasicCtrl_Pe | Done  -->
+                        <CheckBox x:Name="cbBasicCtrl_Pe"
+                                  Width="91"
+                                  Height="91"
+                                  Margin="0,0,10,0"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="../ViewThemes/Icons/ctrl_pe.png" />
                         </CheckBox>
                     </StackPanel>
                 </Grid>
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="3" x:Name="gridAdvTab" Background="Blue"
-              Visibility="Hidden">
+        <!--#endregion-->
 
+        <!--#region Shortcut Tab XAML-->
+
+        <Grid x:Name="gridLnkTab"
+              Grid.Row="3"
+              Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="55,15">
+                <TextBlock Margin="10"
+                           HorizontalAlignment="Center"
+                           Text="- Desktop -" />
+
+                <!--  Start Menu Shortcut for BetterJoy  -->
+                <CheckBox x:Name="cbLnkDsk_BetterJoy"
+                          Content="BetterJoy"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+
+                <!--  Start Menu Shortcut for BCML  -->
+                <CheckBox x:Name="cbLnkDsk_Bcml"
+                          Content="BCML"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+
+                <!--  Start Menu Shortcut for BettBotWerJoy  -->
+                <CheckBox x:Name="cbLnkDsk_Botw"
+                          Content="BotW"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+
+                <!--  Start Menu Shortcut for Cemu  -->
+                <CheckBox x:Name="cbLnkDsk_Cemu"
+                          Content="Cemu"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+
+                <!--  Start Menu Shortcut for DS4Windows  -->
+                <CheckBox x:Name="cbLnkDsk_DS4Windows"
+                          Content="DS4Windows"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="55,15">
+                <TextBlock Margin="10"
+                           HorizontalAlignment="Center"
+                           Text="- Start Menu -" />
+
+                <!--  Start Menu Shortcut for BetterJoy  -->
+                <CheckBox x:Name="cbLnkSrt_BetterJoy"
+                          Content="BetterJoy"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+
+                <!--  Start Menu Shortcut for BCML  -->
+                <CheckBox x:Name="cbLnkSrt_Bcml"
+                          Content="BCML"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+
+                <!--  Start Menu Shortcut for BettBotWerJoy  -->
+                <CheckBox x:Name="cbLnkSrt_Botw"
+                          Content="BotW"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+
+                <!--  Start Menu Shortcut for Cemu  -->
+                <CheckBox x:Name="cbLnkSrt_Cemu"
+                          Content="Cemu"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+
+                <!--  Start Menu Shortcut for DS4Windows  -->
+                <CheckBox x:Name="cbLnkSrt_DS4Windows"
+                          Content="DS4Windows"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+            </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="3" x:Name="gridLnkTab" Background="Green"
-              Visibility="Hidden">
+        <!--#endregion-->
 
+        <!--#region Advanced Tab XAML-->
+
+        <Grid x:Name="gridAdvTab"
+              Grid.Row="3"
+              Margin="45,0,0,0"
+              Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="250" MaxWidth="250" />
+                <ColumnDefinition MinWidth="250" MaxWidth="250" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="0,15,15,0">
+                <Border BorderBrush="#3b000000"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                    <StackPanel Margin="12,6">
+                        <TextBlock Margin="3,-14,0,0"
+                                   FontSize="14"
+                                   Text="Python">
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="5" ShadowDepth="4" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+
+                        <!--  Check Box: 'Install Python' | Name: cbAdv_PyDocs | Done  -->
+                        <CheckBox x:Name="cbAdv_InstallPython"
+                                  Margin="0,5"
+                                  Content="Install Python"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  ToolTip="Installs Python.&#x0a;This is required for BCML and many other modding tools." />
+
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.4*" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Check Box: 'Py Docs' | Name: cbAdv_PyDocs | Done  -->
+                            <CheckBox x:Name="cbAdv_PyDocs"
+                                      Margin="0,0,5,0"
+                                      Content="Py Docs"
+                                      Style="{StaticResource MaterialDesignCheckBox}"
+                                      ToolTip="Installs The Python Documentation.&#x0a;Recomended if you plan on coding with python." />
+
+                            <!--  Combo Box: 'Python Version' | Name: cbAdv_PyVersion | Done  -->
+                            <ComboBox x:Name="cbAdv_PyVersion"
+                                      Grid.Column="1"
+                                      Margin="5,0,0,0"
+                                      Padding="6,3.5"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      ToolTip="The version of python to be installed.">
+                                <ComboBoxItem Content="3.8.10" IsSelected="True" />
+                                <ComboBoxItem Content="3.7.8" />
+                            </ComboBox>
+                        </Grid>
+
+                        <!--  Text Box: 'DS4Windows Path' | Name: tbAdv_PythonPath | Done  -->
+                        <TextBox x:Name="tbAdv_PythonPath"
+                                 Margin="0,5"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource Filled}"
+                                 Text="C:\Python"
+                                 ToolTip="Path To Python Installation.&#x0a;&#x0a;Ctrl + Double click to browse." />
+                    </StackPanel>
+                </Border>
+                <Border Margin="0,15,0,0"
+                        BorderBrush="#3b000000"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                    <StackPanel Margin="12,6">
+                        <TextBlock Margin="3,-14,0,0"
+                                   FontSize="14"
+                                   Text="Microsoft (Readonly)">
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="5" ShadowDepth="4" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+
+                        <!--  Check Box: 'Install .NET Runtime' | Name: cbAdv_NetRuntime | Done  -->
+                        <CheckBox x:Name="_cbAdv_NetRuntime"
+                                  Content=".NET 5.0 Runtime"
+                                  IsEnabled="False"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  ToolTip="Installs .NET 5.0 Runtime.&#x0a;Required to run DS4Windows." />
+
+                        <!--  Check Box: 'Install WebView 2 Runtime Runtime' | Name: cbAdv_NetRuntime | Done  -->
+                        <CheckBox x:Name="_cbAdv_WebviewRuntime"
+                                  Content="WebView 2 Runtime"
+                                  IsEnabled="False"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  ToolTip="Installs WebView 2 Runtime.&#x0a;Required to run BCML."
+                                  Visibility="Collapsed" />
+
+                        <!--  Check Box: 'Install Visual C++ Runtime' | Name: cbAdv_VisualRuntime | Done  -->
+                        <CheckBox x:Name="_cbAdv_VisualRuntime"
+                                  Content="Visual C++ Runtime"
+                                  IsEnabled="False"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  ToolTip="Installs Visual C++ Runtime.&#x0a;Required to run BCML and Cemu." />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <StackPanel Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="0,0,15,0">
+                <Border Margin="0,15,0,0"
+                        BorderBrush="#3b000000"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                    <StackPanel Margin="12,6">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MaxWidth="120" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Margin="3,-14,0,0"
+                                           FontSize="14"
+                                           Text="Cemu">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="5" ShadowDepth="4" />
+                                    </TextBlock.Effect>
+                                </TextBlock>
+
+                                <!--  Check Box: 'Install Cemu' | Name: cbAdv_InstallCemu | Done  -->
+                                <CheckBox x:Name="cbAdv_InstallCemu"
+                                          Content="Cemu"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          ToolTip="Downloads and install Cemu to&#x0a;the specified folder.&#x0a;Installs BotW if not already installed." />
+
+                                <!--  Check Box: 'Install GFX' | Name: cbAdv_InstallGfx | Done  -->
+                                <CheckBox x:Name="cbAdv_InstallGfx"
+                                          Content="GFX"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          ToolTip="Downloads and installs the&#x0a;latest community graphic packs&#x0a;and installs them." />
+
+                                <!--  Check Box: 'Install DS4Windows' | Name: cbAdv_InstallDs4 | Done  -->
+                                <CheckBox x:Name="cbAdv_InstallDs4"
+                                          Content="DS4Win"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          ToolTip="Downloads and installs the&#x0a;latest DS4Windows Ryochan7 fork." />
+
+                                <!--  Check Box: 'Install BetterJoy' | Name: cbAdv_InstallBetterJoy | Done  -->
+                                <CheckBox x:Name="cbAdv_InstallBetterJoy"
+                                          Content="BetterJoy"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          ToolTip="Downloads and installs the&#x0a;latest BetterJoy." />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="10,3,0,0">
+
+                                <!--  Text Box: 'mlc01 Path' | Name: tbAdv_Mlc01Path | Done  -->
+                                <TextBox x:Name="tbAdv_Mlc01Path"
+                                         Margin="0,5"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource Filled}"
+                                         Text="mlc01"
+                                         ToolTip="Path to Cemu mlc01.&#x0a;This is where your game files are stored. (Or a copy of them.)&#x0a;&#x0a;Ctrl + Double click to browse." />
+
+                                <!--  Check Box: 'Copy Base Game' | Name: cbAdv_CopyBase | Done  -->
+                                <CheckBox x:Name="cbAdv_CopyBase"
+                                          Width="283"
+                                          Margin="0,5"
+                                          HorizontalAlignment="Left"
+                                          Content="Copy Base Game"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          ToolTip="Copies Botw base game files to&#x0a;the specified mlc01 folder." />
+
+                                <!--  Text Box: 'DS4Windows Path' | Name: tbAdv_DS4Path | Done  -->
+                                <TextBox x:Name="tbAdv_DS4Path"
+                                         Margin="0,5"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource Filled}"
+                                         Text="%botwdata%\DS4Windows"
+                                         ToolTip="Path To DS4Windows Installation.&#x0a;Note: %botwdata% = %localappdata%\BotwData&#x0a;&#x0a;Ctrl + Double click to browse." />
+
+                                <!--  Text Box: 'BetterJoy Path' | Name: tbAdv_BetterJoy | Done  -->
+                                <TextBox x:Name="tbAdv_BetterJoyPath"
+                                         Margin="0,5"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource Filled}"
+                                         Text="%botwdata%\BetterJoy"
+                                         ToolTip="Path To BetterJoy Installation.&#x0a;Note: %botwdata% = %localappdata%\BotwData&#x0a;&#x0a;Ctrl + Double click to browse." />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <Border Margin="0,15,0,0"
+                        BorderBrush="#3b000000"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                    <StackPanel Margin="12,6">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MaxWidth="120" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Margin="3,-14,0,0"
+                                           FontSize="14"
+                                           Text="BCML">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="5" ShadowDepth="4" />
+                                    </TextBlock.Effect>
+                                </TextBlock>
+
+                                <!--  Check Box: 'BCML' | Name: cbAdv_InstallBcml | Done  -->
+                                <CheckBox x:Name="cbAdv_InstallBcml"
+                                          Content="BCML"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          ToolTip="Install BCML with PIP.&#x0a;Requires Python, WebView Runtime,&#x0a;and Visual C++ Runtime." />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="10,3,0,0">
+
+                                <!--  Text Box: 'BCML Data Path' | Name: tbAdv_BcmlData | Done  -->
+                                <TextBox x:Name="tbAdv_BcmlData"
+                                         Margin="0,5"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource Filled}"
+                                         Text="%localappdata%\bcml"
+                                         ToolTip="Path to BCML Data.&#x0a;This is where BCML will store your mods.&#x0a;&#x0a;Ctrl + Double click to browse." />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
         </Grid>
+
+        <!--#endregion-->
+
+        <!--#endregion-->
+
+        <!--#region Lower Panel-->
+
+        <Grid x:Name="anim_LowerPanel"
+              Grid.Row="1"
+              Grid.RowSpan="4"
+              Margin="0,350,0,0"
+              Background="{DynamicResource PrimaryHueDarkBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Border x:Name="anim_TopBar"
+                    MaxWidth="1000"
+                    Background="#0082C9">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                                      Direction="90"
+                                      Opacity="0.5"
+                                      ShadowDepth="2" />
+                </Border.Effect>
+            </Border>
+
+            <Button x:Name="btnAll_Install"
+                    Grid.Row="1"
+                    Height="40"
+                    Margin="0,0,13,13"
+                    Padding="10,0,70,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Calibri"
+                    FontSize="25"
+                    FontWeight="Bold">
+                <Grid x:Name="_installParent">
+                    <StackPanel x:Name="_obscureBtn_Install"
+                                Width="160"
+                                Margin="0"
+                                Orientation="Horizontal"
+                                ToolTip="Start Installing">
+                        <Image Margin="5" Source="../ViewThemes/Icons/install.png" />
+                        <TextBlock x:Name="_obscureBtnInstall_Text"
+                                   Margin="15,0,0,0"
+                                   VerticalAlignment="Center"
+                                   FontSize="30"
+                                   Text="Install" />
+                    </StackPanel>
+                    <StackPanel x:Name="_obscureBtn_Cancel"
+                                Width="160"
+                                Margin="0,0,0,60"
+                                Orientation="Horizontal"
+                                ToolTip="Cancel Install">
+                        <Image Margin="5" Source="../ViewThemes/Icons/back.png" />
+                        <TextBlock Margin="15,0,0,0"
+                                   VerticalAlignment="Center"
+                                   FontSize="30"
+                                   Text="Cancel" />
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <Button Grid.Row="1"
+                    Width="35"
+                    Height="35"
+                    Margin="20,0,0,15.5"
+                    Padding="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Click="{s:Action Help}"
+                    FontFamily="Calibri"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    ToolTip="GitHub README-">
+                <StackPanel Orientation="Horizontal">
+                    <Image Margin="6,6,4,4" Source="../ViewThemes/Icons/help.png" />
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Row="1"
+                    Width="35"
+                    Height="35"
+                    Margin="70,0,0,15.5"
+                    Padding="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Click="{s:Action Dump}"
+                    FontFamily="Calibri"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    ToolTip="Install Homebrew to a specified SD card.">
+                <StackPanel Orientation="Horizontal">
+                    <Image Margin="6,6,4,4" Source="../ViewThemes/Icons/sd.png" />
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="ocSearch"
+                    Grid.Row="1"
+                    Width="35"
+                    Height="35"
+                    Margin="120,0,0,15.5"
+                    Padding="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Click="btnSearch_Click"
+                    FontFamily="Calibri"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    ToolTip="Search and/or verify game files.">
+                <StackPanel Orientation="Horizontal">
+                    <Image Margin="4,6,6,4" Source="../ViewThemes/Icons/search.png" />
+                </StackPanel>
+            </Button>
+
+            <CheckBox x:Name="ocDebug"
+                      Grid.Row="1"
+                      Width="35"
+                      Height="35"
+                      Margin="170,0,0,15.5"
+                      Padding="0"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Bottom"
+                      HorizontalContentAlignment="Left"
+                      VerticalContentAlignment="Center"
+                      FontFamily="Calibri"
+                      FontSize="25"
+                      FontWeight="Bold"
+                      Style="{StaticResource MaterialDesignCheckBox}"
+                      ToolTip="Show console when installing.">
+                <StackPanel Orientation="Horizontal">
+                    <Image Margin="5,5,5,4" Source="../ViewThemes/Icons/debug.png" />
+                </StackPanel>
+            </CheckBox>
+
+            <TextBlock x:Name="ocStatus"
+                       Grid.Row="1"
+                       Margin="280,10,0,0"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource SecondaryHueMidBrush}"
+                       Text="" />
+        </Grid>
+
+        <!--#endregion-->
+
+        <!--#region Loading Controls-->
+
+        <Grid x:Name="anim_Controls"
+              Grid.Row="1"
+              Grid.RowSpan="3" />
+
+        <!--#endregion-->
+
     </Grid>
 </Window>

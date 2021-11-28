@@ -1,14 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="BotwInstaller.Res">
-      <HintPath>..\BotwInstaller.Res\bin\Release\net6.0-windows\win-x64\BotwInstaller.Res.dll</HintPath>
+      <HintPath>Res\BotwInstaller.Res.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -30,7 +30,6 @@ namespace BotwInstaller.Lib
         public bool bcml { get; set; }
         public bool python { get; set; }
         public bool py_docs { get; set; }
-        public bool vc2019 { get; set; }
     }
 
     public class Shortcuts
@@ -46,35 +45,30 @@ namespace BotwInstaller.Lib
     {
         public bool dsk { get; set; }
         public bool start { get; set; }
-        public bool programs { get; set; }
     }
 
     public class Bcml
     {
         public bool dsk { get; set; }
         public bool start { get; set; }
-        public bool programs { get; set; }
     }
 
     public class Botw
     {
         public bool dsk { get; set; }
         public bool start { get; set; }
-        public bool programs { get; set; }
     }
 
     public class Ds4
     {
         public bool dsk { get; set; }
         public bool start { get; set; }
-        public bool programs { get; set; }
     }
 
     public class Betterjoy
     {
         public bool dsk { get; set; }
         public bool start { get; set; }
-        public bool programs { get; set; }
     }
 
 }

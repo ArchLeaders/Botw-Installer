@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>ViewThemes\Icons\app.ico</ApplicationIcon>
@@ -18,10 +18,13 @@
     <None Remove="ViewThemes\Icons\ctrl_jp.png" />
     <None Remove="ViewThemes\Icons\ctrl_pe.png" />
     <None Remove="ViewThemes\Icons\ctrl_we.png" />
+    <None Remove="ViewThemes\Icons\debug.png" />
     <None Remove="ViewThemes\Icons\discord.png" />
     <None Remove="ViewThemes\Icons\help.png" />
     <None Remove="ViewThemes\Icons\install.png" />
     <None Remove="ViewThemes\Icons\sd.png" />
+    <None Remove="ViewThemes\Icons\search.png" />
+    <None Remove="ViewThemes\Icons\verify.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +47,9 @@
     <Content Include="ViewThemes\Icons\ctrl_we.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ViewThemes\Icons\debug.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ViewThemes\Icons\discord.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -56,19 +62,22 @@
     <Content Include="ViewThemes\Icons\sd.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ViewThemes\Icons\search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ViewThemes\Icons\verify.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.2.1" />
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.0" />
     <PackageReference Include="Stylet" Version="1.3.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BotwInstaller.Lib\BotwInstaller.Lib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewThemes\Controls\" />
   </ItemGroup>
 
 </Project>

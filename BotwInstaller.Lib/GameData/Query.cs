@@ -19,27 +19,29 @@ namespace BotwInstaller.Lib.GameData
 
             try
             {
-                foreach (var drive in DriveInfo.GetDrives().Reverse())
+                await Task.Run(async() =>
                 {
-                    foreach (var item in await Task.Run(() => Operations.Files.GetSafeFiles(drive.Name, "U-King.rpx")))
+                    foreach (var drive in DriveInfo.GetDrives().Reverse())
                     {
-                        ConsoleMsg.PrintLine(item.EditPath(3), ConsoleColor.DarkCyan);
-
-                        foreach (var dir in Directory.EnumerateDirectories(item.EditPath(3)))
+                        foreach (var item in await Task.Run(() => Files.GetSafeFiles(drive.Name, "U-King.rpx")))
                         {
-                            if (File.Exists($"{dir}\\content\\Actor\\Pack\\TwnObj_TempleOfTime_A_01.sbactorpack"))
-                                update = $"{dir}\\content";
-                            if (File.Exists($"{dir}\\content\\Movie\\Demo101_0.mp4"))
-                                game = $"{dir}\\content";
-                            if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
-                                dlc = $"{dir}\\content";
-                        }
+                            ConsoleMsg.PrintLine(item.EditPath(3), ConsoleColor.DarkCyan);
 
-                        if (game != null && update != null)
-                            break;
+                            foreach (var dir in Directory.EnumerateDirectories(item.EditPath(3)))
+                            {
+                                if (File.Exists($"{dir}\\content\\Actor\\Pack\\TwnObj_TempleOfTime_A_01.sbactorpack"))
+                                    update = $"{dir}\\content";
+                                if (File.Exists($"{dir}\\content\\Movie\\Demo101_0.mp4"))
+                                    game = $"{dir}\\content";
+                                if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
+                                    dlc = $"{dir}\\content";
+                            }
+                        
+                            if (game != "" && update != "") break;
+                        }
+                        if (game != "" && update != "") break;
                     }
-                    if (game != null && update != null) break;
-                }
+                });
 
                 return new string[] {game, update, dlc};
             }
@@ -50,54 +52,95 @@ namespace BotwInstaller.Lib.GameData
             }
         }
 
-        public static bool VerifyGameFiles(string baseContent, string updateContent, string dlcContent)
+        public static async Task<bool> VerifyGameFiles(string bC, string uC, string dC)
         {
-            ConsoleMsg.PrintLine("Verifying game files...\n");
-
-            Base.Set(baseContent.EditPath());
-            Update.Set(updateContent.EditPath());
-            Dlc.Set(dlcContent.EditPath());
-
-            var baseGame = Base.Receive.Except(Directory.EnumerateFiles(baseContent.EditPath(), "*.*", SearchOption.AllDirectories));
-            var update = Update.Receive.Except(Directory.EnumerateFiles(updateContent.EditPath(), "*.*", SearchOption.AllDirectories));
-            var dlc = new List<string>();
-
-            if (dlcContent != "")
-                dlc = Dlc.Receive.Except(Directory.EnumerateFiles(dlcContent.EditPath(), "*.*", SearchOption.AllDirectories)).ToList();
-
-            if (baseGame.Count() != 0)
+            await Task.Run(() =>
             {
-                foreach (var item in baseGame)
-                    ConsoleMsg.PrintLine($"Missig :: {item}", ConsoleColor.DarkRed);
+                Base.Set(bC.EditPath());
+                Update.Set(uC.EditPath());
+                Dlc.Set(dC.EditPath());
+            });
 
-                ConsoleMsg.PrintLine("\nFailed at BaseGame");
-                Console.ReadLine();
+            IEnumerable<string>? b = null;
+            IEnumerable<string>? u = null;
+            IEnumerable<string>? d = null;
+
+            await Task.Run(() =>
+            {
+                b = Base.Receive.Except(Directory.EnumerateFiles(bC.EditPath(), "*.*", SearchOption.AllDirectories));
+                u = Update.Receive.Except(Directory.EnumerateFiles(uC.EditPath(), "*.*", SearchOption.AllDirectories));
+                if (dC != "")
+                    d = Dlc.Receive.Except(Directory.EnumerateFiles(dC.EditPath(), "*.*", SearchOption.AllDirectories));
+            });
+
+            if (b.Any())
+            {
+                await Task.Run(() =>
+                {
+                    foreach (var item in b)
+                        ConsoleMsg.PrintLine($"Missing: {item}", ConsoleColor.DarkRed, false, "./verify.log");
+                });
                 return false;
             }
 
-            if (update.Count() != 0)
+            if (u.Any())
             {
-                foreach (var item in update)
-                    ConsoleMsg.PrintLine($"Missig :: {item}", ConsoleColor.DarkRed);
-
-                ConsoleMsg.PrintLine("\nFailed at Update");
-                Console.ReadLine();
+                await Task.Run(() =>
+                {
+                    foreach (var item in b)
+                        ConsoleMsg.PrintLine($"Missing: {item}", ConsoleColor.DarkRed, false, "./verify.log");
+                });
                 return false;
             }
 
-            if (dlc.Count() != 0)
+            if (d.Any())
             {
-                foreach (var item in dlc)
-                    ConsoleMsg.PrintLine($"Missig :: {item}", ConsoleColor.DarkRed);
-
-                ConsoleMsg.PrintLine("\nFailed at DLC");
-                Console.ReadLine();
+                await Task.Run(() =>
+                {
+                    foreach (var item in b)
+                        ConsoleMsg.PrintLine($"Missing: {item}", ConsoleColor.DarkRed, false, "./verify.log");
+                });
                 return false;
             }
-
-            ConsoleMsg.PrintLine("\nCompleted succesfully.");
 
             return true;
+        }
+
+        public static async Task<string[]?> VerifyLogic(string b, string u, string d)
+        {
+            // Create bool and empty string[]
+            bool check = false;
+            string[] f = new string[] { "", "", "" };
+
+            // Check if the passed paths are null. If they are, search for the game.
+            // Otherise pass the givin paths to the used string[]
+            if (b == "" || u == "")
+            {
+                f = await GameFiles();
+
+                if (f[0] == "" || f[1] == "")
+                    return null;
+            }
+            else f = new string[] { b, u, d };
+
+            check = await VerifyGameFiles(f[0], f[1], f[2]);
+
+            if (check) return f;
+            else
+            {
+                string? str = null;
+                await Task.Run(() =>
+                {
+                    var log = File.ReadAllLines("./verify.log");
+
+                    if (log.Length <= 5)
+                        foreach (var line in log)
+                            str = $"{str}\n{line}";
+                    else str = $"There are {log.Length} missing files.\n\nYou may want to re-dump your game.";
+
+                });
+                return new string[] { "Error", str };
+            }
         }
     }
 }

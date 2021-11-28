@@ -67,7 +67,7 @@ namespace BotwInstaller.Lib.Shell
                 t2.Add(Software.WVRuntime());
 
             // Initialize Visual C++ Runtime Install
-            if (c.install.vc2019)
+            if (c.install.cemu || c.install.bcml)
                 t2.Add(Software.VCRuntime());
 
             ///
