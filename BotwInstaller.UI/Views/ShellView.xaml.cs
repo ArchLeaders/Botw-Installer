@@ -423,6 +423,9 @@ namespace BotwInstaller.UI.Views
                 // Call Search/Verify logic.
                 var check = await Query.VerifyLogic(c.base_game, c.update, c.dlc);
 
+                // Stop timer
+                timer.Stop();
+
                 // Return errors based on verify return.
                 // return[0] == null: Files not found
                 // return[0] == error: Missing files
@@ -436,11 +439,6 @@ namespace BotwInstaller.UI.Views
                 // Revert readonly state
                 if (!isVerified)
                     tbBasic_BotwPath.IsReadOnly = false;
-
-                // Cleanup
-                timer.Stop();
-                tbBasic_BotwPath.Focus();
-                tbBasic_BotwPath.CaretIndex = Int32.MaxValue;
             }
             catch (Exception ex)
             {
@@ -473,6 +471,8 @@ namespace BotwInstaller.UI.Views
 
                 // Set TextBox and ToolTip
                 tbBasic_BotwPath.Text = bC.EditPath(2);
+                tbBasic_BotwPath.Focus();
+                tbBasic_BotwPath.CaretIndex = Int32.MaxValue;
                 tbBasic_BotwPath.ToolTip = $"Verified.\nBase Game: \"{bC}\"\n\nUpdate: \"{uC}\"\n\nDLC: \"{dC}\"";
 
                 // Show complete message when applicable
