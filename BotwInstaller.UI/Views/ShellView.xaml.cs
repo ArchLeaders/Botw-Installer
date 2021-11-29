@@ -190,35 +190,31 @@ namespace BotwInstaller.UI.Views
 
             #region Inline Animations
 
-            timer.Interval = TimeSpan.FromMilliseconds(3000);
+            timer.Interval = TimeSpan.FromMilliseconds(900);
             timer.Tick += async (s, e) =>
             {
-                // bring ep1 up
-                ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 100), 400);
+                // UP - EP1
+                ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 150), 300);
+                await Task.Run(() => Thread.Sleep(199));
 
-                // wait for ep1 to mostly go up
-                await Task.Run(() => Thread.Sleep(300));
+                // UP - EP2
+                ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 150), 300);
+                await Task.Run(() => Thread.Sleep(99));
 
-                // bring ep2 up
-                ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 100), 400);
+                // DOWN - EP1
+                ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 0), 300);
+                await Task.Run(() => Thread.Sleep(99));
 
-                // wait a total of 400ms to bring ep1 back down
-                await Task.Run(() => Thread.Sleep(100));
+                // UP - EP3
+                ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 150), 300);
+                await Task.Run(() => Thread.Sleep(99));
 
-                // bring ep1 down
-                ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 0), 400);
+                // DOWN - EP2
+                ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 0), 300);
+                await Task.Run(() => Thread.Sleep(199));
 
-                // wait another 200ms to have it be 300ms since ep2 went up
-                await Task.Run(() => Thread.Sleep(200));
-
-                // bring ep3 up
-                ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 100), 400);
-
-
-                await Task.Run(() => Thread.Sleep(100));
-                ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 0), 400);
-
-                await Task.Run(() => Thread.Sleep(300));
+                // DOWN - EP3
+                ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 0), 300);
             };
 
             #endregion

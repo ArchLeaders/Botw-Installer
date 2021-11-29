@@ -693,13 +693,16 @@
 
         <!--#region Loading Controls-->
 
-        <Grid x:Name="_anim_Controls"
+        <!--  OLD ANIMATION  -->
+        <!--<Grid x:Name="_anim_Controls"
               Grid.Row="1"
               Grid.RowSpan="3"
               Opacity="0"
               Visibility="Hidden">
 
-            <!--  EP 1  -->
+        -->
+        <!--  EP 1  -->
+        <!--
             <Ellipse x:Name="ep1_parent"
                      Width="220"
                      Height="220"
@@ -720,7 +723,9 @@
                 </Ellipse.RenderTransform>
             </Ellipse>
 
-            <!--  EP 2  -->
+        -->
+        <!--  EP 2  -->
+        <!--
             <Ellipse x:Name="ep2_parent"
                      Width="260"
                      Height="260"
@@ -741,7 +746,9 @@
                 </Ellipse.RenderTransform>
             </Ellipse>
 
-            <!--  EP 3  -->
+        -->
+        <!--  EP 3  -->
+        <!--
             <Ellipse x:Name="ep3_parent"
                      Width="300"
                      Height="300"
@@ -762,7 +769,9 @@
                 </Ellipse.RenderTransform>
             </Ellipse>
 
-            <!--  Static  -->
+        -->
+        <!--  Static  -->
+        <!--
             <Ellipse Width="170"
                      Height="170"
                      Fill="{DynamicResource PrimaryHueMidBrush}">
@@ -786,32 +795,30 @@
                                       Color="#000" />
                 </TextBlock.Effect>
             </TextBlock>
-        </Grid>
+        </Grid>-->
 
         <Grid x:Name="anim_Controls"
               Grid.Row="1"
-              Grid.RowSpan="3">
+              Grid.RowSpan="3"
+              Opacity="0"
+              Visibility="Hidden">
 
-            <Ellipse x:Name="ep1_trg" Fill="{DynamicResource PrimaryHueMidBrush}"
-                     Height="45" Width="45" Margin="0, 0, 140, 0">
-                <Ellipse.Effect>
-                    <DropShadowEffect BlurRadius="5" ShadowDepth="2"/>
-                </Ellipse.Effect>
-            </Ellipse>
+            <Ellipse x:Name="ep1_trg"
+                     Width="45"
+                     Height="45"
+                     Margin="0,0,140,0"
+                     Fill="{DynamicResource PrimaryHueMidBrush}" />
 
-            <Ellipse x:Name="ep2_trg" Fill="{DynamicResource PrimaryHueMidBrush}"
-                     Height="45" Width="45">
-                <Ellipse.Effect>
-                    <DropShadowEffect BlurRadius="5" ShadowDepth="2"/>
-                </Ellipse.Effect>
-            </Ellipse>
+            <Ellipse x:Name="ep2_trg"
+                     Width="45"
+                     Height="45"
+                     Fill="{DynamicResource PrimaryHueMidBrush}" />
 
-            <Ellipse x:Name="ep3_trg" Fill="{DynamicResource PrimaryHueMidBrush}"
-                     Height="45" Width="45" Margin="140, 0, 0, 0">
-                <Ellipse.Effect>
-                    <DropShadowEffect BlurRadius="5" ShadowDepth="2"/>
-                </Ellipse.Effect>
-            </Ellipse>
+            <Ellipse x:Name="ep3_trg"
+                     Width="45"
+                     Height="45"
+                     Margin="140,0,0,0"
+                     Fill="{DynamicResource PrimaryHueMidBrush}" />
 
             <TextBlock x:Name="ocName"
                        Margin="35,55"
