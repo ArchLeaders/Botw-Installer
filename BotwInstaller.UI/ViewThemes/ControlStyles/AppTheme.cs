@@ -16,7 +16,7 @@ namespace BotwInstaller.UI.ViewThemes.ControlStyles
                 theme.SetBaseTheme(Theme.Light);
 
                 theme.PrimaryDark = (Color)ColorConverter.ConvertFromString("#fff");
-                theme.PrimaryMid = (Color)ColorConverter.ConvertFromString("#fff");
+                theme.PrimaryMid = (Color)ColorConverter.ConvertFromString("#afafaf");
                 theme.PrimaryLight = (Color)ColorConverter.ConvertFromString("#fff");
 
                 theme.SecondaryDark = (Color)ColorConverter.ConvertFromString("#F50955");
@@ -27,8 +27,8 @@ namespace BotwInstaller.UI.ViewThemes.ControlStyles
             {
                 theme.SetBaseTheme(Theme.Dark);
 
-                theme.PrimaryDark = (Color)ColorConverter.ConvertFromString("#121212");
-                theme.PrimaryMid = (Color)ColorConverter.ConvertFromString("#1A1A1A");
+                theme.PrimaryDark = (Color)ColorConverter.ConvertFromString("#1f1f1f");
+                theme.PrimaryMid = (Color)ColorConverter.ConvertFromString("#121212");
                 theme.PrimaryLight = (Color)ColorConverter.ConvertFromString("#EDEDED");
 
                 theme.SecondaryDark = (Color)ColorConverter.ConvertFromString("#8A0530");

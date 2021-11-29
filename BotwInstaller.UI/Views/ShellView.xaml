@@ -32,6 +32,8 @@
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
 
+        <Border Background="{DynamicResource PrimaryHueMidBrush}" />
+
         <TextBlock Margin="30,0,0,0"
                    VerticalAlignment="Center"
                    FontFamily="Calibri"
@@ -177,7 +179,8 @@
                     <Button x:Name="ocBrowseCemu"
                             Height="41"
                             HorizontalAlignment="Right"
-                            Content="· · ·" />
+                            Content="· · ·"
+                            Style="{StaticResource Global}" />
 
                 </Grid>
                 <Grid Margin="0,5,0,0">
@@ -194,7 +197,8 @@
                     <Button x:Name="ocBrowseBotw"
                             Height="41"
                             HorizontalAlignment="Right"
-                            Content="· · ·" />
+                            Content="· · ·"
+                            Style="{StaticResource Global}" />
 
                 </Grid>
                 <Grid Margin="0,5,0,0">
@@ -471,7 +475,7 @@
                                          Margin="0,5"
                                          VerticalAlignment="Center"
                                          Style="{StaticResource Filled}"
-                                         Text="mlc01"
+                                         Text="%cemupath%\mlc01"
                                          ToolTip="Path to Cemu mlc01.&#x0a;This is where your game files are stored. (Or a copy of them.)&#x0a;&#x0a;Ctrl + Double click to browse." />
 
                                 <!--  Check Box: 'Copy Base Game' | Name: cbAdv_CopyBase | Done  -->
@@ -623,6 +627,7 @@
                     FontFamily="Calibri"
                     FontSize="25"
                     FontWeight="Bold"
+                    Style="{StaticResource Global}"
                     ToolTip="GitHub README-">
                 <StackPanel Orientation="Horizontal">
                     <Image Margin="6,6,4,4" Source="../ViewThemes/Icons/help.png" />
@@ -642,6 +647,7 @@
                     FontFamily="Calibri"
                     FontSize="25"
                     FontWeight="Bold"
+                    Style="{StaticResource Global}"
                     ToolTip="Install Homebrew to a specified SD card.">
                 <StackPanel Orientation="Horizontal">
                     <Image Margin="6,6,4,4" Source="../ViewThemes/Icons/sd.png" />
@@ -662,6 +668,7 @@
                     FontFamily="Calibri"
                     FontSize="25"
                     FontWeight="Bold"
+                    Style="{StaticResource Global}"
                     ToolTip="Search and/or verify game files.">
                 <StackPanel Orientation="Horizontal">
                     <Image Margin="4,6,6,4" Source="../ViewThemes/Icons/search.png" />
@@ -691,7 +698,7 @@
 
         <!--#endregion-->
 
-        <!--#region Loading Controls-->
+        <!--#region Old Loading Screen-->
 
         <!--  OLD ANIMATION  -->
         <!--<Grid x:Name="_anim_Controls"
@@ -797,6 +804,10 @@
             </TextBlock>
         </Grid>-->
 
+        <!--#endregion-->
+
+        <!--#region Loading Screen-->
+
         <Grid x:Name="anim_Controls"
               Grid.Row="1"
               Grid.RowSpan="3"
@@ -847,8 +858,6 @@
         </Grid>
 
         <!--#endregion-->
-
-
 
     </Grid>
 </Window>

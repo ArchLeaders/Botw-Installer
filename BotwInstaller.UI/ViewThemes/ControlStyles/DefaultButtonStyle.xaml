@@ -43,7 +43,7 @@
                                                   ShadowDepth="1"
                                                   Color="{DynamicResource MaterialDesignShadow}" />
                             </Border.Effect>
-                            <ContentPresenter Margin="2"
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               RecognizesAccessKey="True" />

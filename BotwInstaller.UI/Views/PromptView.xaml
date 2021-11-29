@@ -14,7 +14,6 @@
         Style="{StaticResource MaterialDesignWindow}"
         TextOptions.TextFormattingMode="Display"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
         mc:Ignorable="d">
 
     <WindowChrome.WindowChrome>
@@ -47,11 +46,13 @@
                   VerticalAlignment="Bottom"
                   Visibility="Hidden">
                 <Button x:Name="btnOk"
+                        Width="80"
                         Height="25"
+                        Margin="10,0"
                         VerticalAlignment="Center"
                         Click="No"
                         Content="OK"
-                        Style="{StaticResource MaterialDesignFlatButton}" />
+                        Style="{StaticResource Global}" />
             </Grid>
             <StackPanel x:Name="yesNo"
                         Margin="15"
@@ -60,16 +61,20 @@
                         Orientation="Horizontal"
                         Visibility="Visible">
                 <Button x:Name="btnYes"
+                        Width="80"
                         Height="25"
+                        Margin="10,0"
                         VerticalAlignment="Center"
                         Click="Yes"
                         Content="Yes"
-                        Style="{StaticResource MaterialDesignFlatButton}" />
-                <Button Height="25"
+                        Style="{StaticResource Global}" />
+                <Button Width="80"
+                        Height="25"
+                        Margin="10,0"
                         VerticalAlignment="Center"
                         Click="No"
                         Content="No"
-                        Style="{StaticResource MaterialDesignFlatButton}" />
+                        Style="{StaticResource Global}" />
             </StackPanel>
         </Grid>
     </Grid>
