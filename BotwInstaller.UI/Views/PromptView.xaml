@@ -24,7 +24,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition />
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource PrimaryHueMidBrush}" />
 
         <StackPanel HorizontalAlignment="Right"
                     Orientation="Horizontal"
@@ -39,9 +42,8 @@
                     Style="{StaticResource MaterialDesignFlatAccentButton}" />
         </StackPanel>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid x:Name="ok"
-                  Margin="15"
                   HorizontalAlignment="Right"
                   VerticalAlignment="Bottom"
                   Visibility="Hidden">
@@ -55,9 +57,8 @@
                         Style="{StaticResource Global}" />
             </Grid>
             <StackPanel x:Name="yesNo"
-                        Margin="15"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
+                        VerticalAlignment="Center"
                         Orientation="Horizontal"
                         Visibility="Visible">
                 <Button x:Name="btnYes"

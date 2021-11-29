@@ -20,7 +20,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <Grid x:Name="templateRoot"
-                          VerticalAlignment="Center"
+                          Width="{TemplateBinding Width}"
+                          Height="{TemplateBinding Height}"
+                          HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                          VerticalAlignment="{TemplateBinding VerticalAlignment}"
                           Background="Transparent"
                           SnapsToDevicePixels="True">
                         <Grid.Effect>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace BotwInstaller.UI.Views
 {
@@ -22,6 +23,8 @@ namespace BotwInstaller.UI.Views
                 ok.Visibility = Visibility.Visible;
                 btnOk.Focus();
             }
+
+            homeBtnWindowExit.Click += (s, e) => { Close(); };
         }
 
         private void Yes(object sender, RoutedEventArgs e)

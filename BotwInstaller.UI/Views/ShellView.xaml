@@ -34,6 +34,8 @@
 
         <Border Background="{DynamicResource PrimaryHueMidBrush}" />
 
+        <!--#region Window Chrome-->
+
         <TextBlock Margin="30,0,0,0"
                    VerticalAlignment="Center"
                    FontFamily="Calibri"
@@ -85,6 +87,10 @@
                RenderOptions.BitmapScalingMode="HighQuality"
                Source="/ViewThemes/Icons/app.png" />
 
+        <!--#endregion-->
+
+        <!--#region Tabs-->
+
         <StackPanel Grid.Row="2"
                     HorizontalAlignment="Center"
                     Orientation="Horizontal">
@@ -126,18 +132,20 @@
                          ToolTip="Configure The Advanced Install Options" />
         </StackPanel>
 
+        <!--#endregion-->
+
         <!--#region Basic Tab XAML-->
 
         <Grid x:Name="gridBasicTab"
               Grid.Row="3"
-              Margin="25"
+              Margin="20"
               VerticalAlignment="Top"
               Visibility="Visible">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220" />
                 <ColumnDefinition />
+                <ColumnDefinition Width="230" />
             </Grid.ColumnDefinitions>
-            <StackPanel Margin="-5">
+            <StackPanel Grid.Column="1">
                 <CheckBox x:Name="cbConfigBasic_Mods"
                           Content="Use Mods"
                           FontSize="25"
@@ -164,7 +172,12 @@
                           Style="{StaticResource MaterialDesignCheckBox}"
                           ToolTip="Runs Botw, BetterJoy, and DS4Windows once (if) installed." />
             </StackPanel>
-            <StackPanel Grid.Column="1" Margin="45,0,0,0">
+            <Grid Margin="0,0,15,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
                 <Grid>
                     <TextBlock Width="150"
                                HorizontalAlignment="Left"
@@ -173,17 +186,28 @@
                                FontWeight="Bold"
                                Text="Path to Cemu:" />
                     <TextBox x:Name="tbBasic_CemuPath"
-                             Margin="150,8,60,8"
-                             Padding="8"
+                             Margin="150,5,60,5"
+                             Padding="5,8"
                              Style="{StaticResource Filled}" />
                     <Button x:Name="ocBrowseCemu"
-                            Height="41"
+                            Width="50"
+                            Height="40"
+                            Padding="2,0,0,0"
                             HorizontalAlignment="Right"
-                            Content="· · ·"
-                            Style="{StaticResource Global}" />
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Top"
+                            Style="{StaticResource Global}">
+                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              Fill="{DynamicResource MaterialDesignBody}"
+                              StrokeThickness="0.0372541">
+                            <Path.Data>
+                                <PathGeometry Figures="m 9.070066 6.7379049 c -1.2549167 0 -2.2936247 1.0387858 -2.2936247 2.2937024 V 29.468892 c 0 2.083103 1.7101006 3.793203 3.7932037 3.793203 h 1.747415 4.861913 15.494112 c 2.407299 0 4.612645 -1.364117 5.687621 -3.51807 l 4.637004 -9.291243 c 0.722365 -1.447417 -0.380399 -3.230305 -1.998061 -3.230305 H 19.325674 c -1.599633 0 -3.066802 0.907491 -3.781116 2.338778 l -4.51909 9.055103 c -0.180657 0.386692 -0.370681 0.544666 -0.530923 0.619904 -0.165449 0.07768 -0.340262 0.0898 -0.5675771 0.01981 C 9.4860669 29.120311 8.9424757 28.600284 8.7728641 27.860369 V 9.0316073 c 0 -0.1759708 0.1212311 -0.2972798 0.2972019 -0.2972798 h 9.265272 c 0.75852 0 1.498445 0.2326452 2.120499 0.6666961 l 4.248949 2.9647654 c 1.018405 0.710613 2.230627 1.091793 3.472449 1.091793 h 8.955282 c 0.14604 0 0.24308 0.09696 0.24308 0.243003 v 0.965301 a 0.99821131 0.99821131 0 0 0 0.998211 0.998212 0.99821131 0.99821131 0 0 0 0.998211 -0.998212 v -0.965301 c 0 -1.224987 -1.014516 -2.239424 -2.239502 -2.239425 h -8.955282 c -0.833448 1e-6 -1.64654 -0.255665 -2.330043 -0.732593 L 21.598242 7.763801 C 20.641286 7.0960655 19.502231 6.7379049 18.335338 6.7379049 Z" FillRule="NonZero" />
+                            </Path.Data>
+                        </Path>
+                    </Button>
 
                 </Grid>
-                <Grid Margin="0,5,0,0">
+                <Grid Grid.Row="1">
                     <TextBlock Width="150"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
@@ -191,24 +215,35 @@
                                FontWeight="Bold"
                                Text="Path to Botw:" />
                     <TextBox x:Name="tbBasic_BotwPath"
-                             Margin="150,8,60,8"
-                             Padding="8"
+                             Margin="150,5,60,5"
+                             Padding="5,8"
                              Style="{StaticResource Filled}" />
                     <Button x:Name="ocBrowseBotw"
-                            Height="41"
+                            Width="50"
+                            Height="40"
+                            Padding="2,0,0,0"
                             HorizontalAlignment="Right"
-                            Content="· · ·"
-                            Style="{StaticResource Global}" />
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Top"
+                            Style="{StaticResource Global}">
+                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              Fill="{DynamicResource MaterialDesignBody}"
+                              StrokeThickness="0.0372541">
+                            <Path.Data>
+                                <PathGeometry Figures="m 9.070066 6.7379049 c -1.2549167 0 -2.2936247 1.0387858 -2.2936247 2.2937024 V 29.468892 c 0 2.083103 1.7101006 3.793203 3.7932037 3.793203 h 1.747415 4.861913 15.494112 c 2.407299 0 4.612645 -1.364117 5.687621 -3.51807 l 4.637004 -9.291243 c 0.722365 -1.447417 -0.380399 -3.230305 -1.998061 -3.230305 H 19.325674 c -1.599633 0 -3.066802 0.907491 -3.781116 2.338778 l -4.51909 9.055103 c -0.180657 0.386692 -0.370681 0.544666 -0.530923 0.619904 -0.165449 0.07768 -0.340262 0.0898 -0.5675771 0.01981 C 9.4860669 29.120311 8.9424757 28.600284 8.7728641 27.860369 V 9.0316073 c 0 -0.1759708 0.1212311 -0.2972798 0.2972019 -0.2972798 h 9.265272 c 0.75852 0 1.498445 0.2326452 2.120499 0.6666961 l 4.248949 2.9647654 c 1.018405 0.710613 2.230627 1.091793 3.472449 1.091793 h 8.955282 c 0.14604 0 0.24308 0.09696 0.24308 0.243003 v 0.965301 a 0.99821131 0.99821131 0 0 0 0.998211 0.998212 0.99821131 0.99821131 0 0 0 0.998211 -0.998212 v -0.965301 c 0 -1.224987 -1.014516 -2.239424 -2.239502 -2.239425 h -8.955282 c -0.833448 1e-6 -1.64654 -0.255665 -2.330043 -0.732593 L 21.598242 7.763801 C 20.641286 7.0960655 19.502231 6.7379049 18.335338 6.7379049 Z" FillRule="NonZero" />
+                            </Path.Data>
+                        </Path>
+                    </Button>
 
                 </Grid>
-                <Grid Margin="0,5,0,0">
+                <Grid Grid.Row="2" Margin="0,5,0,0">
                     <TextBlock HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                FontFamily="Noto Sans Mono"
                                FontWeight="Bold"
                                Text="Controller Profiles:"
                                ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)" />
-                    <StackPanel Margin="0,33,0,0" Orientation="Horizontal">
+                    <StackPanel Margin="0,38,0,0" Orientation="Horizontal">
 
                         <!--  Check Box: 'Standard Layout' | Name: cbBasicCtrl_Standard | Done  -->
                         <CheckBox x:Name="cbBasicCtrl_Standard"
@@ -241,7 +276,7 @@
                         </CheckBox>
                     </StackPanel>
                 </Grid>
-            </StackPanel>
+            </Grid>
         </Grid>
 
         <!--#endregion-->
@@ -549,14 +584,12 @@
 
         <!--#endregion-->
 
-        <!--#endregion-->
-
         <!--#region Lower Panel-->
 
         <Grid x:Name="anim_LowerPanel"
               Grid.Row="1"
               Grid.RowSpan="4"
-              Margin="0,350,0,0"
+              Margin="0,360,0,0"
               Background="{DynamicResource PrimaryHueDarkBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2" />
@@ -577,122 +610,128 @@
             <Button x:Name="btnAll_Install"
                     Grid.Row="1"
                     Height="40"
-                    Margin="0,0,13,13"
-                    Padding="10,0,70,0"
+                    Margin="0,0,25,0"
+                    Padding="15,4"
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    HorizontalContentAlignment="Left"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Calibri"
-                    FontSize="25"
-                    FontWeight="Bold"
-                    Style="{DynamicResource Global}">
+                    VerticalAlignment="Center"
+                    Style="{StaticResource Global}">
                 <Grid x:Name="_installParent">
-                    <StackPanel x:Name="_obscureBtn_Install"
-                                Width="160"
-                                Margin="0"
-                                Orientation="Horizontal"
-                                ToolTip="Start Installing">
-                        <Image Margin="5" Source="../ViewThemes/Icons/install.png" />
-                        <TextBlock x:Name="_obscureBtnInstall_Text"
-                                   Margin="15,0,0,0"
+                    <Grid x:Name="_obscureBtn_Install" Margin="0">
+                        <Image Margin="0,0,157,0" Source="../ViewThemes/Icons/install.png" />
+                        <TextBlock Margin="25,0,0,0"
+                                   HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   FontSize="30"
+                                   FontSize="35"
                                    Text="Install" />
-                    </StackPanel>
-                    <StackPanel x:Name="_obscureBtn_Cancel"
-                                Width="160"
-                                Margin="0,0,0,60"
-                                Orientation="Horizontal"
-                                ToolTip="Cancel Install">
-                        <Image Margin="5" Source="../ViewThemes/Icons/back.png" />
-                        <TextBlock Margin="15,0,0,0"
+                    </Grid>
+                    <Grid x:Name="_obscureBtn_Cancel" Margin="0,0,0,60">
+                        <Image Margin="0,0,145,0" Source="../ViewThemes/Icons/back.png" />
+                        <TextBlock Margin="25,0,0,0"
+                                   HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   FontSize="30"
+                                   FontSize="35"
                                    Text="Cancel" />
-                    </StackPanel>
+                    </Grid>
                 </Grid>
             </Button>
 
             <Button Grid.Row="1"
-                    Width="35"
-                    Height="35"
-                    Margin="20,0,0,15.5"
+                    Width="40"
+                    Height="40"
+                    Margin="20,0,0,0"
                     Padding="0"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
+                    VerticalAlignment="Center"
                     HorizontalContentAlignment="Left"
-                    VerticalContentAlignment="Center"
+                    VerticalContentAlignment="Top"
                     Click="{s:Action Help}"
-                    FontFamily="Calibri"
-                    FontSize="25"
-                    FontWeight="Bold"
                     Style="{StaticResource Global}"
                     ToolTip="GitHub README-">
-                <StackPanel Orientation="Horizontal">
-                    <Image Margin="6,6,4,4" Source="../ViewThemes/Icons/help.png" />
-                </StackPanel>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      Name="path16563"
+                      Fill="{DynamicResource MaterialDesignBody}"
+                      StrokeEndLineCap="Round"
+                      StrokeLineJoin="Round"
+                      StrokeStartLineCap="Round">
+                    <Path.Data>
+                        <PathGeometry Figures="M 20 5.0009015 C 11.728583 5.0009015 5.0009015 11.728583 5.0009015 20 5.0009015 28.271417 11.728583 34.999098 20 34.999098 28.271417 34.999098 34.999098 28.271417 34.999098 20 34.999098 11.728583 28.271417 5.0009015 20 5.0009015 Z M 20 7.15856 C 27.105333 7.1585601 32.84144 12.894667 32.84144 20 32.84144 27.105333 27.105333 32.84144 20 32.84144 12.894667 32.84144 7.1585601 27.105333 7.15856 20 7.1585601 12.894667 12.894667 7.15856 20 7.15856 Z m 6.402878 8.370558 q 0 1.207948 -0.353546 2.180199 -0.338815 0.972252 -0.972252 1.679343 -0.618705 0.707092 -1.502569 1.134293 -0.869134 0.427201 -1.929772 0.54505 l -0.117848 2.87256 q -0.01473 0.26516 -0.427201 0.397739 -0.39774 0.13258 -1.163755 0.13258 -0.486126 0 -0.824941 -0.01473 -0.324083 -0.02946 -0.515587 -0.08839 -0.191505 -0.05892 -0.279891 -0.162042 -0.08839 -0.103118 -0.103117 -0.26516 l -0.132581 -3.476534 q -0.01473 -0.471394 0.04419 -0.766015 0.05892 -0.294623 0.206235 -0.471395 0.162042 -0.176773 0.39774 -0.235698 0.235697 -0.07365 0.559781 -0.07365 h 0.206235 q 0.780747 0 1.340528 -0.250429 0.574512 -0.250428 0.942789 -0.662898 0.368277 -0.41247 0.530319 -0.972251 0.176773 -0.559781 0.176773 -1.193218 0 -0.707091 -0.206235 -1.296334 -0.191505 -0.589243 -0.603975 -1.016444 -0.397739 -0.427202 -1.016444 -0.648168 -0.603974 -0.235697 -1.428915 -0.235697 -0.751285 0 -1.325796 0.147311 -0.574512 0.14731 -0.986983 0.324084 -0.41247 0.176772 -0.69236 0.324083 -0.26516 0.147311 -0.41247 0.147311 -0.103118 0 -0.191505 -0.05892 -0.08839 -0.07365 -0.14731 -0.250428 -0.05892 -0.176773 -0.103118 -0.500857 -0.02947 -0.324084 -0.02947 -0.82494 0 -0.515588 0.04419 -0.751285 0.0442 -0.235697 0.191504 -0.383008 0.147311 -0.147311 0.559781 -0.338815 0.412471 -0.206235 0.986983 -0.368277 0.574512 -0.1767727 1.281603 -0.2946214 0.707092 -0.1178486 1.473108 -0.1178486 1.738267 0 2.975678 0.486126 1.23741 0.471394 2.018157 1.281603 0.795479 0.810209 1.163756 1.856116 0.368277 1.045906 0.368277 2.209662 z m -4.3604 12.624533 q 0 0.603974 -0.103117 1.016445 -0.08839 0.41247 -0.338815 0.662898 -0.235697 0.250428 -0.648168 0.353546 -0.397738 0.117849 -0.986982 0.117849 -0.618705 0 -1.016443 -0.117849 -0.39774 -0.103118 -0.648168 -0.353546 -0.235697 -0.250428 -0.338815 -0.662898 -0.08839 -0.412471 -0.08839 -1.016445 0 -0.618705 0.08839 -1.031175 0.103118 -0.427201 0.338815 -0.67763 0.250428 -0.265159 0.648168 -0.368277 0.397738 -0.117848 1.016443 -0.117848 0.589244 0 0.986982 0.117848 0.412471 0.103118 0.648168 0.368277 0.250428 0.250429 0.338815 0.67763 0.103117 0.41247 0.103117 1.031175 z" FillRule="NonZero" />
+                    </Path.Data>
+                </Path>
             </Button>
 
             <Button Grid.Row="1"
-                    Width="35"
-                    Height="35"
-                    Margin="70,0,0,15.5"
+                    Width="40"
+                    Height="40"
+                    Margin="70,0,0,0"
                     Padding="0"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
+                    VerticalAlignment="Center"
                     HorizontalContentAlignment="Left"
-                    VerticalContentAlignment="Center"
+                    VerticalContentAlignment="Top"
                     Click="{s:Action Dump}"
-                    FontFamily="Calibri"
-                    FontSize="25"
-                    FontWeight="Bold"
                     Style="{StaticResource Global}"
                     ToolTip="Install Homebrew to a specified SD card.">
-                <StackPanel Orientation="Horizontal">
-                    <Image Margin="6,6,4,4" Source="../ViewThemes/Icons/sd.png" />
-                </StackPanel>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      Name="path2568"
+                      Fill="{DynamicResource MaterialDesignBody}"
+                      StrokeEndLineCap="Round"
+                      StrokeLineJoin="Round"
+                      StrokeStartLineCap="Round">
+                    <Path.Data>
+                        <PathGeometry Figures="m 17.893289 6.287419 c -1.398394 0 -2.74182 0.5499663 -3.739796 1.5295306 L 9.8399116 12.050745 c -1.001353 0.982877 -1.5651802 2.328184 -1.5651802 3.731307 v 15.857769 c 0 1.131811 0.9409479 2.07276 2.0727606 2.07276 H 29.77813 c 1.062577 0 1.947138 -0.884562 1.947138 -1.947139 V 8.2973682 c 0 -1.0971946 -0.912755 -2.0099492 -2.009948 -2.0099492 z m 0 2.1729179 H 29.552351 V 31.539663 H 10.447649 V 15.782052 c 0 -0.820703 0.329301 -1.606509 0.915003 -2.181406 l 4.313581 -4.2337948 c 0.592261 -0.5813349 1.387161 -0.9065143 2.217056 -0.9065143 z m -1.028742 0.8199369 c -0.520873 0 -0.938768 0.4195931 -0.938768 0.9404662 v 3.885789 c 0 0.520873 0.417895 0.940466 0.938768 0.940466 h 1.692501 c 0.520873 0 0.940464 -0.419593 0.940464 -0.940466 V 10.22074 c 0 -0.5208731 -0.419591 -0.9404662 -0.940464 -0.9404662 z m 4.518991 0 c -0.520874 0 -0.940467 0.4195931 -0.940467 0.9404662 v 3.885789 c 0 0.520873 0.419593 0.940466 0.940467 0.940466 h 1.692499 c 0.520873 0 0.940466 -0.419593 0.940466 -0.940466 V 10.22074 c 0 -0.5208731 -0.419593 -0.9404662 -0.940466 -0.9404662 z m 4.517291 0 c -0.520871 0 -0.938767 0.4195931 -0.938767 0.9404662 v 3.885789 c 0 0.520873 0.417896 0.940466 0.938767 0.940466 h 1.6925 c 0.520874 0 0.940466 -0.419593 0.940466 -0.940466 V 10.22074 c 0 -0.5208731 -0.419592 -0.9404662 -0.940466 -0.9404662 z" FillRule="NonZero" />
+                    </Path.Data>
+                </Path>
             </Button>
 
             <Button x:Name="ocSearch"
                     Grid.Row="1"
-                    Width="35"
-                    Height="35"
-                    Margin="120,0,0,15.5"
+                    Width="40"
+                    Height="40"
+                    Margin="120,0,0,0"
                     Padding="0"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
+                    VerticalAlignment="Center"
                     HorizontalContentAlignment="Left"
-                    VerticalContentAlignment="Center"
+                    VerticalContentAlignment="Top"
                     Click="SearchEvent"
-                    FontFamily="Calibri"
-                    FontSize="25"
-                    FontWeight="Bold"
                     Style="{StaticResource Global}"
                     ToolTip="Search and/or verify game files.">
-                <StackPanel Orientation="Horizontal">
-                    <Image Margin="4,6,6,4" Source="../ViewThemes/Icons/search.png" />
-                </StackPanel>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      Name="path1760"
+                      Fill="{DynamicResource MaterialDesignBody}"
+                      StrokeEndLineCap="Round"
+                      StrokeLineJoin="Bevel"
+                      StrokeStartLineCap="Round"
+                      StrokeThickness="0.813953">
+                    <Path.Data>
+                        <PathGeometry Figures="m 23.914349 5.8094952 c -5.662842 0 -10.274565 4.6133108 -10.274565 10.2761558 0 2.465745 0.874209 4.732037 2.328986 6.505264 L 5.4621009 33.099173 a 1.0174411 1.0174411 0 0 0 0 1.438726 1.0174411 1.0174411 0 0 0 1.4387254 0 L 17.409085 24.031229 c 1.773227 1.454778 4.039519 2.328987 6.505264 2.328987 5.662844 0 10.276156 -4.611722 10.276155 -10.274565 0 -5.662845 -4.613311 -10.2761558 -10.276155 -10.2761558 z m 0 2.0348822 c 4.563113 0 8.241274 3.6781596 8.241273 8.2412736 0 4.563111 -3.678159 8.239682 -8.241273 8.239682 -4.563112 0 -8.239683 -3.676571 -8.239683 -8.239682 0 -4.563114 3.676571 -8.2412736 8.239683 -8.2412736 z" FillRule="NonZero" />
+                    </Path.Data>
+                </Path>
             </Button>
 
             <CheckBox x:Name="ocDebug"
                       Grid.Row="1"
-                      Width="35"
-                      Height="35"
-                      Margin="170,0,0,15.5"
+                      Width="40"
+                      Height="40"
+                      Margin="170,0,0,0"
                       Padding="0"
                       HorizontalAlignment="Left"
-                      VerticalAlignment="Bottom"
+                      VerticalAlignment="Center"
                       HorizontalContentAlignment="Left"
-                      VerticalContentAlignment="Center"
-                      FontFamily="Calibri"
-                      FontSize="25"
-                      FontWeight="Bold"
+                      VerticalContentAlignment="Top"
+                      Click="SearchEvent"
                       Style="{StaticResource MaterialDesignCheckBox}"
-                      ToolTip="Show console when installing.">
-                <StackPanel Orientation="Horizontal">
-                    <Image Margin="5,5,5,4" Source="../ViewThemes/Icons/debug.png" />
-                </StackPanel>
+                      ToolTip="Enable debug mode. (Shows console when installing.)">
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      Fill="{DynamicResource MaterialDesignBody}"
+                      StrokeEndLineCap="Round"
+                      StrokeLineJoin="Bevel"
+                      StrokeStartLineCap="Round"
+                      StrokeThickness="0.813953">
+                    <Path.Data>
+                        <PathGeometry Figures="m 34.255493 20.171727 c 0 0.175096 -0.0066 0.326622 -0.02021 0.454577 -0.01348 0.127963 -0.03368 0.235708 -0.06061 0.323256 -0.02021 0.08754 -0.0505 0.158261 -0.09091 0.212137 -0.03368 0.04713 -0.0741 0.08081 -0.121221 0.101011 l -7.748035 3.838661 c -0.09429 0.04714 -0.175101 0.06735 -0.242441 0.06061 -0.06733 -0.0068 -0.124585 -0.04381 -0.171731 -0.111117 -0.0404 -0.06733 -0.0707 -0.164985 -0.09091 -0.292948 -0.01348 -0.134689 -0.02021 -0.303053 -0.02021 -0.505087 0 -0.276115 0.0034 -0.494987 0.01015 -0.656615 0.01348 -0.161623 0.03368 -0.289583 0.06062 -0.383866 0.02695 -0.09429 0.06399 -0.161624 0.111117 -0.202035 0.04714 -0.04712 0.111116 -0.08754 0.191933 -0.121222 l 5.818602 -2.727469 -5.707483 -2.646656 c -0.107754 -0.04713 -0.195298 -0.09427 -0.262646 -0.141431 -0.06061 -0.04712 -0.107754 -0.117842 -0.141431 -0.212136 -0.03368 -0.101013 -0.05723 -0.232335 -0.0707 -0.393967 -0.0068 -0.168363 -0.01016 -0.393968 -0.01016 -0.676816 0 -0.249177 0.0066 -0.444478 0.02021 -0.585902 0.02021 -0.14143 0.0505 -0.242443 0.09091 -0.303052 0.04713 -0.06062 0.104375 -0.08754 0.171729 -0.08081 0.06733 0.0068 0.148157 0.03371 0.242442 0.08081 l 7.758136 3.868966 c 0.08754 0.0404 0.154898 0.148156 0.202035 0.323256 0.05387 0.175097 0.08081 0.434375 0.08081 0.777834 z m -15.940546 8.424851 c -0.03368 0.08754 -0.07744 0.158261 -0.131326 0.212136 -0.05387 0.05387 -0.131309 0.09765 -0.23234 0.131326 -0.09429 0.03367 -0.215507 0.05725 -0.363661 0.0707 -0.141431 0.02021 -0.323257 0.03031 -0.545495 0.03031 -0.276115 0 -0.50172 -0.01348 -0.676816 -0.0404 -0.175098 -0.02695 -0.309788 -0.06735 -0.40407 -0.121221 -0.08754 -0.05387 -0.138051 -0.124585 -0.151519 -0.212136 -0.01348 -0.08082 -5e-6 -0.178465 0.0404 -0.292951 l 6.04084 -16.960823 c 0.02695 -0.08754 0.06735 -0.15826 0.121221 -0.212135 0.05387 -0.06061 0.127946 -0.107754 0.222238 -0.14143 0.09429 -0.03368 0.215507 -0.05725 0.363662 -0.0707 0.154898 -0.02021 0.340093 -0.03031 0.555596 -0.03031 0.28285 0 0.508455 0.01348 0.676818 0.04042 0.175096 0.02693 0.306419 0.06733 0.393967 0.121222 0.08754 0.05387 0.138068 0.124584 0.151535 0.212134 0.01348 0.08082 0.0034 0.178465 -0.03031 0.292953 z m -3.60632 -4.374055 c 0 0.249177 -0.01015 0.444478 -0.03031 0.585902 -0.02021 0.141431 -0.05387 0.242443 -0.101013 0.303052 -0.0404 0.06061 -0.09429 0.08754 -0.161622 0.08081 -0.06061 -0.0068 -0.141431 -0.03371 -0.242442 -0.08081 L 6.4252005 21.252612 c -0.094287 -0.05387 -0.1649859 -0.164986 -0.212136 -0.333357 -0.040401 -0.175097 -0.060611 -0.434375 -0.060611 -0.777834 0 -0.175097 0.00665 -0.326622 0.020209 -0.454577 0.013484 -0.134689 0.030313 -0.242444 0.050506 -0.323256 0.020209 -0.08754 0.047144 -0.154898 0.08082 -0.202035 0.040401 -0.05387 0.084182 -0.09427 0.1313261 -0.121222 l 7.7379314 -3.83866 c 0.195302 -0.09429 0.333358 -0.07408 0.414171 0.06061 0.08082 0.127946 0.121221 0.393966 0.121221 0.798037 0 0.276115 -0.0066 0.494985 -0.02021 0.656613 -0.0066 0.161623 -0.02357 0.289583 -0.0505 0.383865 -0.02693 0.09429 -0.06397 0.16164 -0.111117 0.202037 -0.04714 0.0404 -0.111117 0.08081 -0.191931 0.121221 l -5.8186014 2.727463 5.7074824 2.646656 c 0.101013 0.04713 0.181831 0.09427 0.242441 0.141431 0.06735 0.04713 0.117859 0.121204 0.151536 0.222237 0.03367 0.09429 0.05725 0.22561 0.07071 0.393966 0.01348 0.161624 0.02021 0.383868 0.02021 0.666715 z" FillRule="NonZero" />
+                    </Path.Data>
+                </Path>
             </CheckBox>
         </Grid>
 
