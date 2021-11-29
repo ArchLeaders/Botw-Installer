@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BotwInstaller.UI.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,25 @@ namespace BotwInstaller.UI.Models
 {
     public class IPrompt
     {
-        public static void Error()
+        public static bool Error(string text, bool isYesNo = false, string title = "Error")
         {
-
+            PromptView pr = new(text, title, isYesNo);
+            pr.ShowDialog();
+            return pr.activePrompt;
         }
 
-        public static void Warning()
+        public static bool Warning(string text, bool isYesNo = false, string title = "Warning")
         {
+            PromptView pr = new(text, title, isYesNo);
+            pr.ShowDialog();
+            return pr.activePrompt;
+        }
 
+        public static bool Show(string text, string title = "Notification", bool isYesNo = false)
+        {
+            PromptView pr = new(text, title, isYesNo);
+            pr.ShowDialog();
+            return pr.activePrompt;
         }
     }
 }

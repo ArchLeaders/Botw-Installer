@@ -8,10 +8,15 @@ namespace BotwInstaller.UI.Views
     /// </summary>
     public partial class PromptView : Window
     {
-        public static bool activePrompt = false;
-        public PromptView(string messgae, string title, bool isYesNo = false)
+        public bool activePrompt = false;
+        public PromptView(string message, string title, bool isYesNo = false)
         {
             InitializeComponent();
+
+            activePrompt = false;
+
+            text.Text = message;
+            tbTitle.Text = title;
 
             if (isYesNo)
             {
@@ -30,11 +35,13 @@ namespace BotwInstaller.UI.Views
         private void Yes(object sender, RoutedEventArgs e)
         {
             activePrompt = true;
+            Close();
         }
 
         private void No(object sender, RoutedEventArgs e)
         {
             activePrompt = false;
+            Close();
         }
     }
 }

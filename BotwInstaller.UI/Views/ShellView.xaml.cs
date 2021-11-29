@@ -2,6 +2,7 @@
 using BotwInstaller.Lib.GameData;
 using BotwInstaller.Lib.Operations;
 using BotwInstaller.Lib.Prompts;
+using BotwInstaller.UI.Models;
 using BotwInstaller.UI.ViewThemes.ControlStyles;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
@@ -431,9 +432,9 @@ namespace BotwInstaller.UI.Views
                 // return[0] == error: Missing files
                 // else: All good.
                 if (check == null)
-                    MessageBox.Show("Game files not found.", "Error");
+                    IPrompt.Error("Game files not found.");
                 else if (check[0] == "Error")
-                    MessageBox.Show(check[1], check[0]);
+                    IPrompt.Error(check[1], false, check[0]);
                 else SetGameConfig(check[0], check[1], check[2], show);
 
                 // Revert readonly state
@@ -476,7 +477,7 @@ namespace BotwInstaller.UI.Views
                 tbBasic_BotwPath.ToolTip = $"Verified.\nBase Game: \"{bC}\"\n\nUpdate: \"{uC}\"\n\nDLC: \"{dC}\"";
 
                 // Show complete message when applicable
-                if (showComplete) MessageBox.Show("Game paths found and verified.", "Notification");
+                if (showComplete) IPrompt.Show("Game paths found and verified.", "Notification");
             }
             catch (Exception ex)
             {
