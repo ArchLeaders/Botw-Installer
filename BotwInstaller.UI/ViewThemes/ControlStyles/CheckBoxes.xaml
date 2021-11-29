@@ -39,7 +39,7 @@
                                 CornerRadius="5"
                                 Opacity="0" />
                         <Border x:Name="accent"
-                                Background="#40000000"
+                                Background="{DynamicResource SecondaryHueLightBrush}"
                                 CornerRadius="5"
                                 Opacity="0" />
                         <ContentPresenter x:Name="contentPresenter"
@@ -140,7 +140,7 @@
                                 CornerRadius="5"
                                 Opacity="1" />
                         <Border x:Name="fade"
-                                Background="#40000000"
+                                Background="{DynamicResource SecondaryHueLightBrush}"
                                 CornerRadius="5"
                                 Opacity="0" />
                         <Border x:Name="accent"

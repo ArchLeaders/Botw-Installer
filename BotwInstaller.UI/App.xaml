@@ -23,6 +23,7 @@
                 <ResourceDictionary Source="/ViewThemes/ControlStyles/ChromeButtonsStyles.xaml" />
                 <ResourceDictionary Source="/ViewThemes/ControlStyles/TabButtonStyles.xaml" />
                 <ResourceDictionary Source="/ViewThemes/ControlStyles/CheckBoxes.xaml" />
+                <ResourceDictionary Source="/ViewThemes/ControlStyles/DefaultButtonStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="Windows">pack://application:,,,/ViewThemes/Fonts/#Glyph</FontFamily>
         </ResourceDictionary>

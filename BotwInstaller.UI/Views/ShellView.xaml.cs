@@ -24,6 +24,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using System.Xml;
 
 namespace BotwInstaller.UI.Views
@@ -40,6 +41,8 @@ namespace BotwInstaller.UI.Views
 
         public static int minHeight = 450;
         public static int minWidth = 750;
+
+        DispatcherTimer timer = new();
 
         #region Fix Window Sixe in fullscreen.
 
@@ -165,6 +168,13 @@ namespace BotwInstaller.UI.Views
         {
             #region Initialize
 
+            // temp
+
+            PromptView prompt = new("Default", "Error");
+            prompt.Show();
+
+            // temp
+
             InitializeComponent();
 
             if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini"))
@@ -179,6 +189,37 @@ namespace BotwInstaller.UI.Views
             #endregion
 
             #region Inline Animations
+
+            timer.Interval = TimeSpan.FromMilliseconds(3000);
+            timer.Tick += async (s, e) =>
+            {
+                // bring ep1 up
+                ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 100), 400);
+
+                // wait for ep1 to mostly go up
+                await Task.Run(() => Thread.Sleep(300));
+
+                // bring ep2 up
+                ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 100), 400);
+
+                // wait a total of 400ms to bring ep1 back down
+                await Task.Run(() => Thread.Sleep(100));
+
+                // bring ep1 down
+                ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 0), 400);
+
+                // wait another 200ms to have it be 300ms since ep2 went up
+                await Task.Run(() => Thread.Sleep(200));
+
+                // bring ep3 up
+                ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 100), 400);
+
+
+                await Task.Run(() => Thread.Sleep(100));
+                ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 0), 400);
+
+                await Task.Run(() => Thread.Sleep(300));
+            };
 
             #endregion
 
@@ -206,6 +247,33 @@ namespace BotwInstaller.UI.Views
         }
 
         #region Setup & Control Events
+
+        /// <summary>
+        /// Opens a VistaFolderBrowserDialog and sets the result to the sender TextBox.
+        /// <para>Handled: ConsoleMsg.Error</para>
+        /// </summary>
+        /// <param name="textBox">Output TextBox</param>
+        /// <param name="title">Dialog Window Title</param>
+        private static void BrowseEvent(TextBox textBox, string? title = null)
+        {
+            try
+            {
+                VistaFolderBrowserDialog dialog = new();
+
+                dialog.Description = title;
+                dialog.UseDescriptionForTitle = true;
+
+                if (dialog.ShowDialog() == true)
+                    textBox.Text = dialog.SelectedPath;
+
+                textBox.Focus();
+                textBox.CaretIndex = Int32.MaxValue;
+            }
+            catch (Exception ex)
+            {
+                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.Browse", new string[] { $"textBox;{textBox}", $"title;{title}" }, ex.Message);
+            }
+        }
 
         /// <summary>
         /// Registers UI click events and handling
@@ -322,6 +390,25 @@ namespace BotwInstaller.UI.Views
         {
             try
             {
+                #region Searching Timer
+
+                DispatcherTimer timer = new();
+
+                timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+
+                timer.Tick += (s, e) =>
+                {
+                    if (tbBasic_BotwPath.Text == "Searching.")
+                        tbBasic_BotwPath.Text = "Searching..";
+                    else if (tbBasic_BotwPath.Text == "Searching..")
+                        tbBasic_BotwPath.Text = "Searching...";
+                    else if (tbBasic_BotwPath.Text == "Searching...")
+                        tbBasic_BotwPath.Text = "Searching.";
+                    else tbBasic_BotwPath.Text = "Searching.";
+                };
+
+                #endregion
+
                 bool show = false;
 
                 c.base_game = "";
@@ -333,13 +420,8 @@ namespace BotwInstaller.UI.Views
                 // anything else: Button Click
                 if (sender != null) show = true;
 
-                // Get the theme colors
-                PaletteHelper helper = new();
-                ITheme theme = helper.GetTheme();
-
                 // Set staus as 'Searching...'
-                tbBasic_BotwPath.Foreground = new BrushConverter().ConvertFromString("#2f2f2f") as Brush;
-                tbBasic_BotwPath.Text = "Searching...";
+                timer.Start();
                 tbBasic_BotwPath.IsReadOnly = true;
 
                 // Call Search/Verify logic.
@@ -355,13 +437,14 @@ namespace BotwInstaller.UI.Views
                     MessageBox.Show(check[1], check[0]);
                 else SetGameConfig(check[0], check[1], check[2], show);
 
-                // Revert text box color and text.
+                // Revert readonly state
                 if (!isVerified)
-                {
-                    tbBasic_BotwPath.Text = "";
                     tbBasic_BotwPath.IsReadOnly = false;
-                }
-                tbBasic_BotwPath.Foreground = new SolidColorBrush(theme.Body);
+
+                // Cleanup
+                timer.Stop();
+                tbBasic_BotwPath.Focus();
+                tbBasic_BotwPath.CaretIndex = Int32.MaxValue;
             }
             catch (Exception ex)
             {
@@ -402,30 +485,6 @@ namespace BotwInstaller.UI.Views
             catch (Exception ex)
             {
                 ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.SetGameConfig", new string[] { $"bC;{bC}", $"uC;{uC}", $"dC;{dC}", $"showComplete;{showComplete}" }, ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Opens a VistaFolderBrowserDialog and sets the result to the sender TextBox.
-        /// <para>Handled: ConsoleMsg.Error</para>
-        /// </summary>
-        /// <param name="textBox">Output TextBox</param>
-        /// <param name="title">Dialog Window Title</param>
-        private static void BrowseEvent(TextBox textBox, string? title = null)
-        {
-            try
-            {
-                VistaFolderBrowserDialog dialog = new();
-
-                dialog.Description = title;
-                dialog.UseDescriptionForTitle = true;
-
-                if (dialog.ShowDialog() == true)
-                    textBox.Text = dialog.SelectedPath;
-            }
-            catch (Exception ex)
-            {
-                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.Browse", new string[] { $"textBox;{textBox}", $"title;{title}" }, ex.Message);
             }
         }
 
@@ -471,6 +530,8 @@ namespace BotwInstaller.UI.Views
 
                 // Set the optimal (default) Cemu path.
                 tbBasic_CemuPath.Text = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu";
+                tbBasic_CemuPath.Focus();
+                tbBasic_CemuPath.CaretIndex = int.MaxValue;
 
                 // If Cemu exists don't install it.
                 if (File.Exists($"{tbBasic_CemuPath.Text}\\Cemu.exe"))
@@ -510,28 +571,28 @@ namespace BotwInstaller.UI.Views
 
         public async Task StartAnim()
         {
+            timer.Start();
             ThicknessAnim(parentGrid, "anim_LowerPanel", Grid.MarginProperty, new Thickness(0), 500);
             ThicknessAnim(_installParent, "_obscureBtn_Install", Grid.MarginProperty, new Thickness(0,60,0,0), 300);
             ThicknessAnim(parentGrid, "_obscureBtn_Cancel", Grid.MarginProperty, new Thickness(0), 300);
             await Task.Run(() => Thread.Sleep(500));
             DoubleAnim(anim_LowerPanel, "anim_TopBar", Border.MaxWidthProperty, 0, 500);
             await Task.Run(() => Thread.Sleep(500));
-            // fade in load controls
-            // wait
-            // tigger load timer
+            anim_Controls.Visibility = Visibility.Visible;
+            DoubleAnim(parentGrid, anim_Controls.Name, Grid.OpacityProperty, 1, 500);
         }
 
         public async Task StopAnim()
         {
+            DoubleAnim(parentGrid, anim_Controls.Name, Grid.OpacityProperty, 0, 500);
             ThicknessAnim(parentGrid, "anim_LowerPanel", Grid.MarginProperty, new Thickness(0,350,0,0), 500);
             ThicknessAnim(_installParent, "_obscureBtn_Install", Grid.MarginProperty, new Thickness(0), 300);
             ThicknessAnim(parentGrid, "_obscureBtn_Cancel", Grid.MarginProperty, new Thickness(0,60,0,0), 300);
             await Task.Run(() => Thread.Sleep(500));
             DoubleAnim(anim_LowerPanel, "anim_TopBar", Border.MaxWidthProperty, 1000, 500);
             await Task.Run(() => Thread.Sleep(500));
-            // fade in load controls
-            // wait
-            // tigger load timer
+            anim_Controls.Visibility = Visibility.Hidden;
+            timer.Stop();
         }
 
         private void ColorAnim(FrameworkElement parentControl, string control, DependencyProperty property, Color value, int timeSpan = 1000)
@@ -548,21 +609,6 @@ namespace BotwInstaller.UI.Views
 
             storyboard.Begin(parentControl);
         }
-
-        //private void TextAnim(FrameworkElement parentControl, string control, DependencyProperty property, string value, int timeSpan = 1000)
-        //{
-        //    StringAnimationUsingKeyFrames anim = new();
-        //    anim.To = value;
-        //    anim.Duration = new Duration(TimeSpan.FromMilliseconds(timeSpan));
-
-        //    Storyboard.SetTargetName(anim, control);
-        //    Storyboard.SetTargetProperty(anim, new PropertyPath(property));
-
-        //    Storyboard storyboard = new Storyboard();
-        //    storyboard.Children.Add(anim);
-
-        //    storyboard.Begin(parentControl);
-        //}
 
         private void DoubleAnim(FrameworkElement parentControl, string control, DependencyProperty property, double value, int timeSpan = 1000)
         {

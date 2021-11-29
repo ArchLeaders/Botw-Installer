@@ -327,17 +327,18 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <StackPanel Margin="0,15,15,0">
-                <Border BorderBrush="#3b000000"
-                        BorderThickness="1"
+                <Border Margin="0,0,0,0"
+                        BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                        BorderThickness="2"
                         CornerRadius="5">
                     <StackPanel Margin="12,6">
-                        <TextBlock Margin="3,-14,0,0"
+                        <TextBlock Margin="3,-15,0,0"
+                                   Padding="5,0"
+                                   HorizontalAlignment="Left"
+                                   Background="{DynamicResource PrimaryHueDarkBrush}"
                                    FontSize="14"
-                                   Text="Python">
-                            <TextBlock.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="4" />
-                            </TextBlock.Effect>
-                        </TextBlock>
+                                   Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                   Text="Python" />
 
                         <!--  Check Box: 'Install Python' | Name: cbAdv_PyDocs | Done  -->
                         <CheckBox x:Name="cbAdv_InstallPython"
@@ -381,17 +382,17 @@
                     </StackPanel>
                 </Border>
                 <Border Margin="0,15,0,0"
-                        BorderBrush="#3b000000"
-                        BorderThickness="1"
+                        BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                        BorderThickness="2"
                         CornerRadius="5">
                     <StackPanel Margin="12,6">
-                        <TextBlock Margin="3,-14,0,0"
+                        <TextBlock Margin="3,-15,0,0"
+                                   Padding="5,0"
+                                   HorizontalAlignment="Left"
+                                   Background="{DynamicResource PrimaryHueDarkBrush}"
                                    FontSize="14"
-                                   Text="Microsoft (Readonly)">
-                            <TextBlock.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="4" />
-                            </TextBlock.Effect>
-                        </TextBlock>
+                                   Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                   Text="Microsoft (Readonly)" />
 
                         <!--  Check Box: 'Install .NET Runtime' | Name: cbAdv_NetRuntime | Done  -->
                         <CheckBox x:Name="_cbAdv_NetRuntime"
@@ -421,8 +422,8 @@
                         Grid.ColumnSpan="2"
                         Margin="0,0,15,0">
                 <Border Margin="0,15,0,0"
-                        BorderBrush="#3b000000"
-                        BorderThickness="1"
+                        BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                        BorderThickness="2"
                         CornerRadius="5">
                     <StackPanel Margin="12,6">
                         <Grid>
@@ -431,13 +432,13 @@
                                 <ColumnDefinition Width="2*" />
                             </Grid.ColumnDefinitions>
                             <StackPanel>
-                                <TextBlock Margin="3,-14,0,0"
+                                <TextBlock Margin="3,-15,0,0"
+                                           Padding="5,0"
+                                           HorizontalAlignment="Left"
+                                           Background="{DynamicResource PrimaryHueDarkBrush}"
                                            FontSize="14"
-                                           Text="Cemu">
-                                    <TextBlock.Effect>
-                                        <DropShadowEffect BlurRadius="5" ShadowDepth="4" />
-                                    </TextBlock.Effect>
-                                </TextBlock>
+                                           Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                           Text="Cemu" />
 
                                 <!--  Check Box: 'Install Cemu' | Name: cbAdv_InstallCemu | Done  -->
                                 <CheckBox x:Name="cbAdv_InstallCemu"
@@ -501,9 +502,9 @@
                         </Grid>
                     </StackPanel>
                 </Border>
-                <Border Margin="0,15,0,0"
-                        BorderBrush="#3b000000"
-                        BorderThickness="1"
+                <Border Margin="0,13,0,0"
+                        BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                        BorderThickness="2"
                         CornerRadius="5">
                     <StackPanel Margin="12,6">
                         <Grid>
@@ -512,13 +513,13 @@
                                 <ColumnDefinition Width="2*" />
                             </Grid.ColumnDefinitions>
                             <StackPanel>
-                                <TextBlock Margin="3,-14,0,0"
+                                <TextBlock Margin="3,-15,0,0"
+                                           Padding="5,0"
+                                           HorizontalAlignment="Left"
+                                           Background="{DynamicResource PrimaryHueDarkBrush}"
                                            FontSize="14"
-                                           Text="BCML">
-                                    <TextBlock.Effect>
-                                        <DropShadowEffect BlurRadius="5" ShadowDepth="4" />
-                                    </TextBlock.Effect>
-                                </TextBlock>
+                                           Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                           Text="BCML" />
 
                                 <!--  Check Box: 'BCML' | Name: cbAdv_InstallBcml | Done  -->
                                 <CheckBox x:Name="cbAdv_InstallBcml"
@@ -560,7 +561,7 @@
 
             <Border x:Name="anim_TopBar"
                     MaxWidth="1000"
-                    Background="#0082C9">
+                    Background="{DynamicResource SecondaryHueMidBrush}">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10"
                                       Direction="90"
@@ -580,7 +581,8 @@
                     VerticalContentAlignment="Center"
                     FontFamily="Calibri"
                     FontSize="25"
-                    FontWeight="Bold">
+                    FontWeight="Bold"
+                    Style="{DynamicResource Global}">
                 <Grid x:Name="_installParent">
                     <StackPanel x:Name="_obscureBtn_Install"
                                 Width="160"
@@ -691,11 +693,155 @@
 
         <!--#region Loading Controls-->
 
+        <Grid x:Name="_anim_Controls"
+              Grid.Row="1"
+              Grid.RowSpan="3"
+              Opacity="0"
+              Visibility="Hidden">
+
+            <!--  EP 1  -->
+            <Ellipse x:Name="ep1_parent"
+                     Width="220"
+                     Height="220"
+                     StrokeThickness="3">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                                      ShadowDepth="0"
+                                      Color="#00BCFF" />
+                </Ellipse.Effect>
+                <Ellipse.Stroke>
+                    <LinearGradientBrush StartPoint="1.0,0.0" EndPoint="0.5,0">
+                        <GradientStop Color="#00BCFF" />
+                        <GradientStop Offset="1" Color="{DynamicResource PrimaryHueDarkColor}" />
+                    </LinearGradientBrush>
+                </Ellipse.Stroke>
+                <Ellipse.RenderTransform>
+                    <RotateTransform x:Name="ep1_target" Angle="20" CenterX="110" CenterY="110" />
+                </Ellipse.RenderTransform>
+            </Ellipse>
+
+            <!--  EP 2  -->
+            <Ellipse x:Name="ep2_parent"
+                     Width="260"
+                     Height="260"
+                     StrokeThickness="3">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                                      ShadowDepth="0"
+                                      Color="#00BCFF" />
+                </Ellipse.Effect>
+                <Ellipse.Stroke>
+                    <LinearGradientBrush StartPoint="1.0,0.0" EndPoint="0.5,0">
+                        <GradientStop Color="#00BCFF" />
+                        <GradientStop Offset="1" Color="{DynamicResource PrimaryHueDarkColor}" />
+                    </LinearGradientBrush>
+                </Ellipse.Stroke>
+                <Ellipse.RenderTransform>
+                    <RotateTransform x:Name="ep2_target" Angle="40" CenterX="130" CenterY="130" />
+                </Ellipse.RenderTransform>
+            </Ellipse>
+
+            <!--  EP 3  -->
+            <Ellipse x:Name="ep3_parent"
+                     Width="300"
+                     Height="300"
+                     StrokeThickness="3">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                                      ShadowDepth="0"
+                                      Color="#00BCFF" />
+                </Ellipse.Effect>
+                <Ellipse.Stroke>
+                    <LinearGradientBrush StartPoint="1.0,0.0" EndPoint="0.5,0">
+                        <GradientStop Color="#00BCFF" />
+                        <GradientStop Offset="1" Color="{DynamicResource PrimaryHueDarkColor}" />
+                    </LinearGradientBrush>
+                </Ellipse.Stroke>
+                <Ellipse.RenderTransform>
+                    <RotateTransform x:Name="ep3_target" Angle="60" CenterX="150" CenterY="150" />
+                </Ellipse.RenderTransform>
+            </Ellipse>
+
+            <!--  Static  -->
+            <Ellipse Width="170"
+                     Height="170"
+                     Fill="{DynamicResource PrimaryHueMidBrush}">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                                      Opacity="0.5"
+                                      ShadowDepth="2" />
+                </Ellipse.Effect>
+            </Ellipse>
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="Sans-sefif"
+                       FontSize="60"
+                       FontWeight="Bold"
+                       Text="52%"
+                       TextOptions.TextFormattingMode="Display">
+                <TextBlock.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                                      Opacity="1"
+                                      ShadowDepth="4"
+                                      Color="#000" />
+                </TextBlock.Effect>
+            </TextBlock>
+        </Grid>
+
         <Grid x:Name="anim_Controls"
               Grid.Row="1"
-              Grid.RowSpan="3" />
+              Grid.RowSpan="3">
+
+            <Ellipse x:Name="ep1_trg" Fill="{DynamicResource PrimaryHueMidBrush}"
+                     Height="45" Width="45" Margin="0, 0, 140, 0">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="5" ShadowDepth="2"/>
+                </Ellipse.Effect>
+            </Ellipse>
+
+            <Ellipse x:Name="ep2_trg" Fill="{DynamicResource PrimaryHueMidBrush}"
+                     Height="45" Width="45">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="5" ShadowDepth="2"/>
+                </Ellipse.Effect>
+            </Ellipse>
+
+            <Ellipse x:Name="ep3_trg" Fill="{DynamicResource PrimaryHueMidBrush}"
+                     Height="45" Width="45" Margin="140, 0, 0, 0">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="5" ShadowDepth="2"/>
+                </Ellipse.Effect>
+            </Ellipse>
+
+            <TextBlock x:Name="ocName"
+                       Margin="35,55"
+                       VerticalAlignment="Bottom"
+                       Text="Installing . . ." />
+            <TextBlock Margin="38,55"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Bottom"
+                       Text="25% Complete" />
+            <Border Height="35"
+                    Margin="35,15"
+                    VerticalAlignment="Bottom"
+                    Background="{DynamicResource PrimaryHueMidBrush}"
+                    CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="5" ShadowDepth="1" />
+                </Border.Effect>
+            </Border>
+            <Border Height="35"
+                    MinWidth="220"
+                    Margin="35,15"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Background="{DynamicResource SecondaryHueMidBrush}"
+                    CornerRadius="5,0,0,5" />
+        </Grid>
 
         <!--#endregion-->
+
+
 
     </Grid>
 </Window>
