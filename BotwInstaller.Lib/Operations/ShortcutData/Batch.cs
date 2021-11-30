@@ -43,7 +43,7 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
             await Task.Run(() => File.WriteAllText($"{root}\\uninstall_cemu.bat",
                 "@echo off\n" +
                 "echo Removing Cemu...\n" +
-                $"rmdir \"{c.cemu}\" /s /q\n" +
+                $"rmdir \"{c.cemu_path}\" /s /q\n" +
                 "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Cemu /f\n" +
                 $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\Cemu.lnk /f\n" +
                 "echo Done!\n" +

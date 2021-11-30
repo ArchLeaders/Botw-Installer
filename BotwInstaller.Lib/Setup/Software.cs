@@ -11,13 +11,13 @@ namespace BotwInstaller.Lib.Setup
 {
     public class Software
     {
-        public static async Task Python(double ver, string path, bool docs)
+        public static async Task Python(string ver, string path, bool docs)
         {
             try
             {
-                await Download.FromUrl($"https://www.python.org/ftp/python/3.{ver}/python-3.{ver}-amd64.exe", $"{Initialize.temp}\\py.res");
+                await Download.FromUrl($"https://www.python.org/ftp/python/{ver}/python-{ver}-amd64.exe", $"{Initialize.temp}\\py.res");
 
-                ConsoleMsg.PrintLine($"Initialize => Install python 3.{ver}...", ConsoleColor.DarkCyan);
+                ConsoleMsg.PrintLine($"Initialize => Install python {ver}...", ConsoleColor.DarkCyan);
                 await Proc.Start($"{Initialize.temp}\\py.res", $"/quiet InstallAllUsers=1 TargetDir={path} PrependPath=1 Include_doc={docs} Include_pip=1");
             }
             catch (Exception e)

@@ -1,7 +1,11 @@
-﻿using BotwInstaller.Lib;
+﻿#pragma warning disable CS8629
+
+using BotwInstaller.Lib;
 using BotwInstaller.Lib.GameData;
 using BotwInstaller.Lib.Operations;
+using BotwInstaller.Lib.Operations.Configure;
 using BotwInstaller.Lib.Prompts;
+using BotwInstaller.Lib.Shell;
 using BotwInstaller.UI.Models;
 using BotwInstaller.UI.ViewThemes.ControlStyles;
 using MaterialDesignThemes.Wpf;
@@ -169,13 +173,6 @@ namespace BotwInstaller.UI.Views
         {
             #region Initialize
 
-            // temp
-
-            PromptView prompt = new("Default", "Error");
-            prompt.Show();
-
-            // temp
-
             InitializeComponent();
 
             if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini"))
@@ -231,6 +228,8 @@ namespace BotwInstaller.UI.Views
                     // Start Install
                     isCancel = true;
                     await StartAnim();
+                    await Configure();
+                    await Watch();
                 }
                 else
                 {
@@ -566,12 +565,17 @@ namespace BotwInstaller.UI.Views
 
         #region Animations
 
+        /// <summary>
+        /// The animation sequence played when the install is started
+        /// </summary>
+        /// <returns></returns>
         public async Task StartAnim()
         {
             timer.Start();
             ThicknessAnim(parentGrid, "anim_LowerPanel", Grid.MarginProperty, new Thickness(0), 500);
             ThicknessAnim(_installParent, "_obscureBtn_Install", Grid.MarginProperty, new Thickness(0,60,0,0), 300);
             ThicknessAnim(parentGrid, "_obscureBtn_Cancel", Grid.MarginProperty, new Thickness(0), 300);
+            ThicknessAnim(slideoutParent, animSlideout.Name, Grid.MarginProperty, new Thickness(-250, 0, 0, 0), 300);
             await Task.Run(() => Thread.Sleep(500));
             DoubleAnim(anim_LowerPanel, "anim_TopBar", Border.MaxWidthProperty, 0, 500);
             await Task.Run(() => Thread.Sleep(500));
@@ -579,6 +583,10 @@ namespace BotwInstaller.UI.Views
             DoubleAnim(parentGrid, anim_Controls.Name, Grid.OpacityProperty, 1, 500);
         }
 
+        /// <summary>
+        /// The animation sequence played when the install is canceled
+        /// </summary>
+        /// <returns></returns>
         public async Task StopAnim()
         {
             DoubleAnim(parentGrid, anim_Controls.Name, Grid.OpacityProperty, 0, 500);
@@ -586,27 +594,61 @@ namespace BotwInstaller.UI.Views
             ThicknessAnim(_installParent, "_obscureBtn_Install", Grid.MarginProperty, new Thickness(0), 300);
             ThicknessAnim(parentGrid, "_obscureBtn_Cancel", Grid.MarginProperty, new Thickness(0,60,0,0), 300);
             await Task.Run(() => Thread.Sleep(500));
+            ThicknessAnim(slideoutParent, animSlideout.Name, Grid.MarginProperty, new Thickness(0, 0, 0, 0), 300);
             DoubleAnim(anim_LowerPanel, "anim_TopBar", Border.MaxWidthProperty, 1000, 500);
             await Task.Run(() => Thread.Sleep(500));
             anim_Controls.Visibility = Visibility.Hidden;
             timer.Stop();
         }
 
-        private void ColorAnim(FrameworkElement parentControl, string control, DependencyProperty property, Color value, int timeSpan = 1000)
+        /// <summary>
+        /// Moves the progress bar up <paramref name="inc"/> amount of times
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task Increment(int inc = 1)
         {
-            ColorAnimation anim = new();
-            anim.To = value;
-            anim.Duration = new Duration(TimeSpan.FromMilliseconds(timeSpan));
-
-            Storyboard.SetTargetName(anim, control);
-            Storyboard.SetTargetProperty(anim, new PropertyPath(property));
-
-            Storyboard storyboard = new Storyboard();
-            storyboard.Children.Add(anim);
-
-            storyboard.Begin(parentControl);
+            DoubleAnim(anim_Controls, installBar.Name, Border.MinWidthProperty, inc * 6.8, inc * 10);
+            await Task.Run(() => Thread.Sleep(inc * 10));
+            installStatus.Text = $"{inc}% Complete";
         }
 
+        /// <summary>
+        /// Watches the inc.p file to update the UI accordingly.
+        /// </summary>
+        /// <returns></returns>
+        public async Task Watch()
+        {
+            var cache = 0;
+
+            DispatcherTimer check = new();
+            check.Interval = TimeSpan.FromMilliseconds(1000);
+            check.Tick += async (s, e) =>
+            {
+                try
+                {
+                    var length = await Task.Run(() => File.ReadAllLines($"{Initialize.temp}\\inc.p").Length);
+
+                    if (length != cache)
+                    {
+                        cache = length;
+                        await Increment(length);
+                    }
+                }
+                catch { }
+            };
+
+            check.Start();
+        }
+
+        /// <summary>
+        /// Plays a DoubleAnimation animation on the specified controls
+        /// </summary>
+        /// <param name="parentControl">The target controls parent</param>
+        /// <param name="control">The name of the target</param>
+        /// <param name="property">The property to change</param>
+        /// <param name="value">The value to change the property to</param>
+        /// <param name="timeSpan">The time it takes to change the property</param>
         private void DoubleAnim(FrameworkElement parentControl, string control, DependencyProperty property, double value, int timeSpan = 1000)
         {
             DoubleAnimation anim = new();
@@ -622,6 +664,14 @@ namespace BotwInstaller.UI.Views
             storyboard.Begin(parentControl);
         }
 
+        /// <summary>
+        /// Plays a Thickness animation on the specified controls
+        /// </summary>
+        /// <param name="parentControl">The target controls parent</param>
+        /// <param name="control">The name of the target</param>
+        /// <param name="property">The property to change</param>
+        /// <param name="value">The value to change the property to</param>
+        /// <param name="timeSpan">The time it takes to change the property</param>
         private void ThicknessAnim(FrameworkElement parentControl, string control, DependencyProperty property, Thickness value, int timeSpan = 1000)
         {
             ThicknessAnimation anim = new();
@@ -641,7 +691,94 @@ namespace BotwInstaller.UI.Views
 
         #region Install / Config
 
+        private async Task Configure()
+        {
+            Install i = new();
+            Shortcuts s = new();
 
+            Bcml bc = new();
+            Bcml bo = new();
+            Bcml bj = new();
+            Bcml ce = new();
+            Bcml ds = new();
+
+            // Game check
+            if ((bool)cbAdv_InstallCemu.IsChecked)
+            {
+                if (c.base_game == "" || c.update == "")
+                {
+                    IPrompt.Error("Game files not set.\nMake sure you have dumped your game correctly.\n\nSee the log for more details.\n%localappdata%\\BotwData\\install.txt");
+                }
+                else c.install.botw = true;
+            }
+
+            // Null checks
+            NullCheck(tbAdv_BcmlData, $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\bcml");
+            NullCheck(tbAdv_BetterJoyPath, $"{Initialize.root}\\BetterJoy");
+            NullCheck(tbAdv_BetterJoyPath, $"{Initialize.root}\\BetterJoy");
+            NullCheck(tbAdv_Mlc01Path, $"mlc01");
+            NullCheck(tbAdv_PythonPath, $"C:\\Python_{cbAdv_PyVersion.Text}");
+            NullCheck(tbBasic_CemuPath, $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu");
+
+            // TextBox setters
+            c.bcml_data = tbAdv_BcmlData.Text.Replace("%localappdata%", $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}");
+            c.betterjoy_path = tbAdv_BetterJoyPath.Text.Replace("%botwdata%", Initialize.root);
+            c.cemu_path = tbBasic_CemuPath.Text;
+            c.ds4_path = tbAdv_DS4Path.Text.Replace("%botwdata%", Initialize.root);
+            c.mlc01 = tbAdv_Mlc01Path.Text.Replace("%cemupath%", "");
+            c.python_path = tbAdv_PythonPath.Text;
+
+            // ComboBox setters
+            c.py_ver = cbAdv_PyVersion.Text;
+
+            // CheckBox setters
+            c.copy_base = (bool)cbAdv_CopyBase.IsChecked;
+            c.run = (bool)cbBasic_RunAfterInstall.IsChecked;
+            c.install.bcml = (bool)cbAdv_InstallBcml.IsChecked;
+            c.install.betterjoy = (bool)cbAdv_InstallBetterJoy.IsChecked;
+            c.install.cemu = (bool)cbAdv_InstallCemu.IsChecked;
+            c.install.ds4 = (bool)cbAdv_InstallDs4.IsChecked;
+            c.install.python = (bool)cbAdv_InstallPython.IsChecked;
+
+            // Shortcuts
+            c.shortcuts.bcml.dsk = (bool)cbLnkDsk_Bcml.IsChecked;
+            c.shortcuts.bcml.start = (bool)cbLnkSrt_Bcml.IsChecked;
+
+            c.shortcuts.botw.dsk = (bool)cbLnkDsk_Botw.IsChecked;
+            c.shortcuts.botw.start = (bool)cbLnkSrt_Botw.IsChecked;
+
+            c.shortcuts.betterjoy.dsk = (bool)cbLnkDsk_BetterJoy.IsChecked;
+            c.shortcuts.betterjoy.start = (bool)cbLnkSrt_BetterJoy.IsChecked;
+
+            c.shortcuts.cemu.dsk = (bool)cbLnkDsk_Cemu.IsChecked;
+            c.shortcuts.cemu.start = (bool)cbLnkSrt_Cemu.IsChecked;
+
+            c.shortcuts.ds4.dsk = (bool)cbLnkDsk_DS4Windows.IsChecked;
+            c.shortcuts.ds4.start = (bool)cbLnkSrt_DS4Windows.IsChecked;
+
+            // Controler Profiles
+            List<string> ctrl = new();
+
+            if ((bool)cbBasicCtrl_Standard.IsChecked)
+                ctrl.Add("jp");
+            if ((bool)cbBasicCtrl_Western.IsChecked)
+                ctrl.Add("us");
+            if ((bool)cbBasicCtrl_Pe.IsChecked)
+                ctrl.Add("pe");
+
+            if (ctrl.Count == 0)
+                ctrl.Add("jp");
+
+            c.ctrl_profile = ctrl.ToArray();
+
+            // Write config
+            await JsonData.ConfigWriter(c);
+        }
+
+        private void NullCheck(TextBox tb, string defaulted)
+        {
+            if (tb.Text == "") tb.Text = defaulted;
+        }
 
         #endregion
     }

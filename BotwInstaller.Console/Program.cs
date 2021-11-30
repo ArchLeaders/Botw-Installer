@@ -1,44 +1,38 @@
 ﻿using BotwInstaller.Lib;
+using BotwInstaller.Lib.GameData;
 using BotwInstaller.Lib.Operations.Configure;
+using BotwInstaller.Lib.Prompts;
 using BotwInstaller.Lib.Shell;
 using System.Text.Json;
+#pragma warning disable CS8604
+
 using static BotwInstaller.Lib.Prompts.ConsoleMsg;
 
 namespace BotwInstaller.Shell
 {
     public static class Program
     {
-        public static async Task Main()
+        public static async Task Main(string[] args)
         {
-            string[]? args = Environment.GetCommandLineArgs();
-
-            // CLI starts at 1, 0 is filepath\\executableName.dll
-            // args = "filepath\\executableName.dll" "config"
-            // -bcml "bcmlData" -vc -py8 -dsk -srt
-            // -cemu "path" -vc -dsk -srt
-            // -g "D:\Botw\Files"
-
-            if (args.Length >= 2)
+            if (args.Length >= 1)
             {
-                // Configure commands?
-                if (!File.Exists(args[1]))
+                switch (args[0].ToLower())
                 {
-                    PrintLine("Config Not Found.", ConsoleColor.DarkRed);
-                    return;
+                    case "-v":
+                    case "--verify":
+                        PrintLine("Verifying game files...");
+                        var rt = await Query.VerifyLogic("", "", "");
+                        if (rt[0] == null) PrintLine("Files not found.");
+                        else if (rt[0] == "Error") PrintLine(rt[1]);
+                        else PrintLine($"Verified:\n\tBase: {rt[0]}\n\tUpdate: {rt[1]}\n\tDLC: {rt[2]}");
+                        break;
                 }
             }
             else
             {
-                if (!File.Exists("./config.json"))
-                {
-                    PrintLine("Config Not Found.", ConsoleColor.DarkRed);
-                    return;
-                }
+                Config? config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Initialize.temp}\\config.json"));
+                await Initialize.Install(config);
             }
-
-            Config? config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Initialize.temp}\\config.json"));
-
-            await Initialize.Install(config);
         }
     }
 }

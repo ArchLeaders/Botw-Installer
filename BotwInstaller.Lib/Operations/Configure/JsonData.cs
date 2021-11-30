@@ -8,12 +8,8 @@ namespace BotwInstaller.Lib.Operations.Configure
 {
     public class JsonData
     {
-        public static async Task ConfigWriter(Config config, bool verify = false)
+        public static async Task ConfigWriter(Config config)
         {
-            if (verify)
-                if (!await Query.VerifyGameFiles(config.base_game, config.update, config.dlc))
-                    return;
-
             await Task.Run(() => Directory.CreateDirectory(Initialize.temp));
             await Task.Run(() => File.WriteAllText($"{Initialize.temp}\\config.json", JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true })));
         }

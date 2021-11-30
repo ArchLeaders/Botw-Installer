@@ -17,6 +17,7 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
             public string target { get; set; }
             public string description { get; set; }
             public string icon { get; set; }
+            public string args { get; set; } = "";
             public Task uninstaller { get; set; }
         }
 
@@ -38,12 +39,13 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
             botw.description = "The Legend of Zelda: Breath of the Wild";
 
             cemu.name = "Cemu";
-            cemu.target = $"{c.cemu}\\Cemu.exe";
+            cemu.target = $"{c.cemu_path}\\Cemu.exe";
             cemu.description = "WiiU Emulator Made By Exzap and Petergov";
             cemu.uninstaller = c.Cemu();
 
             bcml.name = "BCML";
-            bcml.target = $"{c.python_path}\\Scripts\\bcml.exe";
+            bcml.target = $"{c.python_path}\\pythonw.exe";
+            bcml.args = "-m bcml.exe";
             botw.icon = $"{Initialize.root}\\bcml.ico";
             bcml.description = "BotW Cross-Platform Mod Loader made by Nicene Nerd (C. Smith)";
             bcml.uninstaller = c.Bcml();

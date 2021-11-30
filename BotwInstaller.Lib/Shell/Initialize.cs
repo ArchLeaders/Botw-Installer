@@ -27,7 +27,7 @@ namespace BotwInstaller.Lib.Shell
             List<Task> t4 = new();
             List<Task> t5 = new();
 
-            string local = $"{c.cemu.EditPath()}\\local-temp";
+            string local = $"{c.cemu_path.EditPath()}\\local-temp";
 
             /// 
             /// Start threadOne =>
@@ -49,9 +49,11 @@ namespace BotwInstaller.Lib.Shell
                 if (c.dlc != "")
                     t1.Add(Folders.CopyAsync(c.dlc.EditPath(), $"{local}\\mlc01\\usr\\title\\0005000c\\101c9{c.base_game.Get()}00\\"));
 
-                // Initialize Write Cemu settings.xml
-                t1.Add(Settings.Xml(c.base_game, c.mlc01));
             }
+
+            // Initialize Write Cemu settings.xml
+            if (c.install.cemu)
+                t1.Add(Settings.Xml(c.base_game, c.mlc01));
 
             ///
             /// Start threadTwo =>
@@ -140,6 +142,20 @@ namespace BotwInstaller.Lib.Shell
 
             // Create Profiles
             t4.Add(Controller.Generate(c));
+
+            await Task.WhenAll(t4);
+
+            ///
+            /// End threadFour =>
+            /// 
+
+            ///
+            /// Start threadFive =>
+            /// 
+            ConsoleMsg.PrintLine($"Initialize => Clean out temp folder.", ConsoleColor.DarkGreen);
+
+            Console.WriteLine("Last.");
+            Console.ReadLine();
         }
     }
 }

@@ -11,28 +11,31 @@ namespace BotwInstaller.Lib.Operations.Configure
     {
         public static class Profiles
         {
-            public static async Task Eur()
+            public static async Task Jpn()
             {
-                await Standard("NintendoStandard", "button_2", "button_1", "button_8", "button_4");
+                await Write("NintendoStandard", "button_2", "button_1", "button_8", "button_4");
             }
 
             public static async Task Usa()
             {
-                await Standard("WesternLayout", "button_1", "button_2", "button_8", "button_4");
+                await Write("WesternLayout", "button_1", "button_2", "button_8", "button_4");
             }
 
             public static async Task Idk()
             {
-                await Standard("Default", "button_1", "button_2", "button_4", "button_8");
+                await Write("Default", "button_1", "button_2", "button_4", "button_8");
             }
         }
 
         public static async Task Generate(Config c)
         {
-                 if (c.ctrl_profile == "us") await Profiles.Usa();
-            else if (c.ctrl_profile == "eu") await Profiles.Eur();
-            else if (c.ctrl_profile == "pe") await Profiles.Idk();
-            else await Profiles.Eur();
+            foreach (var item in c.ctrl_profile)
+            {
+                     if (item == "us") await Profiles.Usa();
+                else if (item == "jp") await Profiles.Jpn();
+                else if (item == "pe") await Profiles.Idk();
+                else await Profiles.Jpn();
+            }
         }
 
         /// <summary>
@@ -47,7 +50,7 @@ namespace BotwInstaller.Lib.Operations.Configure
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static async Task Standard(string name, string a, string b, string x, string y, int index = 0)
+        public static async Task Write(string name, string a, string b, string x, string y, int index = 0)
         {
             // button_1 #X/B/A
             // button_2 #○/A/B
