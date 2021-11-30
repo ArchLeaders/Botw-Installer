@@ -36,7 +36,13 @@ namespace BotwInstaller.Lib.GameData
                                 if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
                                     dlc = $"{dir}\\content";
                             }
-                        
+
+                            if (dlc == "")
+                                foreach (var pdir in Directory.EnumerateDirectories(item.EditPath(4)))
+                                    foreach (var dir in Directory.EnumerateDirectories(pdir))
+                                        if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
+                                            dlc = $"{dir}\\content";
+
                             if (game != "" && update != "") break;
                         }
                         if (game != "" && update != "") break;
