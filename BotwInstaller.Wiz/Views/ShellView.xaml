@@ -2,45 +2,60 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BotwInstaller.Wiz.Views"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:s="https://github.com/canton7/Stylet"
-        mc:Ignorable="d"
-        Title="ShellView" Height="400" Width="600"
-        WindowStyle="None" x:Name="shellView" Style="{StaticResource MaterialDesignWindow}">
+        x:Name="shellView"
+        Title="ShellView"
+        Width="600"
+        Height="400"
+        Style="{StaticResource MaterialDesignWindow}"
+        WindowStyle="None"
+        mc:Ignorable="d">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30"/>
+        <WindowChrome CaptionHeight="30" />
     </WindowChrome.WindowChrome>
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
+            <RowDefinition Height="30" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="BotwInstaller.Wiz" Margin="40, 0, 0, 0"
-                   VerticalAlignment="Center" FontSize="18"
-                   FontFamily="Calibri" FontWeight="Bold"
+        <TextBlock Margin="40,0,0,0"
+                   VerticalAlignment="Center"
+                   FontFamily="Calibri"
+                   FontSize="18"
+                   FontWeight="Bold"
                    Style="{StaticResource MaterialDesignHeadline1TextBlock}"
-                   TextOptions.TextFormattingMode="Display"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                   Text="BotwInstaller.Wiz"
+                   TextOptions.TextFormattingMode="Display" />
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
                     WindowChrome.IsHitTestVisibleInChrome="True">
-            <Button Style="{StaticResource WindowChromeItem}"
-                    Content="◓" Width="45" FontSize="20"
-                    Click="{s:Action SwitchTheme}"/>
-            <Button Style="{StaticResource WindowChromeItem}"
-                    Content="-" Width="45" x:Name="homeBtnWindowMin"/>
-            <Button Style="{StaticResource WindowChromeItem}"
-                    Content=" " Width="45" x:Name="homeBtnWindowSize"/>
-            <Button Style="{StaticResource WindowChromeExitItem}"
-                    Content="!" Width="45" x:Name="homeBtnWindowExit"/>
+            <Button Width="45"
+                    Click="{s:Action SwitchTheme}"
+                    Content="◓"
+                    FontSize="20"
+                    Style="{StaticResource WindowChromeItem}" />
+            <Button x:Name="homeBtnWindowMin"
+                    Width="45"
+                    Content="-"
+                    Style="{StaticResource WindowChromeItem}" />
+            <Button x:Name="homeBtnWindowSize"
+                    Width="45"
+                    Content=" "
+                    Style="{StaticResource WindowChromeItem}" />
+            <Button x:Name="homeBtnWindowExit"
+                    Width="45"
+                    Content="!"
+                    Style="{StaticResource WindowChromeExitItem}" />
         </StackPanel>
-        <Image Source="/ViewThemes/Icons/app.png" HorizontalAlignment="Left"
-               Margin="5, 0, 0, 0"/>
+        <Image Margin="5,0,0,0"
+               HorizontalAlignment="Left"
+               Source="/ViewThemes/Icons/app.png" />
 
-        <Grid Grid.Row="1">
-            
-        </Grid>
+        <Grid Grid.Row="1" />
     </Grid>
 </Window>

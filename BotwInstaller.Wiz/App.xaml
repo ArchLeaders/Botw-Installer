@@ -10,15 +10,17 @@
                 <ResourceDictionary>
                     <s:ApplicationLoader x:Key="Bootstrapper">
                         <s:ApplicationLoader.Bootstrapper>
-                            <local:AppBootstrapper/>
+                            <local:AppBootstrapper />
                         </s:ApplicationLoader.Bootstrapper>
                     </s:ApplicationLoader>
                 </ResourceDictionary>
-                
-                <md:BundledTheme BaseTheme="Dark" PrimaryColor="BlueGrey" SecondaryColor="DeepOrange"/>
 
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
-                <ResourceDictionary Source="/ViewThemes/ControlStyles/ChromeButtonsStyles.xaml"/>
+                <md:BundledTheme BaseTheme="Dark"
+                                 PrimaryColor="BlueGrey"
+                                 SecondaryColor="DeepOrange" />
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="/ViewThemes/ControlStyles/ChromeButtonsStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="Windows">pack://application:,,,/ViewThemes/Fonts/#Glyph</FontFamily>
         </ResourceDictionary>
