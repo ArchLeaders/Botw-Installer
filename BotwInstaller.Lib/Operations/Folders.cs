@@ -22,7 +22,7 @@ namespace BotwInstaller.Lib.Operations
                         await Task.Run(() => Directory.CreateDirectory(directoryInfo.FullName.Replace(inputDir, outputDir)));
                         tasks.Add(Task.Run(() => File.Copy(file, file.Replace(inputDir, outputDir), overwrite)));
 
-                        ConsoleMsg.Print($"{id} :: Copied {file} to {file.Replace(inputDir, outputDir)}", ConsoleColor.DarkCyan, false, false);
+                        ConsoleMsg.Print($"{id} :: Copied {file} to {file.Replace(inputDir, outputDir)}", ConsoleColor.DarkCyan, true, false);
                     }
                 });
 

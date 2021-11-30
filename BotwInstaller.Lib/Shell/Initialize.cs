@@ -40,14 +40,14 @@ namespace BotwInstaller.Lib.Shell
             {
                 // Initialize Copy Base Game to mlc01 if copy_base is true
                 if (c.copy_base)
-                    t1.Add(Folders.CopyAsync(c.base_game.EditPath(), $"{local}\\mlc01\\usr\\title\\0005000\\101c9{c.base_game.Get()}00\\"));
+                    t1.Add(Folders.CopyAsync(c.base_game.EditPath(), $"{local}\\mlc01\\usr\\title\\0005000\\{c.base_game.Get().Replace("0005000", "")}\\"));
 
                 // Initialize Copy Base Game to mlc01 if install.cemu is true
-                t1.Add(Folders.CopyAsync(c.update.EditPath(), $"{local}\\mlc01\\usr\\title\\0005000e\\101c9{c.base_game.Get()}00\\"));
+                t1.Add(Folders.CopyAsync(c.update.EditPath(), $"{local}\\mlc01\\usr\\title\\0005000e\\{c.base_game.Get().Replace("0005000", "")}\\"));
 
                 // Initialize Copy Base Game to mlc01 if dlc is not null
                 if (c.dlc != "")
-                    t1.Add(Folders.CopyAsync(c.dlc.EditPath(), $"{local}\\mlc01\\usr\\title\\0005000c\\101c9{c.base_game.Get()}00\\"));
+                    t1.Add(Folders.CopyAsync(c.dlc.EditPath(), $"{local}\\mlc01\\usr\\title\\0005000c\\{c.base_game.Get().Replace("0005000", "")}\\"));
 
             }
 
@@ -154,8 +154,11 @@ namespace BotwInstaller.Lib.Shell
             /// 
             ConsoleMsg.PrintLine($"Initialize => Clean out temp folder.", ConsoleColor.DarkGreen);
 
-            Console.WriteLine("Last.");
-            Console.ReadLine();
+            // Move Cemu
+            // Move mlc01
+            // Move controller profiles
+            // Move GFX
+            // 
         }
     }
 }

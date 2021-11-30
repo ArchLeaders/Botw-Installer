@@ -1,8 +1,7 @@
 {
   "profiles": {
     "BotwInstaller.Console": {
-      "commandName": "Project",
-      "commandLineArgs": "-v"
+      "commandName": "Project"
     }
   }
 }

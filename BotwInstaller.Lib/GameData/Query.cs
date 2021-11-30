@@ -63,7 +63,7 @@ namespace BotwInstaller.Lib.GameData
 
             IEnumerable<string>? b = null;
             IEnumerable<string>? u = null;
-            IEnumerable<string>? d = null;
+            IEnumerable<string>? d = new string[] { };
 
             await Task.Run(() =>
             {
