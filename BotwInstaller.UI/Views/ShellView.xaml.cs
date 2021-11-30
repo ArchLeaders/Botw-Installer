@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -48,6 +49,7 @@ namespace BotwInstaller.UI.Views
         public static int minWidth = 750;
 
         DispatcherTimer timer = new();
+        Process install = new();
 
         #region Fix Window Sixe in fullscreen.
 
@@ -176,13 +178,30 @@ namespace BotwInstaller.UI.Views
             InitializeComponent();
 
             if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini"))
-                if (File.ReadAllLines($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini")[0].ToLower() == "light") AppTheme.Change(true);
-                else AppTheme.Change();
-            else AppTheme.Change(false);
+                if (File.ReadAllLines($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini")[0].ToLower() == "light")
+                {
+                    AppTheme.Change(true);
+                    moon.Opacity = 1;
+                    sun.Opacity = 0;
+                }
+                else
+                {
+                    AppTheme.Change();
+                    moon.Opacity = 0;
+                    sun.Opacity = 1;
+                }
+            else
+            {
+                AppTheme.Change(false);
+                moon.Opacity = 0;
+                sun.Opacity = 1;
+            }
 
             SetupUserInterface();
 
             RegisterEvents();
+
+            AssignTips();
 
             #endregion
 
@@ -228,13 +247,14 @@ namespace BotwInstaller.UI.Views
                     // Start Install
                     isCancel = true;
                     await StartAnim();
-                    await Configure();
+                    await Install();
                     await Watch();
                 }
                 else
                 {
                     // Cancel Install
                     isCancel = false;
+                    await Cancel();
                     await StopAnim();
                 }
             };
@@ -243,6 +263,83 @@ namespace BotwInstaller.UI.Views
         }
 
         #region Setup & Control Events
+
+        /// <summary>
+        /// Loops through Texts.ToolTips to assign each control that tools ToolTip.
+        /// </summary>
+        private void AssignTips()
+        {
+            Texts.Set();
+
+            Control[] controls = new Control[] { 
+                // Basic Tab
+                tbBsc_BotwPath,
+                tbBsc_CemuPath,
+                cbBsc_UseMods,
+                cbBsc_Shortcuts,
+                cbBsc_InstallBjoy,
+                cbBsc_InstallDs4,
+                cbBsc_RunAfter,
+
+                // Advanced Tab
+                cbAdv_CopyBase,
+                cbAdv_InstallBcml,
+                cbAdv_InstallCemu,
+                cbAdv_InstallGfx,
+                cbAdv_InstallPython,
+                cbAdv_PyDocs,
+                cbAdv_PyVersion,
+                tbAdv_BcmlData,
+                tbAdv_GameBase,
+                tbAdv_GameDlc,
+                tbAdv_GameUpdate,
+                tbAdv_Mlc01Path,
+                tbAdv_PythonPath
+            };
+
+            foreach (Control control in controls)
+                foreach (var item in Texts.ToolTips)
+                    if (item.Key == control.Name)
+                        control.ToolTip = item.Value;
+        }
+
+        /// <summary>
+        /// Changes the app theme.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SwitchTheme(object sender, EventArgs e)
+        {
+            PaletteHelper helper = new();
+            ITheme theme = helper.GetTheme();
+
+            string file = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini";
+            string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\";
+            Directory.CreateDirectory(folder);
+
+            if (theme.GetBaseTheme() == BaseTheme.Light)
+            {
+                AppTheme.Change();
+                File.WriteAllText(file, "dark");
+                moon.Opacity = 0;
+                sun.Opacity = 1;
+
+            }
+            else if (theme.GetBaseTheme() == BaseTheme.Dark)
+            {
+                AppTheme.Change(true);
+                File.WriteAllText(file, "light");
+                moon.Opacity = 1;
+                sun.Opacity = 0;
+            }
+            else
+            {
+                AppTheme.Change();
+                File.WriteAllText(file, "dark");
+                moon.Opacity = 0;
+                sun.Opacity = 1;
+            }
+        }
 
         /// <summary>
         /// Opens a VistaFolderBrowserDialog and sets the result to the sender TextBox.
@@ -323,8 +420,8 @@ namespace BotwInstaller.UI.Views
             ocDebug.Click += (s, e) => isDebug = true;
 
             // Assign browse buttons | ShellView.Basic
-            ocBrowseBotw.Click += (s, e) => BrowseEvent(tbBasic_BotwPath, "Browse For Botw /content");
-            ocBrowseCemu.Click += (s, e) => BrowseEvent(tbBasic_CemuPath, "Browse For Cemu Folder");
+            ocBrowseBotw.Click += (s, e) => BrowseEvent(tbBsc_BotwPath, "Browse For Botw /content");
+            ocBrowseCemu.Click += (s, e) => BrowseEvent(tbBsc_CemuPath, "Browse For Cemu Folder");
 
             // Assign textBox double click events
             tbAdv_Mlc01Path.MouseDoubleClick += (s, e) =>
@@ -380,15 +477,15 @@ namespace BotwInstaller.UI.Views
             /// Configurations
 
             // Mods Configuration
-            cbConfigBasic_Mods.Click += (s, e) =>
-                SyncCheckBox(cbConfigBasic_Mods.IsChecked, new List<CheckBox> { cbAdv_InstallBcml, cbAdv_InstallPython, _cbAdv_WebviewRuntime, _cbAdv_VisualRuntime });
+            cbBsc_UseMods.Click += (s, e) =>
+                SyncCheckBox(cbBsc_UseMods.IsChecked, new List<CheckBox> { cbAdv_InstallBcml, cbAdv_InstallPython, _cbAdv_WebviewRuntime, _cbAdv_VisualRuntime });
 
             // Shortcut Configuration
-            cbConfigBasic_Shortcuts.Click += (s, e) =>
-                SyncCheckBox(cbConfigBasic_Shortcuts.IsChecked, new List<CheckBox> { cbLnkDsk_Botw, cbLnkDsk_Cemu, cbLnkSrt_Bcml, cbLnkSrt_BetterJoy, cbLnkSrt_Botw, cbLnkSrt_Cemu, cbLnkSrt_DS4Windows});
+            cbBsc_Shortcuts.Click += (s, e) =>
+                SyncCheckBox(cbBsc_Shortcuts.IsChecked, new List<CheckBox> { cbLnkDsk_Botw, cbLnkDsk_Cemu, cbLnkSrt_Bcml, cbLnkSrt_BetterJoy, cbLnkSrt_Botw, cbLnkSrt_Cemu, cbLnkSrt_DS4Windows});
 
             // DS4Windows Configuration
-            cbBasic_InstallDs4Windows.Click += (s, e) => SyncCheckBox(cbBasic_InstallDs4Windows.IsChecked, new List<CheckBox> { _cbAdv_NetRuntime });
+            cbBsc_InstallDs4.Click += (s, e) => SyncCheckBox(cbBsc_InstallDs4.IsChecked, new List<CheckBox> { _cbAdv_NetRuntime });
 
             // VCRuntime Configuration
             cbAdv_InstallCemu.Click += (s, e) =>
@@ -418,13 +515,13 @@ namespace BotwInstaller.UI.Views
 
                 timer.Tick += (s, e) =>
                 {
-                    if (tbBasic_BotwPath.Text == "Searching.")
-                        tbBasic_BotwPath.Text = "Searching..";
-                    else if (tbBasic_BotwPath.Text == "Searching..")
-                        tbBasic_BotwPath.Text = "Searching...";
-                    else if (tbBasic_BotwPath.Text == "Searching...")
-                        tbBasic_BotwPath.Text = "Searching.";
-                    else tbBasic_BotwPath.Text = "Searching.";
+                    if (tbBsc_BotwPath.Text == "Searching.")
+                        tbBsc_BotwPath.Text = "Searching..";
+                    else if (tbBsc_BotwPath.Text == "Searching..")
+                        tbBsc_BotwPath.Text = "Searching...";
+                    else if (tbBsc_BotwPath.Text == "Searching...")
+                        tbBsc_BotwPath.Text = "Searching.";
+                    else tbBsc_BotwPath.Text = "Searching.";
                 };
 
                 #endregion
@@ -442,7 +539,7 @@ namespace BotwInstaller.UI.Views
 
                 // Set staus as 'Searching...'
                 timer.Start();
-                tbBasic_BotwPath.IsReadOnly = true;
+                tbBsc_BotwPath.IsReadOnly = true;
 
                 // Call Search/Verify logic.
                 var check = await Query.VerifyLogic(c.base_game, c.update, c.dlc);
@@ -462,7 +559,7 @@ namespace BotwInstaller.UI.Views
 
                 // Revert readonly state
                 if (!isVerified)
-                    tbBasic_BotwPath.IsReadOnly = false;
+                    tbBsc_BotwPath.IsReadOnly = false;
             }
             catch (Exception ex)
             {
@@ -471,7 +568,7 @@ namespace BotwInstaller.UI.Views
         }
 
         /// <summary>
-        /// Sets the tbBasic_BotwPath text and tooltip with the found game paths.
+        /// Sets the tbBsc_BotwPath text and tooltip with the found game paths.
         /// <para>Handled: ConsoleMsg.Error</para>
         /// </summary>
         /// <param name="bC">BaseGame Content</param>
@@ -492,6 +589,11 @@ namespace BotwInstaller.UI.Views
                 tbAdv_GameUpdate.Text = uC;
                 tbAdv_GameDlc.Text = dC;
 
+                // Make TextBoxes readonly
+                tbAdv_GameBase.IsReadOnly = true;
+                tbAdv_GameUpdate.IsReadOnly = true;
+                if (c.dlc != "") tbAdv_GameDlc.IsReadOnly = true;
+
                 // Make cd N/A
                 if (dC == "") dC = "N/A";
 
@@ -499,10 +601,10 @@ namespace BotwInstaller.UI.Views
                 isVerified = true;
 
                 // Set TextBox and ToolTip
-                tbBasic_BotwPath.Text = bC.EditPath(2);
-                tbBasic_BotwPath.Focus();
-                tbBasic_BotwPath.CaretIndex = Int32.MaxValue;
-                tbBasic_BotwPath.ToolTip = $"Verified.\nBase Game: \"{bC}\"\n\nUpdate: \"{uC}\"\n\nDLC: \"{dC}\"";
+                tbBsc_BotwPath.Text = bC.EditPath(2);
+                tbBsc_BotwPath.Focus();
+                tbBsc_BotwPath.CaretIndex = Int32.MaxValue;
+                tbBsc_BotwPath.ToolTip = $"Verified.\nBase Game: \"{bC}\"\n\nUpdate: \"{uC}\"\n\nDLC: \"{dC}\"";
 
                 // Show complete message when applicable
                 if (showComplete) IPrompt.Show("Game paths found and verified.", "Notification");
@@ -525,9 +627,9 @@ namespace BotwInstaller.UI.Views
                 // Create a list of *checked CheckBoxes
                 List<CheckBox> vs = new()
                 {
-                    cbConfigBasic_Mods,
-                    cbConfigBasic_Shortcuts,
-                    cbBasic_RunAfterInstall,
+                    cbBsc_UseMods,
+                    cbBsc_Shortcuts,
+                    cbBsc_RunAfter,
 
                     cbLnkDsk_Botw,
                     cbLnkDsk_Cemu,
@@ -554,12 +656,12 @@ namespace BotwInstaller.UI.Views
                     v.IsChecked = true;
 
                 // Set the optimal (default) Cemu path.
-                tbBasic_CemuPath.Text = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu";
-                tbBasic_CemuPath.Focus();
-                tbBasic_CemuPath.CaretIndex = int.MaxValue;
+                tbBsc_CemuPath.Text = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu";
+                tbBsc_CemuPath.Focus();
+                tbBsc_CemuPath.CaretIndex = int.MaxValue;
 
                 // If Cemu exists don't install it.
-                if (File.Exists($"{tbBasic_CemuPath.Text}\\Cemu.exe"))
+                if (File.Exists($"{tbBsc_CemuPath.Text}\\Cemu.exe"))
                     cbAdv_InstallCemu.IsChecked = false;
 
                 // Search for Botw files.
@@ -646,8 +748,10 @@ namespace BotwInstaller.UI.Views
         /// Watches the inc.p file to update the UI accordingly.
         /// </summary>
         /// <returns></returns>
-        public async Task Watch()
+        public async Task Watch(bool stop = false)
         {
+            if (stop) timer.Stop();
+
             var cache = 0;
 
             DispatcherTimer check = new();
@@ -674,7 +778,7 @@ namespace BotwInstaller.UI.Views
 
         #region Install / Config
 
-        private async Task Configure()
+        private async Task Install()
         {
             Install i = new();
             Shortcuts s = new();
@@ -699,7 +803,7 @@ namespace BotwInstaller.UI.Views
             NullCheck(tbAdv_BcmlData, $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\bcml");
             NullCheck(tbAdv_Mlc01Path, $"mlc01");
             NullCheck(tbAdv_PythonPath, $"C:\\Python_{cbAdv_PyVersion.Text}");
-            NullCheck(tbBasic_CemuPath, $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu");
+            NullCheck(tbBsc_CemuPath, $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu");
 
             // TextBox setters
             c.base_game = tbAdv_GameBase.Text;
@@ -707,7 +811,7 @@ namespace BotwInstaller.UI.Views
             c.dlc = tbAdv_GameDlc.Text;
             c.bcml_data = tbAdv_BcmlData.Text.Replace("%localappdata%", $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}");
             c.betterjoy_path = Initialize.root + "\\BetterJoy";
-            c.cemu_path = tbBasic_CemuPath.Text;
+            c.cemu_path = tbBsc_CemuPath.Text;
             c.ds4_path = Initialize.root + "\\DS4Windows";
             c.mlc01 = tbAdv_Mlc01Path.Text.Replace("%cemupath%", "");
             c.python_path = tbAdv_PythonPath.Text;
@@ -717,11 +821,11 @@ namespace BotwInstaller.UI.Views
 
             // CheckBox setters
             c.copy_base = (bool)cbAdv_CopyBase.IsChecked;
-            c.run = (bool)cbBasic_RunAfterInstall.IsChecked;
+            c.run = (bool)cbBsc_RunAfter.IsChecked;
             c.install.bcml = (bool)cbAdv_InstallBcml.IsChecked;
-            c.install.betterjoy = (bool)cbBasic_InstallBetterJoy.IsChecked;
+            c.install.betterjoy = (bool)cbBsc_InstallBjoy.IsChecked;
             c.install.cemu = (bool)cbAdv_InstallCemu.IsChecked;
-            c.install.ds4 = (bool)cbBasic_InstallDs4Windows.IsChecked;
+            c.install.ds4 = (bool)cbBsc_InstallDs4.IsChecked;
             c.install.python = (bool)cbAdv_InstallPython.IsChecked;
 
             // Shortcuts
@@ -757,6 +861,29 @@ namespace BotwInstaller.UI.Views
 
             // Write config
             await JsonData.ConfigWriter(c);
+            Interface.Update(1);
+
+            // Download installer
+            Download.FromUrl("", $"{Initialize.temp}\\install.exe");
+
+            // Call installer
+            install.StartInfo.Arguments = "-d";
+            install.StartInfo.FileName = $"{Initialize.temp}\\install.exe";
+            install.StartInfo.CreateNoWindow = !isDebug;
+
+            install.Start();
+            await install.WaitForExitAsync();
+        }
+
+        private async Task Cancel()
+        {
+            if (IPrompt.Warning("Are you sure you want to cancel installing?\nThis cannot be undone.", true))
+            {
+                install.Kill(true);
+                Watch(true);
+                Directory.Delete(Initialize.temp, true);
+                Directory.Delete($"{c.cemu_path.EditPath()}\\local-temp", true);
+            }
         }
 
         private void NullCheck(TextBox tb, string defaulted)

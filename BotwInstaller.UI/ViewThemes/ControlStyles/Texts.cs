@@ -9,20 +9,20 @@ namespace BotwInstaller.UI.ViewThemes.ControlStyles
 {
     public class Texts
     {
-        List<TextBox> tbAdv = new();
+        public static Dictionary<string, string> ToolTips = new();
 
-        // tbInstallPython | if true -> Install Python
-        public Dictionary<string, string> ToolTips = new();
-
-        public void Set()
+        public static void Set()
         {
             #region Basic
 
             // Path To Cemu
-            ToolTips.Add("cbBsc_CemuPath", "Path to Cemu.\nThis is the folder containing Cemu.exe (new/existing).");
+            ToolTips.Add("tbBsc_CemuPath", "Path to Cemu.\nThis is the folder containing Cemu.exe (new/existing).");
 
             // Use Mods
             ToolTips.Add("cbBsc_UseMods", "Installs the software required to use mods with Botw.");
+
+            // Basic Shortcuts
+            ToolTips.Add("cbBsc_Shortcuts", "Installs the default set of shortcuts.\nChange them individually in the Shortcuts tab.");
 
             // Install DS4
             ToolTips.Add("cbBsc_InstallDs4", "Allows you to use a PlayStation Dualshock controler on Windows and in Botw.");
@@ -31,7 +31,7 @@ namespace BotwInstaller.UI.ViewThemes.ControlStyles
             ToolTips.Add("cbBsc_InstallBjoy", "Allows you to use a Nintendo Pro Controler on Windows and in Botw.");
 
             // Run After Install
-            ToolTips.Add("cbBsc_RunAfter", "Runs Botw once it has been installed.");
+            ToolTips.Add("cbBsc_RunAfter", "Runs Botw after it has been installed.");
 
             #endregion
 
@@ -59,7 +59,7 @@ namespace BotwInstaller.UI.ViewThemes.ControlStyles
             ToolTips.Add("cbAdv_InstallCemu", "Installs Cemu.\nOnly change if you know what your doing.");
 
             // mlc01 Path
-            ToolTips.Add("tbAdv_Mlc01Path", "Path to Cemu's Data directory (mlc01). This is where Cemu stores your games, updates, dlc content, and saves.");
+            ToolTips.Add("tbAdv_Mlc01Path", "Path to Cemu's Data directory (mlc01).\nThis is where Cemu stores your games, updates, dlc, and saves.");
 
             // Install GFX
             ToolTips.Add("cbAdv_InstallGfx", "Download and installs the latest community graphic packs (GFX).");
@@ -68,13 +68,13 @@ namespace BotwInstaller.UI.ViewThemes.ControlStyles
             ToolTips.Add("cbAdv_CopyBase", "Installs the Base game in Cemu.\nRecomended if your game files are stored on an SD card.");
 
             // Base Game Path
-            ToolTips.Add("tbAdv_GameBase", "Path to Botw's Base Game files.\nDo not change unless you know what you are doing.");
+            ToolTips.Add("tbAdv_GameBase", "Path to Botw's Base Game files.\nDo not change unless you know what you are doing.\n\nCtrl + Double Click to browse.");
 
             // Update Path
-            ToolTips.Add("tbAdv_GameUpdate", "Path to Botw's Update files.\nDo not change unless you know what you are doing.");
+            ToolTips.Add("tbAdv_GameUpdate", "Path to Botw's Update files.\nDo not change unless you know what you are doing.\n\nCtrl + Double Click to browse.");
 
             // DLC Path
-            ToolTips.Add("tbAdv_GameDlc", "Path to Botw's DLC files.\nDo not change unless you know what you are doing.");
+            ToolTips.Add("tbAdv_GameDlc", "Path to Botw's DLC files.\nDo not change unless you know what you are doing.\n\nCtrl + Double Click to browse.");
 
             #endregion
         }

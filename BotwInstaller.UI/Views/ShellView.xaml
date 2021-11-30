@@ -13,9 +13,9 @@
         FontFamily="Calibri"
         FontSize="20"
         FontWeight="Bold"
+        Foreground="{DynamicResource MaterialDesignBody}"
         RenderOptions.BitmapScalingMode="HighQuality"
         ResizeMode="CanMinimize"
-        Style="{StaticResource MaterialDesignWindow}"
         TextOptions.TextFormattingMode="Display"
         mc:Ignorable="d">
 
@@ -50,11 +50,40 @@
             <Button Width="45"
                     Height="30"
                     Padding="0"
-                    Click="{s:Action SwitchTheme}"
-                    Content="◓"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Top"
+                    Click="SwitchTheme"
                     FontSize="20"
                     Foreground="{DynamicResource MaterialDesignBody}"
-                    Style="{StaticResource MaterialDesignFlatButton}" />
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                <Grid>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          Name="moon"
+                          Margin="-4,0,0,0"
+                          Fill="{DynamicResource MaterialDesignBody}"
+                          Opacity="0"
+                          StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeThickness="1.10632">
+                        <Path.Data>
+                            <PathGeometry Figures="M 23.021484 5.0839844 C 22.226899 5.0739776 20.068142 5.2390279 20.460036 5.5390625 23.069315 7.5284995 24.713519 11.116653 24.708083 15 c -0.0054 3.879206 -1.655212 7.456526 -4.265625 9.435547 -0.450038 0.341185 2.278125 0.509189 2.838792 0.441406 4.444378 -0.538119 7.786448 -4.538616 7.798828 -9.875 V 15 c -0.0012 -5.3369396 -3.335645 -9.3487297 -7.779297 -9.9003906 -0.06997 -0.00867 -0.165784 -0.014196 -0.279297 -0.015625 z" FillRule="NonZero" />
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          Name="sun"
+                          Fill="{DynamicResource MaterialDesignBody}"
+                          Opacity="0"
+                          StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeThickness="0.724495">
+                        <Path.Data>
+                            <PathGeometry Figures="M 23.091797 4.9492188 A 0.31282931 0.31282931 0 0 0 22.800781 5.1132812 L 20.664062 9.0019531 L 16.689453 6.8925781 A 0.31282931 0.31282931 0 0 0 16.236328 7.2324219 L 17.09375 11.550781 L 12.726562 12.294922 A 0.31282931 0.31282931 0 0 0 12.576172 12.84375 L 16.021484 15.769531 L 13.130859 19.222656 A 0.31282931 0.31282931 0 0 0 13.367188 19.738281 L 17.884766 19.761719 L 18.017578 24.125 A 0.31282931 0.31282931 0 0 0 18.523438 24.359375 L 22.005859 21.613281 L 24.941406 24.943359 A 0.31282931 0.31282931 0 0 0 25.484375 24.785156 L 26.181641 20.357422 L 30.597656 21.103516 A 0.31282931 0.31282931 0 0 0 30.917969 20.636719 L 28.589844 16.71875 L 32.378906 14.5 A 0.31282931 0.31282931 0 0 0 32.335938 13.935547 L 28.222656 12.326172 L 29.623047 8.2226562 A 0.31282931 0.31282931 0 0 0 29.220703 7.828125 L 25.074219 9.3515625 L 23.363281 5.1445312 A 0.31282931 0.31282931 0 0 0 23.091797 4.9492188 z " FillRule="NonZero" />
+                        </Path.Data>
+                    </Path>
+                </Grid>
+            </Button>
             <Button x:Name="homeBtnWindowMin"
                     Width="45"
                     Height="30"
@@ -146,31 +175,26 @@
                 <ColumnDefinition Width="230" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1">
-                <CheckBox x:Name="cbConfigBasic_Mods"
+                <CheckBox x:Name="cbBsc_UseMods"
                           Content="Use Mods"
                           FontSize="25"
-                          Style="{StaticResource MaterialDesignCheckBox}"
-                          ToolTip="Installs the required software&#x0a;to use mods with Cemu." />
-                <CheckBox x:Name="cbConfigBasic_Shortcuts"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+                <CheckBox x:Name="cbBsc_Shortcuts"
                           Content="Basic Shortcuts"
                           FontSize="25"
-                          Style="{StaticResource MaterialDesignCheckBox}"
-                          ToolTip="Enables basic shortcut creaton.&#x0a;Choose exactly wich ones you want&#x0a;in the Shortcuts tab." />
-                <CheckBox x:Name="cbBasic_InstallDs4Windows"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+                <CheckBox x:Name="cbBsc_InstallDs4"
                           Content="DS4Windows"
                           FontSize="25"
-                          Style="{StaticResource MaterialDesignCheckBox}"
-                          ToolTip="Install DS4Windows.&#x0a;Required if you use a Dualshock controler," />
-                <CheckBox x:Name="cbBasic_InstallBetterJoy"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+                <CheckBox x:Name="cbBsc_InstallBjoy"
                           Content="BetterJoy"
                           FontSize="25"
-                          Style="{StaticResource MaterialDesignCheckBox}"
-                          ToolTip="Install BetterJoy.&#x0a;Required if you use a Switch controler," />
-                <CheckBox x:Name="cbBasic_RunAfterInstall"
+                          Style="{StaticResource MaterialDesignCheckBox}" />
+                <CheckBox x:Name="cbBsc_RunAfter"
                           Content="Run After Install"
                           FontSize="25"
-                          Style="{StaticResource MaterialDesignCheckBox}"
-                          ToolTip="Runs Botw, BetterJoy, and DS4Windows once (if) installed." />
+                          Style="{StaticResource MaterialDesignCheckBox}" />
             </StackPanel>
             <Grid Margin="0,0,15,0">
                 <Grid.RowDefinitions>
@@ -185,7 +209,7 @@
                                FontFamily="Noto Sans Mono"
                                FontWeight="Bold"
                                Text="Path to Cemu:" />
-                    <TextBox x:Name="tbBasic_CemuPath"
+                    <TextBox x:Name="tbBsc_CemuPath"
                              Margin="150,5,60,5"
                              Padding="5,8"
                              Style="{StaticResource Filled}" />
@@ -214,7 +238,7 @@
                                FontFamily="Noto Sans Mono"
                                FontWeight="Bold"
                                Text="Path to Botw:" />
-                    <TextBox x:Name="tbBasic_BotwPath"
+                    <TextBox x:Name="tbBsc_BotwPath"
                              Margin="150,5,60,5"
                              Padding="5,8"
                              Style="{StaticResource Filled}" />
@@ -392,8 +416,7 @@
                             <CheckBox x:Name="cbAdv_InstallPython"
                                       Margin="0,5"
                                       Content="Install Python"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      ToolTip="Installs Python.&#x0a;This is required for BCML and many other modding tools." />
+                                      Style="{StaticResource MaterialDesignCheckBox}" />
 
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
@@ -405,16 +428,14 @@
                                 <CheckBox x:Name="cbAdv_PyDocs"
                                           Margin="0,0,5,0"
                                           Content="Py Docs"
-                                          Style="{StaticResource MaterialDesignCheckBox}"
-                                          ToolTip="Installs The Python Documentation.&#x0a;Recomended if you plan on coding with python." />
+                                          Style="{StaticResource MaterialDesignCheckBox}" />
 
                                 <!--  Combo Box: 'Python Version' | Name: cbAdv_PyVersion | Done  -->
                                 <ComboBox x:Name="cbAdv_PyVersion"
                                           Grid.Column="1"
                                           Margin="5,0,0,0"
                                           Padding="6,3.5"
-                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                                          ToolTip="The version of python to be installed.">
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}">
                                     <ComboBoxItem Content="3.8.10" IsSelected="True" />
                                     <ComboBoxItem Content="3.7.8" />
                                 </ComboBox>
@@ -425,8 +446,7 @@
                                      Margin="0,5"
                                      VerticalAlignment="Center"
                                      Style="{StaticResource Filled}"
-                                     Text="C:\Python"
-                                     ToolTip="Path To Python Installation.&#x0a;&#x0a;Ctrl + Double click to browse." />
+                                     Text="C:\Python" />
                         </StackPanel>
                     </Border>
                     <Border Margin="0,15,0,0"
@@ -445,23 +465,20 @@
                             <!--  Check Box: 'BCML' | Name: cbAdv_InstallBcml | Done  -->
                             <CheckBox x:Name="cbAdv_InstallBcml"
                                       Content="Install BCML"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      ToolTip="Install BCML with PIP.&#x0a;Requires Python, WebView Runtime,&#x0a;and Visual C++ Runtime." />
+                                      Style="{StaticResource MaterialDesignCheckBox}" />
 
                             <!--  Text Box: 'BCML Data Path' | Name: tbAdv_BcmlData | Done  -->
                             <TextBox x:Name="tbAdv_BcmlData"
                                      Margin="5"
                                      VerticalAlignment="Center"
                                      Style="{StaticResource Filled}"
-                                     Text="%localappdata%\bcml"
-                                     ToolTip="Path to BCML Data.&#x0a;This is where BCML will store your mods.&#x0a;&#x0a;Ctrl + Double click to browse." />
+                                     Text="%localappdata%\bcml" />
 
                             <!--  Check Box: 'Install .NET Runtime' | Name: cbAdv_NetRuntime | Done  -->
                             <CheckBox x:Name="_cbAdv_NetRuntime"
                                       Content=".NET 5.0 Runtime"
                                       IsEnabled="False"
                                       Style="{StaticResource MaterialDesignCheckBox}"
-                                      ToolTip="Installs .NET 5.0 Runtime.&#x0a;Required to run DS4Windows."
                                       Visibility="Collapsed" />
 
                             <!--  Check Box: 'Install WebView 2 Runtime Runtime' | Name: cbAdv_NetRuntime | Done  -->
@@ -469,7 +486,6 @@
                                       Content="WebView 2 Runtime"
                                       IsEnabled="False"
                                       Style="{StaticResource MaterialDesignCheckBox}"
-                                      ToolTip="Installs WebView 2 Runtime.&#x0a;Required to run BCML."
                                       Visibility="Collapsed" />
 
                             <!--  Check Box: 'Install Visual C++ Runtime' | Name: cbAdv_VisualRuntime | Done  -->
@@ -477,7 +493,6 @@
                                       Content="Visual C++ Runtime"
                                       IsEnabled="False"
                                       Style="{StaticResource MaterialDesignCheckBox}"
-                                      ToolTip="Installs Visual C++ Runtime.&#x0a;Required to run BCML and Cemu."
                                       Visibility="Collapsed" />
                         </StackPanel>
                     </Border>
@@ -508,15 +523,13 @@
                                     <CheckBox x:Name="cbAdv_InstallCemu"
                                               Margin="0,5"
                                               Content="Cemu"
-                                              Style="{StaticResource MaterialDesignCheckBox}"
-                                              ToolTip="Downloads and install Cemu to&#x0a;the specified folder.&#x0a;Installs BotW if not already installed." />
+                                              Style="{StaticResource MaterialDesignCheckBox}" />
 
                                     <!--  Check Box: 'Install GFX' | Name: cbAdv_InstallGfx | Done  -->
                                     <CheckBox x:Name="cbAdv_InstallGfx"
                                               Margin="0,5"
                                               Content="GFX"
-                                              Style="{StaticResource MaterialDesignCheckBox}"
-                                              ToolTip="Downloads and installs the&#x0a;latest community graphic packs." />
+                                              Style="{StaticResource MaterialDesignCheckBox}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="10,3,0,0">
 
@@ -525,16 +538,14 @@
                                              Margin="0,5"
                                              VerticalAlignment="Center"
                                              Style="{StaticResource Filled}"
-                                             Text="%cemupath%\mlc01"
-                                             ToolTip="Path to Cemu mlc01.&#x0a;This is where your game files are stored. (Or a copy of them.)&#x0a;&#x0a;Ctrl + Double click to browse." />
+                                             Text="%cemupath%\mlc01" />
 
                                     <!--  Check Box: 'Copy Base Game' | Name: cbAdv_CopyBase | Done  -->
                                     <CheckBox x:Name="cbAdv_CopyBase"
                                               Margin="0,5"
                                               HorizontalAlignment="Stretch"
                                               Content="Copy Base Game"
-                                              Style="{StaticResource MaterialDesignCheckBox}"
-                                              ToolTip="Copies Botw base game files to&#x0a;the specified mlc01 folder." />
+                                              Style="{StaticResource MaterialDesignCheckBox}" />
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
@@ -568,24 +579,21 @@
                                              Margin="0,5"
                                              VerticalAlignment="Center"
                                              Style="{StaticResource Filled}"
-                                             Text="Base"
-                                             ToolTip="Path to Botw's Base game files.&#x0a;Must end in content.&#x0a;&#x0a;Ctrl + Double click to browse." />
+                                             Text="Base" />
 
                                     <!--  Text Box: 'Update Game Path' | Name: tbAdv_GameDlc | Done  -->
                                     <TextBox x:Name="tbAdv_GameUpdate"
                                              Margin="0,5"
                                              VerticalAlignment="Center"
                                              Style="{StaticResource Filled}"
-                                             Text="Update"
-                                             ToolTip="Path to Botw's Update files.&#x0a;Must end in content.&#x0a;&#x0a;Ctrl + Double click to browse." />
+                                             Text="Update" />
 
                                     <!--  Text Box: 'DLC Game Path' | Name: tbAdv_GameUpdate | Done  -->
                                     <TextBox x:Name="tbAdv_GameDlc"
                                              Margin="0,5"
                                              VerticalAlignment="Center"
                                              Style="{StaticResource Filled}"
-                                             Text="DLC"
-                                             ToolTip="Path to Botw's DLC files.&#x0a;Must end in content.&#x0a;&#x0a;Ctrl + Double click to browse." />
+                                             Text="DLC" />
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
@@ -662,7 +670,7 @@
                         VerticalContentAlignment="Top"
                         Click="{s:Action Help}"
                         Style="{StaticResource Global}"
-                        ToolTip="GitHub README-">
+                        ToolTip="Open BotwInstaller help page.">
                     <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                           Name="path16563"
                           Fill="{DynamicResource MaterialDesignBody}"
@@ -686,7 +694,7 @@
                         VerticalContentAlignment="Top"
                         Click="{s:Action Dump}"
                         Style="{StaticResource Global}"
-                        ToolTip="Install Homebrew to a specified SD card.">
+                        ToolTip="Installs Homebrew to the specified SD card. (Or an empty drive.)">
                     <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                           Name="path2568"
                           Fill="{DynamicResource MaterialDesignBody}"
@@ -711,7 +719,8 @@
                         VerticalContentAlignment="Top"
                         Click="SearchEvent"
                         Style="{StaticResource Global}"
-                        ToolTip="Search and/or verify game files.">
+                        ToolTip="Search and/or verify game files."
+                        Visibility="Collapsed">
                     <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                           Name="path1760"
                           Fill="{DynamicResource MaterialDesignBody}"
@@ -735,9 +744,9 @@
                           VerticalAlignment="Center"
                           HorizontalContentAlignment="Left"
                           VerticalContentAlignment="Top"
-                          Click="SearchEvent"
                           Style="{StaticResource MaterialDesignCheckBox}"
-                          ToolTip="Enable debug mode. (Shows console when installing.)">
+                          ToolTip="Enable debug mode. (Shows console when installing.)"
+                          Visibility="Collapsed">
                     <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                           Fill="{DynamicResource MaterialDesignBody}"
                           StrokeEndLineCap="Round"
@@ -753,114 +762,6 @@
             </Grid>
 
         </Grid>
-
-        <!--#endregion-->
-
-        <!--#region Old Loading Screen-->
-
-        <!--  OLD ANIMATION  -->
-        <!--<Grid x:Name="_anim_Controls"
-              Grid.Row="1"
-              Grid.RowSpan="3"
-              Opacity="0"
-              Visibility="Hidden">
-
-        -->
-        <!--  EP 1  -->
-        <!--
-            <Ellipse x:Name="ep1_parent"
-                     Width="220"
-                     Height="220"
-                     StrokeThickness="3">
-                <Ellipse.Effect>
-                    <DropShadowEffect BlurRadius="10"
-                                      ShadowDepth="0"
-                                      Color="#00BCFF" />
-                </Ellipse.Effect>
-                <Ellipse.Stroke>
-                    <LinearGradientBrush StartPoint="1.0,0.0" EndPoint="0.5,0">
-                        <GradientStop Color="#00BCFF" />
-                        <GradientStop Offset="1" Color="{DynamicResource PrimaryHueDarkColor}" />
-                    </LinearGradientBrush>
-                </Ellipse.Stroke>
-                <Ellipse.RenderTransform>
-                    <RotateTransform x:Name="ep1_target" Angle="20" CenterX="110" CenterY="110" />
-                </Ellipse.RenderTransform>
-            </Ellipse>
-
-        -->
-        <!--  EP 2  -->
-        <!--
-            <Ellipse x:Name="ep2_parent"
-                     Width="260"
-                     Height="260"
-                     StrokeThickness="3">
-                <Ellipse.Effect>
-                    <DropShadowEffect BlurRadius="10"
-                                      ShadowDepth="0"
-                                      Color="#00BCFF" />
-                </Ellipse.Effect>
-                <Ellipse.Stroke>
-                    <LinearGradientBrush StartPoint="1.0,0.0" EndPoint="0.5,0">
-                        <GradientStop Color="#00BCFF" />
-                        <GradientStop Offset="1" Color="{DynamicResource PrimaryHueDarkColor}" />
-                    </LinearGradientBrush>
-                </Ellipse.Stroke>
-                <Ellipse.RenderTransform>
-                    <RotateTransform x:Name="ep2_target" Angle="40" CenterX="130" CenterY="130" />
-                </Ellipse.RenderTransform>
-            </Ellipse>
-
-        -->
-        <!--  EP 3  -->
-        <!--
-            <Ellipse x:Name="ep3_parent"
-                     Width="300"
-                     Height="300"
-                     StrokeThickness="3">
-                <Ellipse.Effect>
-                    <DropShadowEffect BlurRadius="10"
-                                      ShadowDepth="0"
-                                      Color="#00BCFF" />
-                </Ellipse.Effect>
-                <Ellipse.Stroke>
-                    <LinearGradientBrush StartPoint="1.0,0.0" EndPoint="0.5,0">
-                        <GradientStop Color="#00BCFF" />
-                        <GradientStop Offset="1" Color="{DynamicResource PrimaryHueDarkColor}" />
-                    </LinearGradientBrush>
-                </Ellipse.Stroke>
-                <Ellipse.RenderTransform>
-                    <RotateTransform x:Name="ep3_target" Angle="60" CenterX="150" CenterY="150" />
-                </Ellipse.RenderTransform>
-            </Ellipse>
-
-        -->
-        <!--  Static  -->
-        <!--
-            <Ellipse Width="170"
-                     Height="170"
-                     Fill="{DynamicResource PrimaryHueMidBrush}">
-                <Ellipse.Effect>
-                    <DropShadowEffect BlurRadius="10"
-                                      Opacity="0.5"
-                                      ShadowDepth="2" />
-                </Ellipse.Effect>
-            </Ellipse>
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontFamily="Sans-sefif"
-                       FontSize="60"
-                       FontWeight="Bold"
-                       Text="52%"
-                       TextOptions.TextFormattingMode="Display">
-                <TextBlock.Effect>
-                    <DropShadowEffect BlurRadius="10"
-                                      Opacity="1"
-                                      ShadowDepth="4"
-                                      Color="#000" />
-                </TextBlock.Effect>
-            </TextBlock>
-        </Grid>-->
 
         <!--#endregion-->
 

@@ -1,5 +1,6 @@
 ﻿using BotwInstaller.Lib.Operations;
 using BotwInstaller.Lib.Setup;
+using BotwInstaller.UI.Models;
 using BotwInstaller.UI.Views;
 using BotwInstaller.UI.ViewThemes.ControlStyles;
 using MaterialDesignThemes.Wpf;
@@ -19,32 +20,6 @@ namespace BotwInstaller.UI.ViewModels
 {
     public class ShellViewModel : Screen
     {
-        public void SwitchTheme()
-        {
-            PaletteHelper helper = new();
-            ITheme theme = helper.GetTheme();
-
-            string file = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\settings.ini";
-            string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\";
-            Directory.CreateDirectory(folder);
-
-            if (theme.GetBaseTheme() == BaseTheme.Light)
-            {
-                AppTheme.Change();
-                File.WriteAllText(file, "dark");
-            }
-            else if (theme.GetBaseTheme() == BaseTheme.Dark)
-            {
-                AppTheme.Change(true);
-                File.WriteAllText(file, "light");
-            }
-            else
-            {
-                AppTheme.Change();
-                File.WriteAllText(file, "dark");
-            }
-        }
-
         public async void Dump()
         {
             var drives = DriveInfo.GetDrives();
@@ -54,7 +29,6 @@ namespace BotwInstaller.UI.ViewModels
                 if (drive.DriveType == DriveType.Removable)
                     if (Directory.EnumerateFiles(drive.Name).Count() == 0)
                     {
-
                         dv = drive.Name;
                     }
             }
@@ -62,7 +36,7 @@ namespace BotwInstaller.UI.ViewModels
             if (dv != null)
             {
                 await Dumpling.Start(dv);
-                // Message - All Good
+                IPrompt.Show($"Dumping installed on {dv}");
             }
             else
             {
@@ -74,9 +48,9 @@ namespace BotwInstaller.UI.ViewModels
                 if (save.ShowDialog() == true)
                 {
                     await Dumpling.Start(save.FileName.EditPath());
-                    // Message - All Good
+                    IPrompt.Show($"Dumping installed in {save.FileName.EditPath()}");
                 }
-                else { } // Error Failed
+                else { IPrompt.Show("Dumping not installed."); }
             }
         }
 

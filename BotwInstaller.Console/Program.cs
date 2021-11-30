@@ -1,10 +1,11 @@
-﻿using BotwInstaller.Lib;
+﻿#pragma warning disable CS8604
+
+using BotwInstaller.Lib;
 using BotwInstaller.Lib.GameData;
 using BotwInstaller.Lib.Operations.Configure;
 using BotwInstaller.Lib.Prompts;
 using BotwInstaller.Lib.Shell;
 using System.Text.Json;
-#pragma warning disable CS8604
 
 using static BotwInstaller.Lib.Prompts.ConsoleMsg;
 
@@ -26,6 +27,12 @@ namespace BotwInstaller.Shell
                         else if (rt[0] == "Error") PrintLine(rt[1]);
                         else PrintLine($"Verified:\n\tBase: {rt[0]}\n\tUpdate: {rt[1]}\n\tDLC: {rt[2]}");
                         break;
+                    case "-d":
+                        Config? config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Initialize.temp}\\config.json"));
+                        await Initialize.Install(config);
+                        Console.ReadLine();
+                        break;
+
                 }
             }
             else

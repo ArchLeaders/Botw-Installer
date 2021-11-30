@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
       <TargetFramework>net6.0-windows</TargetFramework>
@@ -10,12 +10,14 @@
   <ItemGroup>
     <None Remove="Res\bcml.ico.res" />
     <None Remove="Res\botw.ico.res" />
+    <None Remove="Res\install.res" />
     <None Remove="Res\lnk.res" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Res\bcml.ico.res" />
     <EmbeddedResource Include="Res\botw.ico.res" />
+    <EmbeddedResource Include="Res\install.res" />
     <EmbeddedResource Include="Res\lnk.res" />
   </ItemGroup>
 
