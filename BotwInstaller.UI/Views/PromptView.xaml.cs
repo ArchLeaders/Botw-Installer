@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BotwInstaller.UI.Models;
+using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BotwInstaller.UI.Views
 {
@@ -13,10 +15,13 @@ namespace BotwInstaller.UI.Views
         {
             InitializeComponent();
 
+            Animation.DoubleAnim(parent, fade.Name, Grid.OpacityProperty, 1, 200);
+
             activePrompt = false;
 
             text.Text = message;
             tbTitle.Text = title;
+            Title = title;
 
             if (isYesNo)
             {
@@ -42,6 +47,11 @@ namespace BotwInstaller.UI.Views
         {
             activePrompt = false;
             Close();
+        }
+
+        private void DragWindow(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }

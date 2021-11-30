@@ -11,6 +11,10 @@ namespace BotwInstaller.Lib.GameData
 {
     public static class Query
     {
+        /// <summary>
+        /// Searches a windows pc for U-King.rpx files to get the Botw content paths.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<string[]> GameFiles()
         {
             string game = "";
@@ -58,6 +62,22 @@ namespace BotwInstaller.Lib.GameData
             }
         }
 
+        /// <summary>
+        /// Searches for the DLC.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<string> DlcOnly()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Compares the given Botw contents with an embeded list.
+        /// </summary>
+        /// <param name="bC"></param>
+        /// <param name="uC"></param>
+        /// <param name="dC"></param>
+        /// <returns></returns>
         public static async Task<bool> VerifyGameFiles(string bC, string uC, string dC)
         {
             await Task.Run(() =>
@@ -112,39 +132,54 @@ namespace BotwInstaller.Lib.GameData
             return true;
         }
 
+        /// <summary>
+        /// VerifyLogic for the user interface.
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="u"></param>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public static async Task<string[]?> VerifyLogic(string b, string u, string d)
         {
-            // Create bool and empty string[]
-            bool check = false;
-            string[] f = new string[] { "", "", "" };
-
-            // Check if the passed paths are null. If they are, search for the game.
-            // Otherise pass the givin paths to the used string[]
-            if (b == "" || u == "")
+            string? str = null;
+            try
             {
-                f = await GameFiles();
+                // Create bool and empty string[]
+                bool check = false;
+                string[] f = new string[] { "", "", "" };
 
-                if (f[0] == "" || f[1] == "")
-                    return null;
-            }
-            else f = new string[] { b, u, d };
-
-            check = await VerifyGameFiles(f[0], f[1], f[2]);
-
-            if (check) return f;
-            else
-            {
-                string? str = null;
-                await Task.Run(() =>
+                // Check if the passed paths are null. If they are, search for the game.
+                // Otherise pass the givin paths to the used string[]
+                if (b == "" || u == "")
                 {
-                    var log = File.ReadAllLines("./verify.log");
+                    f = await GameFiles();
 
-                    if (log.Length <= 5)
-                        foreach (var line in log)
-                            str = $"{str}\n{line}";
-                    else str = $"There are {log.Length} missing files.\n\nYou may want to re-dump your game.";
+                    if (f[0] == "" || f[1] == "")
+                        return null;
+                }
+                else f = new string[] { b, u, d };
 
-                });
+                check = await VerifyGameFiles(f[0], f[1], f[2]);
+
+                if (check) return f;
+                else
+                {
+                    await Task.Run(() =>
+                    {
+                        var log = File.ReadAllLines("./verify.log");
+
+                        if (log.Length <= 5)
+                            foreach (var line in log)
+                                str = $"{str}\n{line}";
+                        else str = $"There are {log.Length} missing files.\n\nYou may want to re-dump your game.";
+
+                    });
+                    return new string[] { "Error", str };
+                }
+            }
+            catch (Exception ex)
+            {
+                ConsoleMsg.Error("BotwInstaller.Lib.GameData.Query.VerifyLogic", new string[] { $"bC;{b}", $"uC;{u}", $"dC;{d}" }, ex.Message);
                 return new string[] { "Error", str };
             }
         }

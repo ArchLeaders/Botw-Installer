@@ -158,7 +158,7 @@ namespace BotwInstaller.Lib.Shell
             // Move mlc01
             // Move controller profiles
             // Move GFX
-            // 
+            // Clear temp folder
         }
     }
 }

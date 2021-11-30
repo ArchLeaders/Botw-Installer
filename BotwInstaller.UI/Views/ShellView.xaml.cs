@@ -192,27 +192,27 @@ namespace BotwInstaller.UI.Views
             timer.Tick += async (s, e) =>
             {
                 // UP - EP1
-                ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 150), 300);
+                Animation.ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 150), 300);
                 await Task.Run(() => Thread.Sleep(199));
 
                 // UP - EP2
-                ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 150), 300);
+                Animation.ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 150), 300);
                 await Task.Run(() => Thread.Sleep(99));
 
                 // DOWN - EP1
-                ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 0), 300);
+                Animation.ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 0), 300);
                 await Task.Run(() => Thread.Sleep(99));
 
                 // UP - EP3
-                ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 150), 300);
+                Animation.ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 150), 300);
                 await Task.Run(() => Thread.Sleep(99));
 
                 // DOWN - EP2
-                ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 0), 300);
+                Animation.ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 0), 300);
                 await Task.Run(() => Thread.Sleep(199));
 
                 // DOWN - EP3
-                ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 0), 300);
+                Animation.ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 0), 300);
             };
 
             #endregion
@@ -250,10 +250,14 @@ namespace BotwInstaller.UI.Views
         /// </summary>
         /// <param name="textBox">Output TextBox</param>
         /// <param name="title">Dialog Window Title</param>
-        private static void BrowseEvent(TextBox textBox, string? title = null)
+        private static void BrowseEvent(TextBox textBox, string? title = null, string warning = "")
         {
             try
             {
+                if (warning != "")
+                    if (!IPrompt.Warning(warning, true))
+                        return;
+
                 VistaFolderBrowserDialog dialog = new();
 
                 dialog.Description = title;
@@ -329,18 +333,6 @@ namespace BotwInstaller.UI.Views
                     BrowseEvent((TextBox)s, "Browse For mlc01 Folder");
             };
 
-            tbAdv_DS4Path.MouseDown += (s, e) =>
-            {
-                if (Keyboard.IsKeyDown(Key.LeftCtrl))
-                    BrowseEvent((TextBox)s, "Browse For DS4Windows Install Folder");
-            };
-
-            tbAdv_BetterJoyPath.MouseDown += (s, e) =>
-            {
-                if (Keyboard.IsKeyDown(Key.LeftCtrl))
-                    BrowseEvent((TextBox)s, "Browse For BetterJoy Install Folder");
-            };
-
             tbAdv_BcmlData.MouseDown += (s, e) =>
             {
                 if (Keyboard.IsKeyDown(Key.LeftCtrl))
@@ -351,6 +343,38 @@ namespace BotwInstaller.UI.Views
             {
                 if (Keyboard.IsKeyDown(Key.LeftCtrl))
                     BrowseEvent((TextBox)s, "Browse For Python Install Folder");
+            };
+
+            tbAdv_GameBase.MouseDoubleClick += (s, e) =>
+            {
+                string text = "";
+                if (c.base_game != "")
+                    text = "The base game files have already\nbeen found and verified in the\ncurrent location.\n" +
+                           "\nIf you change them to something else it\ncould make them incorrect.\n\nContinue anyway?";
+
+                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    BrowseEvent((TextBox)s, "Browse For Base Game 'content' Folder", text);
+            };
+
+            tbAdv_GameUpdate.MouseDoubleClick += (s, e) =>
+            {
+                string text = "";
+                if (c.update != "")
+                    text = "The update files have already been found and verified in the current location." +
+                           "\nIf you change them to something else it could make them incorrect.\n\nContinue anyway?";
+
+                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    BrowseEvent((TextBox)s, "Browse For Update 'content' Folder", text);
+            };
+            tbAdv_GameDlc.MouseDoubleClick += (s, e) =>
+            {
+                string text = "";
+                if (c.dlc != "")
+                    text = "The DLC files have already\nbeen found and verified in the\ncurrent location." +
+                           "\n\nIf you change them to something else it\ncould make them incorrect.\n\nContinue anyway?";
+
+                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    BrowseEvent((TextBox)s, "Browse For DLC 'content' Folder", text);
             };
 
             /// Configurations
@@ -364,7 +388,7 @@ namespace BotwInstaller.UI.Views
                 SyncCheckBox(cbConfigBasic_Shortcuts.IsChecked, new List<CheckBox> { cbLnkDsk_Botw, cbLnkDsk_Cemu, cbLnkSrt_Bcml, cbLnkSrt_BetterJoy, cbLnkSrt_Botw, cbLnkSrt_Cemu, cbLnkSrt_DS4Windows});
 
             // DS4Windows Configuration
-            cbAdv_InstallDs4.Click += (s, e) => SyncCheckBox(cbAdv_InstallDs4.IsChecked, new List<CheckBox> { _cbAdv_NetRuntime });
+            cbBasic_InstallDs4Windows.Click += (s, e) => SyncCheckBox(cbBasic_InstallDs4Windows.IsChecked, new List<CheckBox> { _cbAdv_NetRuntime });
 
             // VCRuntime Configuration
             cbAdv_InstallCemu.Click += (s, e) =>
@@ -462,6 +486,11 @@ namespace BotwInstaller.UI.Views
                 c.base_game = bC;
                 c.update = uC;
                 c.dlc = dC;
+
+                // Set TextBoxes
+                tbAdv_GameBase.Text = bC;
+                tbAdv_GameUpdate.Text = uC;
+                tbAdv_GameDlc.Text = dC;
 
                 // Make cd N/A
                 if (dC == "") dC = "N/A";
@@ -572,15 +601,15 @@ namespace BotwInstaller.UI.Views
         public async Task StartAnim()
         {
             timer.Start();
-            ThicknessAnim(parentGrid, "anim_LowerPanel", Grid.MarginProperty, new Thickness(0), 500);
-            ThicknessAnim(_installParent, "_obscureBtn_Install", Grid.MarginProperty, new Thickness(0,60,0,0), 300);
-            ThicknessAnim(parentGrid, "_obscureBtn_Cancel", Grid.MarginProperty, new Thickness(0), 300);
-            ThicknessAnim(slideoutParent, animSlideout.Name, Grid.MarginProperty, new Thickness(-250, 0, 0, 0), 300);
+            Animation.ThicknessAnim(parentGrid, "anim_LowerPanel", Grid.MarginProperty, new Thickness(0), 500);
+            Animation.ThicknessAnim(_installParent, "_obscureBtn_Install", Grid.MarginProperty, new Thickness(0,60,0,0), 300);
+            Animation.ThicknessAnim(parentGrid, "_obscureBtn_Cancel", Grid.MarginProperty, new Thickness(0), 300);
+            Animation.ThicknessAnim(slideoutParent, animSlideout.Name, Grid.MarginProperty, new Thickness(-250, 0, 0, 0), 300);
             await Task.Run(() => Thread.Sleep(500));
-            DoubleAnim(anim_LowerPanel, "anim_TopBar", Border.MaxWidthProperty, 0, 500);
+            Animation.DoubleAnim(anim_LowerPanel, "anim_TopBar", Border.MaxWidthProperty, 0, 500);
             await Task.Run(() => Thread.Sleep(500));
             anim_Controls.Visibility = Visibility.Visible;
-            DoubleAnim(parentGrid, anim_Controls.Name, Grid.OpacityProperty, 1, 500);
+            Animation.DoubleAnim(parentGrid, anim_Controls.Name, Grid.OpacityProperty, 1, 500);
         }
 
         /// <summary>
@@ -589,13 +618,13 @@ namespace BotwInstaller.UI.Views
         /// <returns></returns>
         public async Task StopAnim()
         {
-            DoubleAnim(parentGrid, anim_Controls.Name, Grid.OpacityProperty, 0, 500);
-            ThicknessAnim(parentGrid, "anim_LowerPanel", Grid.MarginProperty, new Thickness(0,350,0,0), 500);
-            ThicknessAnim(_installParent, "_obscureBtn_Install", Grid.MarginProperty, new Thickness(0), 300);
-            ThicknessAnim(parentGrid, "_obscureBtn_Cancel", Grid.MarginProperty, new Thickness(0,60,0,0), 300);
+            Animation.DoubleAnim(parentGrid, anim_Controls.Name, Grid.OpacityProperty, 0, 500);
+            Animation.ThicknessAnim(parentGrid, "anim_LowerPanel", Grid.MarginProperty, new Thickness(0,350,0,0), 500);
+            Animation.ThicknessAnim(_installParent, "_obscureBtn_Install", Grid.MarginProperty, new Thickness(0), 300);
+            Animation.ThicknessAnim(parentGrid, "_obscureBtn_Cancel", Grid.MarginProperty, new Thickness(0,60,0,0), 300);
             await Task.Run(() => Thread.Sleep(500));
-            ThicknessAnim(slideoutParent, animSlideout.Name, Grid.MarginProperty, new Thickness(0, 0, 0, 0), 300);
-            DoubleAnim(anim_LowerPanel, "anim_TopBar", Border.MaxWidthProperty, 1000, 500);
+            Animation.ThicknessAnim(slideoutParent, animSlideout.Name, Grid.MarginProperty, new Thickness(0, 0, 0, 0), 300);
+            Animation.DoubleAnim(anim_LowerPanel, "anim_TopBar", Border.MaxWidthProperty, 1000, 500);
             await Task.Run(() => Thread.Sleep(500));
             anim_Controls.Visibility = Visibility.Hidden;
             timer.Stop();
@@ -608,7 +637,7 @@ namespace BotwInstaller.UI.Views
         /// <returns></returns>
         public async Task Increment(int inc = 1)
         {
-            DoubleAnim(anim_Controls, installBar.Name, Border.MinWidthProperty, inc * 6.8, inc * 10);
+            Animation.DoubleAnim(anim_Controls, installBar.Name, Border.MinWidthProperty, inc * 6.8, inc * 10);
             await Task.Run(() => Thread.Sleep(inc * 10));
             installStatus.Text = $"{inc}% Complete";
         }
@@ -641,52 +670,6 @@ namespace BotwInstaller.UI.Views
             check.Start();
         }
 
-        /// <summary>
-        /// Plays a DoubleAnimation animation on the specified controls
-        /// </summary>
-        /// <param name="parentControl">The target controls parent</param>
-        /// <param name="control">The name of the target</param>
-        /// <param name="property">The property to change</param>
-        /// <param name="value">The value to change the property to</param>
-        /// <param name="timeSpan">The time it takes to change the property</param>
-        private void DoubleAnim(FrameworkElement parentControl, string control, DependencyProperty property, double value, int timeSpan = 1000)
-        {
-            DoubleAnimation anim = new();
-            anim.To = value;
-            anim.Duration = new Duration(TimeSpan.FromMilliseconds(timeSpan));
-
-            Storyboard.SetTargetName(anim, control);
-            Storyboard.SetTargetProperty(anim, new PropertyPath(property));
-
-            Storyboard storyboard = new Storyboard();
-            storyboard.Children.Add(anim);
-
-            storyboard.Begin(parentControl);
-        }
-
-        /// <summary>
-        /// Plays a Thickness animation on the specified controls
-        /// </summary>
-        /// <param name="parentControl">The target controls parent</param>
-        /// <param name="control">The name of the target</param>
-        /// <param name="property">The property to change</param>
-        /// <param name="value">The value to change the property to</param>
-        /// <param name="timeSpan">The time it takes to change the property</param>
-        private void ThicknessAnim(FrameworkElement parentControl, string control, DependencyProperty property, Thickness value, int timeSpan = 1000)
-        {
-            ThicknessAnimation anim = new();
-            anim.To = value;
-            anim.Duration = new Duration(TimeSpan.FromMilliseconds(timeSpan));
-
-            Storyboard.SetTargetName(anim, control);
-            Storyboard.SetTargetProperty(anim, new PropertyPath(property));
-
-            Storyboard storyboard = new Storyboard();
-            storyboard.Children.Add(anim);
-
-            storyboard.Begin(parentControl);
-        }
-
         #endregion
 
         #region Install / Config
@@ -714,17 +697,18 @@ namespace BotwInstaller.UI.Views
 
             // Null checks
             NullCheck(tbAdv_BcmlData, $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\bcml");
-            NullCheck(tbAdv_BetterJoyPath, $"{Initialize.root}\\BetterJoy");
-            NullCheck(tbAdv_BetterJoyPath, $"{Initialize.root}\\BetterJoy");
             NullCheck(tbAdv_Mlc01Path, $"mlc01");
             NullCheck(tbAdv_PythonPath, $"C:\\Python_{cbAdv_PyVersion.Text}");
             NullCheck(tbBasic_CemuPath, $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu");
 
             // TextBox setters
+            c.base_game = tbAdv_GameBase.Text;
+            c.update = tbAdv_GameUpdate.Text;
+            c.dlc = tbAdv_GameDlc.Text;
             c.bcml_data = tbAdv_BcmlData.Text.Replace("%localappdata%", $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}");
-            c.betterjoy_path = tbAdv_BetterJoyPath.Text.Replace("%botwdata%", Initialize.root);
+            c.betterjoy_path = Initialize.root + "\\BetterJoy";
             c.cemu_path = tbBasic_CemuPath.Text;
-            c.ds4_path = tbAdv_DS4Path.Text.Replace("%botwdata%", Initialize.root);
+            c.ds4_path = Initialize.root + "\\DS4Windows";
             c.mlc01 = tbAdv_Mlc01Path.Text.Replace("%cemupath%", "");
             c.python_path = tbAdv_PythonPath.Text;
 
@@ -735,9 +719,9 @@ namespace BotwInstaller.UI.Views
             c.copy_base = (bool)cbAdv_CopyBase.IsChecked;
             c.run = (bool)cbBasic_RunAfterInstall.IsChecked;
             c.install.bcml = (bool)cbAdv_InstallBcml.IsChecked;
-            c.install.betterjoy = (bool)cbAdv_InstallBetterJoy.IsChecked;
+            c.install.betterjoy = (bool)cbBasic_InstallBetterJoy.IsChecked;
             c.install.cemu = (bool)cbAdv_InstallCemu.IsChecked;
-            c.install.ds4 = (bool)cbAdv_InstallDs4.IsChecked;
+            c.install.ds4 = (bool)cbBasic_InstallDs4Windows.IsChecked;
             c.install.python = (bool)cbAdv_InstallPython.IsChecked;
 
             // Shortcuts

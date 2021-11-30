@@ -7,11 +7,12 @@
         xmlns:s="https://github.com/canton7/Stylet"
         x:Name="shellView"
         Title="Botw Installer"
-        Height="460"
+        Height="450"
         MaxWidth="750"
         Background="{DynamicResource PrimaryHueDarkBrush}"
         FontFamily="Calibri"
         FontSize="20"
+        FontWeight="Bold"
         RenderOptions.BitmapScalingMode="HighQuality"
         ResizeMode="CanMinimize"
         Style="{StaticResource MaterialDesignWindow}"
@@ -236,44 +237,52 @@
 
                 </Grid>
                 <Grid Grid.Row="2" Margin="0,5,0,0">
-                    <TextBlock HorizontalAlignment="Left"
+                    <Border Margin="0,3,0,5"
+                            BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                            BorderThickness="2"
+                            CornerRadius="5">
+                        <StackPanel Margin="0,0,0,0"
+                                    HorizontalAlignment="Center"
+                                    Orientation="Horizontal">
+
+                            <!--  Check Box: 'Standard Layout' | Name: cbBasicCtrl_Standard | Done  -->
+                            <CheckBox x:Name="cbBasicCtrl_Standard"
+                                      Width="91"
+                                      Height="91"
+                                      Style="{StaticResource MaterialDesignCheckBox}"
+                                      ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)">
+                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="../ViewThemes/Icons/ctrl_jp.png" />
+                            </CheckBox>
+
+                            <!--  Check Box: 'Western Layout' | Name: cbBasicCtrl_Western | Done  -->
+                            <CheckBox x:Name="cbBasicCtrl_Western"
+                                      Width="91"
+                                      Height="91"
+                                      Margin="40,0"
+                                      Style="{StaticResource MaterialDesignCheckBox}"
+                                      ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)">
+                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="../ViewThemes/Icons/ctrl_we.png" />
+                            </CheckBox>
+
+                            <!--  Check Box: 'PE Layout' | Name: cbBasicCtrl_Pe | Done  -->
+                            <CheckBox x:Name="cbBasicCtrl_Pe"
+                                      Width="91"
+                                      Height="91"
+                                      Style="{StaticResource MaterialDesignCheckBox}"
+                                      ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)">
+                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="../ViewThemes/Icons/ctrl_pe.png" />
+                            </CheckBox>
+                        </StackPanel>
+                    </Border>
+                    <TextBlock Height="15"
+                               Margin="13,-5,0,0"
+                               Padding="5,0"
+                               HorizontalAlignment="Left"
                                VerticalAlignment="Top"
-                               FontFamily="Noto Sans Mono"
-                               FontWeight="Bold"
-                               Text="Controller Profiles:"
-                               ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)" />
-                    <StackPanel Margin="0,38,0,0" Orientation="Horizontal">
-
-                        <!--  Check Box: 'Standard Layout' | Name: cbBasicCtrl_Standard | Done  -->
-                        <CheckBox x:Name="cbBasicCtrl_Standard"
-                                  Width="91"
-                                  Height="91"
-                                  Margin="0,0,10,0"
-                                  Style="{StaticResource MaterialDesignCheckBox}"
-                                  ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)">
-                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="../ViewThemes/Icons/ctrl_jp.png" />
-                        </CheckBox>
-
-                        <!--  Check Box: 'Western Layout' | Name: cbBasicCtrl_Western | Done  -->
-                        <CheckBox x:Name="cbBasicCtrl_Western"
-                                  Width="91"
-                                  Height="91"
-                                  Margin="0,0,10,0"
-                                  Style="{StaticResource MaterialDesignCheckBox}"
-                                  ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)">
-                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="../ViewThemes/Icons/ctrl_we.png" />
-                        </CheckBox>
-
-                        <!--  Check Box: 'PE Layout' | Name: cbBasicCtrl_Pe | Done  -->
-                        <CheckBox x:Name="cbBasicCtrl_Pe"
-                                  Width="91"
-                                  Height="91"
-                                  Margin="0,0,10,0"
-                                  Style="{StaticResource MaterialDesignCheckBox}"
-                                  ToolTip="Check any profiles you wish to be installed. (At least one required to play Botw.)">
-                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="../ViewThemes/Icons/ctrl_pe.png" />
-                        </CheckBox>
-                    </StackPanel>
+                               Background="{DynamicResource PrimaryHueDarkBrush}"
+                               FontSize="14"
+                               Foreground="{DynamicResource SecondaryHueLightBrush}"
+                               Text="Controler Profiles" />
                 </Grid>
             </Grid>
         </Grid>
@@ -357,228 +366,233 @@
 
         <Grid x:Name="gridAdvTab"
               Grid.Row="3"
-              Margin="45,0,0,0"
+              Margin="25,0,0,0"
               Visibility="Hidden">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="250" MaxWidth="250" />
-                <ColumnDefinition MinWidth="250" MaxWidth="250" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <StackPanel Margin="0,15,15,0">
-                <Border Margin="0,0,0,0"
-                        BorderBrush="{DynamicResource SecondaryHueLightBrush}"
-                        BorderThickness="2"
-                        CornerRadius="5">
-                    <StackPanel Margin="12,6">
-                        <TextBlock Margin="3,-15,0,0"
-                                   Padding="5,0"
-                                   HorizontalAlignment="Left"
-                                   Background="{DynamicResource PrimaryHueDarkBrush}"
-                                   FontSize="14"
-                                   Foreground="{DynamicResource SecondaryHueLightBrush}"
-                                   Text="Python" />
+            <Grid x:Name="pageOne" Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="270" MaxWidth="270" />
+                    <ColumnDefinition MinWidth="265" MaxWidth="250" />
+                    <ColumnDefinition MaxWidth="160" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,15,15,0">
+                    <Border Margin="0,0,0,0"
+                            BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                            BorderThickness="2"
+                            CornerRadius="5">
+                        <StackPanel Margin="12,6">
+                            <TextBlock Margin="3,-15,0,0"
+                                       Padding="5,0"
+                                       HorizontalAlignment="Left"
+                                       Background="{DynamicResource PrimaryHueDarkBrush}"
+                                       FontSize="14"
+                                       Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                       Text="Python" />
 
-                        <!--  Check Box: 'Install Python' | Name: cbAdv_PyDocs | Done  -->
-                        <CheckBox x:Name="cbAdv_InstallPython"
-                                  Margin="0,5"
-                                  Content="Install Python"
-                                  Style="{StaticResource MaterialDesignCheckBox}"
-                                  ToolTip="Installs Python.&#x0a;This is required for BCML and many other modding tools." />
-
-                        <Grid Margin="0,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.4*" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            <!--  Check Box: 'Py Docs' | Name: cbAdv_PyDocs | Done  -->
-                            <CheckBox x:Name="cbAdv_PyDocs"
-                                      Margin="0,0,5,0"
-                                      Content="Py Docs"
+                            <!--  Check Box: 'Install Python' | Name: cbAdv_PyDocs | Done  -->
+                            <CheckBox x:Name="cbAdv_InstallPython"
+                                      Margin="0,5"
+                                      Content="Install Python"
                                       Style="{StaticResource MaterialDesignCheckBox}"
-                                      ToolTip="Installs The Python Documentation.&#x0a;Recomended if you plan on coding with python." />
+                                      ToolTip="Installs Python.&#x0a;This is required for BCML and many other modding tools." />
 
-                            <!--  Combo Box: 'Python Version' | Name: cbAdv_PyVersion | Done  -->
-                            <ComboBox x:Name="cbAdv_PyVersion"
-                                      Grid.Column="1"
-                                      Margin="5,0,0,0"
-                                      Padding="6,3.5"
-                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                                      ToolTip="The version of python to be installed.">
-                                <ComboBoxItem Content="3.8.10" IsSelected="True" />
-                                <ComboBoxItem Content="3.7.8" />
-                            </ComboBox>
-                        </Grid>
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.4*" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
 
-                        <!--  Text Box: 'DS4Windows Path' | Name: tbAdv_PythonPath | Done  -->
-                        <TextBox x:Name="tbAdv_PythonPath"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 Style="{StaticResource Filled}"
-                                 Text="C:\Python"
-                                 ToolTip="Path To Python Installation.&#x0a;&#x0a;Ctrl + Double click to browse." />
-                    </StackPanel>
-                </Border>
-                <Border Margin="0,15,0,0"
-                        BorderBrush="{DynamicResource SecondaryHueLightBrush}"
-                        BorderThickness="2"
-                        CornerRadius="5">
-                    <StackPanel Margin="12,6">
-                        <TextBlock Margin="3,-15,0,0"
-                                   Padding="5,0"
-                                   HorizontalAlignment="Left"
-                                   Background="{DynamicResource PrimaryHueDarkBrush}"
-                                   FontSize="14"
-                                   Foreground="{DynamicResource SecondaryHueLightBrush}"
-                                   Text="Microsoft (Readonly)" />
+                                <!--  Check Box: 'Py Docs' | Name: cbAdv_PyDocs | Done  -->
+                                <CheckBox x:Name="cbAdv_PyDocs"
+                                          Margin="0,0,5,0"
+                                          Content="Py Docs"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          ToolTip="Installs The Python Documentation.&#x0a;Recomended if you plan on coding with python." />
 
-                        <!--  Check Box: 'Install .NET Runtime' | Name: cbAdv_NetRuntime | Done  -->
-                        <CheckBox x:Name="_cbAdv_NetRuntime"
-                                  Content=".NET 5.0 Runtime"
-                                  IsEnabled="False"
-                                  Style="{StaticResource MaterialDesignCheckBox}"
-                                  ToolTip="Installs .NET 5.0 Runtime.&#x0a;Required to run DS4Windows." />
+                                <!--  Combo Box: 'Python Version' | Name: cbAdv_PyVersion | Done  -->
+                                <ComboBox x:Name="cbAdv_PyVersion"
+                                          Grid.Column="1"
+                                          Margin="5,0,0,0"
+                                          Padding="6,3.5"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          ToolTip="The version of python to be installed.">
+                                    <ComboBoxItem Content="3.8.10" IsSelected="True" />
+                                    <ComboBoxItem Content="3.7.8" />
+                                </ComboBox>
+                            </Grid>
 
-                        <!--  Check Box: 'Install WebView 2 Runtime Runtime' | Name: cbAdv_NetRuntime | Done  -->
-                        <CheckBox x:Name="_cbAdv_WebviewRuntime"
-                                  Content="WebView 2 Runtime"
-                                  IsEnabled="False"
-                                  Style="{StaticResource MaterialDesignCheckBox}"
-                                  ToolTip="Installs WebView 2 Runtime.&#x0a;Required to run BCML."
-                                  Visibility="Collapsed" />
+                            <!--  Text Box: 'Python Path' | Name: tbAdv_PythonPath | Done  -->
+                            <TextBox x:Name="tbAdv_PythonPath"
+                                     Margin="0,5"
+                                     VerticalAlignment="Center"
+                                     Style="{StaticResource Filled}"
+                                     Text="C:\Python"
+                                     ToolTip="Path To Python Installation.&#x0a;&#x0a;Ctrl + Double click to browse." />
+                        </StackPanel>
+                    </Border>
+                    <Border Margin="0,15,0,0"
+                            BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                            BorderThickness="2"
+                            CornerRadius="5">
+                        <StackPanel Margin="12,6">
+                            <TextBlock Margin="3,-15,0,0"
+                                       Padding="5,0"
+                                       HorizontalAlignment="Left"
+                                       Background="{DynamicResource PrimaryHueDarkBrush}"
+                                       FontSize="14"
+                                       Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                       Text="BCML" />
 
-                        <!--  Check Box: 'Install Visual C++ Runtime' | Name: cbAdv_VisualRuntime | Done  -->
-                        <CheckBox x:Name="_cbAdv_VisualRuntime"
-                                  Content="Visual C++ Runtime"
-                                  IsEnabled="False"
-                                  Style="{StaticResource MaterialDesignCheckBox}"
-                                  ToolTip="Installs Visual C++ Runtime.&#x0a;Required to run BCML and Cemu." />
-                    </StackPanel>
-                </Border>
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Grid.ColumnSpan="2"
-                        Margin="0,0,15,0">
-                <Border Margin="0,15,0,0"
-                        BorderBrush="{DynamicResource SecondaryHueLightBrush}"
-                        BorderThickness="2"
-                        CornerRadius="5">
-                    <StackPanel Margin="12,6">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition MaxWidth="120" />
-                                <ColumnDefinition Width="2*" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel>
-                                <TextBlock Margin="3,-15,0,0"
+                            <!--  Check Box: 'BCML' | Name: cbAdv_InstallBcml | Done  -->
+                            <CheckBox x:Name="cbAdv_InstallBcml"
+                                      Content="Install BCML"
+                                      Style="{StaticResource MaterialDesignCheckBox}"
+                                      ToolTip="Install BCML with PIP.&#x0a;Requires Python, WebView Runtime,&#x0a;and Visual C++ Runtime." />
+
+                            <!--  Text Box: 'BCML Data Path' | Name: tbAdv_BcmlData | Done  -->
+                            <TextBox x:Name="tbAdv_BcmlData"
+                                     Margin="5"
+                                     VerticalAlignment="Center"
+                                     Style="{StaticResource Filled}"
+                                     Text="%localappdata%\bcml"
+                                     ToolTip="Path to BCML Data.&#x0a;This is where BCML will store your mods.&#x0a;&#x0a;Ctrl + Double click to browse." />
+
+                            <!--  Check Box: 'Install .NET Runtime' | Name: cbAdv_NetRuntime | Done  -->
+                            <CheckBox x:Name="_cbAdv_NetRuntime"
+                                      Content=".NET 5.0 Runtime"
+                                      IsEnabled="False"
+                                      Style="{StaticResource MaterialDesignCheckBox}"
+                                      ToolTip="Installs .NET 5.0 Runtime.&#x0a;Required to run DS4Windows."
+                                      Visibility="Collapsed" />
+
+                            <!--  Check Box: 'Install WebView 2 Runtime Runtime' | Name: cbAdv_NetRuntime | Done  -->
+                            <CheckBox x:Name="_cbAdv_WebviewRuntime"
+                                      Content="WebView 2 Runtime"
+                                      IsEnabled="False"
+                                      Style="{StaticResource MaterialDesignCheckBox}"
+                                      ToolTip="Installs WebView 2 Runtime.&#x0a;Required to run BCML."
+                                      Visibility="Collapsed" />
+
+                            <!--  Check Box: 'Install Visual C++ Runtime' | Name: cbAdv_VisualRuntime | Done  -->
+                            <CheckBox x:Name="_cbAdv_VisualRuntime"
+                                      Content="Visual C++ Runtime"
+                                      IsEnabled="False"
+                                      Style="{StaticResource MaterialDesignCheckBox}"
+                                      ToolTip="Installs Visual C++ Runtime.&#x0a;Required to run BCML and Cemu."
+                                      Visibility="Collapsed" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            Margin="0,0,0,0">
+                    <Border Margin="0,15,0,0"
+                            BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                            BorderThickness="2"
+                            CornerRadius="5">
+                        <StackPanel Margin="12,6">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MaxWidth="80" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Margin="3,-15,0,0"
+                                               Padding="5,0"
+                                               HorizontalAlignment="Left"
+                                               Background="{DynamicResource PrimaryHueDarkBrush}"
+                                               FontSize="14"
+                                               Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                               Text="Cemu" />
+
+                                    <!--  Check Box: 'Install Cemu' | Name: cbAdv_InstallCemu | Done  -->
+                                    <CheckBox x:Name="cbAdv_InstallCemu"
+                                              Margin="0,5"
+                                              Content="Cemu"
+                                              Style="{StaticResource MaterialDesignCheckBox}"
+                                              ToolTip="Downloads and install Cemu to&#x0a;the specified folder.&#x0a;Installs BotW if not already installed." />
+
+                                    <!--  Check Box: 'Install GFX' | Name: cbAdv_InstallGfx | Done  -->
+                                    <CheckBox x:Name="cbAdv_InstallGfx"
+                                              Margin="0,5"
+                                              Content="GFX"
+                                              Style="{StaticResource MaterialDesignCheckBox}"
+                                              ToolTip="Downloads and installs the&#x0a;latest community graphic packs." />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="10,3,0,0">
+
+                                    <!--  Text Box: 'mlc01 Path' | Name: tbAdv_Mlc01Path | Done  -->
+                                    <TextBox x:Name="tbAdv_Mlc01Path"
+                                             Margin="0,5"
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource Filled}"
+                                             Text="%cemupath%\mlc01"
+                                             ToolTip="Path to Cemu mlc01.&#x0a;This is where your game files are stored. (Or a copy of them.)&#x0a;&#x0a;Ctrl + Double click to browse." />
+
+                                    <!--  Check Box: 'Copy Base Game' | Name: cbAdv_CopyBase | Done  -->
+                                    <CheckBox x:Name="cbAdv_CopyBase"
+                                              Margin="0,5"
+                                              HorizontalAlignment="Stretch"
+                                              Content="Copy Base Game"
+                                              Style="{StaticResource MaterialDesignCheckBox}"
+                                              ToolTip="Copies Botw base game files to&#x0a;the specified mlc01 folder." />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                    <Border Margin="0,13,0,0"
+                            BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                            BorderThickness="2"
+                            CornerRadius="5">
+                        <StackPanel Margin="12,6">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MaxWidth="80" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="3,-15,0,133"
                                            Padding="5,0"
                                            HorizontalAlignment="Left"
                                            Background="{DynamicResource PrimaryHueDarkBrush}"
                                            FontSize="14"
                                            Foreground="{DynamicResource SecondaryHueLightBrush}"
-                                           Text="Cemu" />
+                                           Text="Game Files" />
+                                <StackPanel Margin="5" VerticalAlignment="Center">
+                                    <TextBlock Margin="0,0,0,20" Text="Base:" />
+                                    <TextBlock Text="Update:" />
+                                    <TextBlock Margin="0,20,0,0" Text="DLC:" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="10,0,0,0">
 
-                                <!--  Check Box: 'Install Cemu' | Name: cbAdv_InstallCemu | Done  -->
-                                <CheckBox x:Name="cbAdv_InstallCemu"
-                                          Content="Cemu"
-                                          Style="{StaticResource MaterialDesignCheckBox}"
-                                          ToolTip="Downloads and install Cemu to&#x0a;the specified folder.&#x0a;Installs BotW if not already installed." />
+                                    <!--  Text Box: 'Base Game Path' | Name: tbAdv_GameBase | Done  -->
+                                    <TextBox x:Name="tbAdv_GameBase"
+                                             Margin="0,5"
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource Filled}"
+                                             Text="Base"
+                                             ToolTip="Path to Botw's Base game files.&#x0a;Must end in content.&#x0a;&#x0a;Ctrl + Double click to browse." />
 
-                                <!--  Check Box: 'Install GFX' | Name: cbAdv_InstallGfx | Done  -->
-                                <CheckBox x:Name="cbAdv_InstallGfx"
-                                          Content="GFX"
-                                          Style="{StaticResource MaterialDesignCheckBox}"
-                                          ToolTip="Downloads and installs the&#x0a;latest community graphic packs." />
+                                    <!--  Text Box: 'Update Game Path' | Name: tbAdv_GameDlc | Done  -->
+                                    <TextBox x:Name="tbAdv_GameUpdate"
+                                             Margin="0,5"
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource Filled}"
+                                             Text="Update"
+                                             ToolTip="Path to Botw's Update files.&#x0a;Must end in content.&#x0a;&#x0a;Ctrl + Double click to browse." />
 
-                                <!--  Check Box: 'Install DS4Windows' | Name: cbAdv_InstallDs4 | Done  -->
-                                <CheckBox x:Name="cbAdv_InstallDs4"
-                                          Content="DS4Win"
-                                          Style="{StaticResource MaterialDesignCheckBox}"
-                                          ToolTip="Downloads and installs the&#x0a;latest DS4Windows Ryochan7 fork." />
-
-                                <!--  Check Box: 'Install BetterJoy' | Name: cbAdv_InstallBetterJoy | Done  -->
-                                <CheckBox x:Name="cbAdv_InstallBetterJoy"
-                                          Content="BetterJoy"
-                                          Style="{StaticResource MaterialDesignCheckBox}"
-                                          ToolTip="Downloads and installs the&#x0a;latest BetterJoy." />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Margin="10,3,0,0">
-
-                                <!--  Text Box: 'mlc01 Path' | Name: tbAdv_Mlc01Path | Done  -->
-                                <TextBox x:Name="tbAdv_Mlc01Path"
-                                         Margin="0,5"
-                                         VerticalAlignment="Center"
-                                         Style="{StaticResource Filled}"
-                                         Text="%cemupath%\mlc01"
-                                         ToolTip="Path to Cemu mlc01.&#x0a;This is where your game files are stored. (Or a copy of them.)&#x0a;&#x0a;Ctrl + Double click to browse." />
-
-                                <!--  Check Box: 'Copy Base Game' | Name: cbAdv_CopyBase | Done  -->
-                                <CheckBox x:Name="cbAdv_CopyBase"
-                                          Width="283"
-                                          Margin="0,5"
-                                          HorizontalAlignment="Left"
-                                          Content="Copy Base Game"
-                                          Style="{StaticResource MaterialDesignCheckBox}"
-                                          ToolTip="Copies Botw base game files to&#x0a;the specified mlc01 folder." />
-
-                                <!--  Text Box: 'DS4Windows Path' | Name: tbAdv_DS4Path | Done  -->
-                                <TextBox x:Name="tbAdv_DS4Path"
-                                         Margin="0,5"
-                                         VerticalAlignment="Center"
-                                         Style="{StaticResource Filled}"
-                                         Text="%botwdata%\DS4Windows"
-                                         ToolTip="Path To DS4Windows Installation.&#x0a;Note: %botwdata% = %localappdata%\BotwData&#x0a;&#x0a;Ctrl + Double click to browse." />
-
-                                <!--  Text Box: 'BetterJoy Path' | Name: tbAdv_BetterJoy | Done  -->
-                                <TextBox x:Name="tbAdv_BetterJoyPath"
-                                         Margin="0,5"
-                                         VerticalAlignment="Center"
-                                         Style="{StaticResource Filled}"
-                                         Text="%botwdata%\BetterJoy"
-                                         ToolTip="Path To BetterJoy Installation.&#x0a;Note: %botwdata% = %localappdata%\BotwData&#x0a;&#x0a;Ctrl + Double click to browse." />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-                <Border Margin="0,13,0,0"
-                        BorderBrush="{DynamicResource SecondaryHueLightBrush}"
-                        BorderThickness="2"
-                        CornerRadius="5">
-                    <StackPanel Margin="12,6">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition MaxWidth="120" />
-                                <ColumnDefinition Width="2*" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel>
-                                <TextBlock Margin="3,-15,0,0"
-                                           Padding="5,0"
-                                           HorizontalAlignment="Left"
-                                           Background="{DynamicResource PrimaryHueDarkBrush}"
-                                           FontSize="14"
-                                           Foreground="{DynamicResource SecondaryHueLightBrush}"
-                                           Text="BCML" />
-
-                                <!--  Check Box: 'BCML' | Name: cbAdv_InstallBcml | Done  -->
-                                <CheckBox x:Name="cbAdv_InstallBcml"
-                                          Content="BCML"
-                                          Style="{StaticResource MaterialDesignCheckBox}"
-                                          ToolTip="Install BCML with PIP.&#x0a;Requires Python, WebView Runtime,&#x0a;and Visual C++ Runtime." />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Margin="10,3,0,0">
-
-                                <!--  Text Box: 'BCML Data Path' | Name: tbAdv_BcmlData | Done  -->
-                                <TextBox x:Name="tbAdv_BcmlData"
-                                         Margin="0,5"
-                                         VerticalAlignment="Center"
-                                         Style="{StaticResource Filled}"
-                                         Text="%localappdata%\bcml"
-                                         ToolTip="Path to BCML Data.&#x0a;This is where BCML will store your mods.&#x0a;&#x0a;Ctrl + Double click to browse." />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-            </StackPanel>
+                                    <!--  Text Box: 'DLC Game Path' | Name: tbAdv_GameUpdate | Done  -->
+                                    <TextBox x:Name="tbAdv_GameDlc"
+                                             Margin="0,5"
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource Filled}"
+                                             Text="DLC"
+                                             ToolTip="Path to Botw's DLC files.&#x0a;Must end in content.&#x0a;&#x0a;Ctrl + Double click to browse." />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+            <Grid />
         </Grid>
 
         <!--#endregion-->
@@ -588,7 +602,7 @@
         <Grid x:Name="anim_LowerPanel"
               Grid.Row="1"
               Grid.RowSpan="4"
-              Margin="0,360,0,0"
+              Margin="0,350,0,0"
               Background="{DynamicResource PrimaryHueDarkBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2" />
