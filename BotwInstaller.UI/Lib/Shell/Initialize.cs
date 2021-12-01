@@ -10,6 +10,8 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BotwInstaller.UI.Views;
+using System.IO;
 
 namespace BotwInstaller.Lib.Shell
 {
@@ -30,7 +32,7 @@ namespace BotwInstaller.Lib.Shell
             /// 
             /// Start threadOne =>
             /// 
-            ConsoleMsg.PrintLine($"Initialize => Copy game files...", ConsoleColor.DarkGreen);
+            Prompt.Log($"Initialize => Copy game files...");
 
             Directory.CreateDirectory(local);
 
@@ -56,7 +58,7 @@ namespace BotwInstaller.Lib.Shell
             ///
             /// Start threadTwo =>
             /// 
-            ConsoleMsg.PrintLine($"Initialize => Install Python, WebView 2 Runtime, VisualC++ Runtime...", ConsoleColor.DarkGreen);
+            Prompt.Log($"Initialize => Install Python, WebView 2 Runtime, VisualC++ Runtime...");
 
             // Initialize Python Install
             if (c.install.python == true)
@@ -73,7 +75,7 @@ namespace BotwInstaller.Lib.Shell
             ///
             /// Start threadThree =>
             /// 
-            ConsoleMsg.PrintLine($"Initialize => Cemu, GFX, DotNET, DS4/BetterJoy Download...", ConsoleColor.DarkGreen);
+            Prompt.Log($"Initialize => Cemu, GFX, DotNET, DS4/BetterJoy Download...");
 
             if (c.install.cemu)
             {
@@ -81,24 +83,24 @@ namespace BotwInstaller.Lib.Shell
                 t3.Add(Download.FromUrl("https://cemu.info/api/cemu_latest.php", $"{temp}\\cemu.res"));
 
                 // Initialize GFX Download
-                t3.Add(Download.FromUrl(await "ActualMandM;cemu_graphic_packs".ToUrl(), $"{temp}\\gfx.res"));
+                t3.Add(Download.FromUrl(await "ActualMandM;cemu_graphic_packs".GetRelease(), $"{temp}\\gfx.res"));
             }
 
             // Initialize ViGEmBus Driver Download
             if (c.install.ds4 || c.install.betterjoy)
-                t3.Add(Download.FromUrl(await "ViGEm;ViGEmBus".ToUrl(), $"{temp}\\vigem.res"));
+                t3.Add(Download.FromUrl(await "ViGEm;ViGEmBus".GetRelease(), $"{temp}\\vigem.res"));
 
             // Initialize DS4Windows Download
             if (c.install.ds4)
             {
                 t3.Add(Download.FromUrl("https://download.visualstudio.microsoft.com/download/pr/5303da13-69f7-407a-955a-788ec4ee269c/dc803f35ea6e4d831c849586a842b912/dotnet-sdk-5.0.403-win-x64.exe",
                     $"{temp}\\net.res"));
-                t3.Add(Download.FromUrl(await "Ryochan7;DS4Windows".ToUrl(2), $"{temp}\\ds4.res"));
+                t3.Add(Download.FromUrl(await "Ryochan7;DS4Windows".GetRelease(2), $"{temp}\\ds4.res"));
             }
 
             // Initialize BetterJoy Download
             if (c.install.betterjoy) 
-                t3.Add(Download.FromUrl(await "Davidobot;BetterJoy".ToUrl(), $"{temp}\\betterjoy.res"));
+                t3.Add(Download.FromUrl(await "Davidobot;BetterJoy".GetRelease(), $"{temp}\\betterjoy.res"));
 
             await Task.WhenAll(t3);
 
@@ -109,7 +111,7 @@ namespace BotwInstaller.Lib.Shell
             ///
             /// Start threadFour =>
             /// 
-            ConsoleMsg.PrintLine($"Initialize => Install Cemu, GFX, DotNET, DS4/BetterJoy Install...", ConsoleColor.DarkGreen);
+            Prompt.Log($"Initialize => Install Cemu, GFX, DotNET, DS4/BetterJoy Install...");
 
             if (c.install.cemu)
             {
@@ -140,7 +142,7 @@ namespace BotwInstaller.Lib.Shell
             t4.Add(Lnk.Generate(c));
 
             // Create Profiles
-            t4.Add(Controller.Generate(c));
+            t4.Add(Controler.Generate(c));
 
             await Task.WhenAll(t4);
 
@@ -151,7 +153,7 @@ namespace BotwInstaller.Lib.Shell
             ///
             /// Start threadFive =>
             /// 
-            ConsoleMsg.PrintLine($"Initialize => Clean out temp folder.", ConsoleColor.DarkGreen);
+            Prompt.Log($"Initialize => Clean out temp folder.");
 
             // Move Cemu
             // Move mlc01

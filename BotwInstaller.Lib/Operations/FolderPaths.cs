@@ -1,6 +1,6 @@
 ﻿#pragma warning disable CS8603
 
-using BotwInstaller.Lib.Prompts;
+using BotwInstaller.Lib.Exceptions;
 
 namespace BotwInstaller.Lib.Operations
 {

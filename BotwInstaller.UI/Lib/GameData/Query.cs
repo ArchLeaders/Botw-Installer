@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BotwInstaller.Lib.GameData.GameFiles;
+using System.IO;
+using BotwInstaller.Lib.Shell;
 
 namespace BotwInstaller.Lib.GameData
 {
@@ -29,8 +31,6 @@ namespace BotwInstaller.Lib.GameData
                     {
                         foreach (var item in await Task.Run(() => Files.GetSafeFiles(drive.Name, "U-King.rpx")))
                         {
-                            ConsoleMsg.PrintLine(item.EditPath(3), ConsoleColor.DarkCyan);
-
                             foreach (var dir in Directory.EnumerateDirectories(item.EditPath(3)))
                             {
                                 if (File.Exists($"{dir}\\content\\Actor\\Pack\\TwnObj_TempleOfTime_A_01.sbactorpack"))
@@ -57,18 +57,9 @@ namespace BotwInstaller.Lib.GameData
             }
             catch (Exception ex)
             {
-                ConsoleMsg.Error("BotwInstaller.Lib.Operations.Configure.Query.GameFiles", new string[] { game, update, dlc}, ex.Message, null, true);
+                Prompt.Error("BotwInstaller.Lib.Operations.Configure.Query.GameFiles", new string[] { game, update, dlc}, ex.Message, $"{game}, {update}, {dlc}", true);
                 return new string[] { "", "", ""};
             }
-        }
-
-        /// <summary>
-        /// Searches for the DLC.
-        /// </summary>
-        /// <returns></returns>
-        public static async Task<string> DlcOnly()
-        {
-            return null;
         }
 
         /// <summary>
@@ -80,56 +71,64 @@ namespace BotwInstaller.Lib.GameData
         /// <returns></returns>
         public static async Task<bool> VerifyGameFiles(string bC, string uC, string dC)
         {
-            await Task.Run(() =>
-            {
-                Base.Set(bC.EditPath());
-                Update.Set(uC.EditPath());
-                Dlc.Set(dC.EditPath());
-            });
-
-            IEnumerable<string>? b = null;
-            IEnumerable<string>? u = null;
-            IEnumerable<string>? d = new string[] { };
-
-            await Task.Run(() =>
-            {
-                b = Base.Receive.Except(Directory.EnumerateFiles(bC.EditPath(), "*.*", SearchOption.AllDirectories));
-                u = Update.Receive.Except(Directory.EnumerateFiles(uC.EditPath(), "*.*", SearchOption.AllDirectories));
-                if (dC != "")
-                    d = Dlc.Receive.Except(Directory.EnumerateFiles(dC.EditPath(), "*.*", SearchOption.AllDirectories));
-            });
-
-            if (b.Any())
+            try
             {
                 await Task.Run(() =>
-                {
-                    foreach (var item in b)
-                        ConsoleMsg.PrintLine($"Missing: {item}", ConsoleColor.DarkRed, false, "./verify.log");
-                });
-                return false;
-            }
+                    {
+                        Base.Set(bC.EditPath());
+                        Update.Set(uC.EditPath());
+                        Dlc.Set(dC.EditPath());
+                    });
 
-            if (u.Any())
-            {
+                IEnumerable<string>? b = null;
+                IEnumerable<string>? u = null;
+                IEnumerable<string>? d = new string[] { };
+
                 await Task.Run(() =>
                 {
-                    foreach (var item in b)
-                        ConsoleMsg.PrintLine($"Missing: {item}", ConsoleColor.DarkRed, false, "./verify.log");
+                    b = Base.Receive.Except(Directory.EnumerateFiles(bC.EditPath(), "*.*", SearchOption.AllDirectories));
+                    u = Update.Receive.Except(Directory.EnumerateFiles(uC.EditPath(), "*.*", SearchOption.AllDirectories));
+                    if (dC != "")
+                        d = Dlc.Receive.Except(Directory.EnumerateFiles(dC.EditPath(), "*.*", SearchOption.AllDirectories));
                 });
-                return false;
-            }
 
-            if (d.Any())
-            {
-                await Task.Run(() =>
+                if (b.Any())
                 {
-                    foreach (var item in b)
-                        ConsoleMsg.PrintLine($"Missing: {item}", ConsoleColor.DarkRed, false, "./verify.log");
-                });
+                    await Task.Run(() =>
+                    {
+                        foreach (var item in b)
+                            Prompt.Log($"Missing: {item}", $"{Initialize.temp}\\verify.log");
+                    });
+                    return false;
+                }
+
+                if (u.Any())
+                {
+                    await Task.Run(() =>
+                    {
+                        foreach (var item in b)
+                            Prompt.Log($"Missing: {item}", $"{Initialize.temp}\\verify.log");
+                    });
+                    return false;
+                }
+
+                if (d.Any())
+                {
+                    await Task.Run(() =>
+                    {
+                        foreach (var item in b)
+                            Prompt.Log($"Missing: {item}", $"{Initialize.temp}\\verify.log");
+                    });
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Prompt.Error("BotwInstaller.Lib.GameData.Query.VerifyGameFiles", new string[] { $"bC;{bC}", $"uC;{uC}", $"dC;{dC}" }, ex.Message);
                 return false;
             }
-
-            return true;
         }
 
         /// <summary>
@@ -166,7 +165,7 @@ namespace BotwInstaller.Lib.GameData
                 {
                     await Task.Run(() =>
                     {
-                        var log = File.ReadAllLines("./verify.log");
+                        var log = File.ReadAllLines($"{Initialize.temp}\\verify.log");
 
                         if (log.Length <= 5)
                             foreach (var line in log)
@@ -179,7 +178,7 @@ namespace BotwInstaller.Lib.GameData
             }
             catch (Exception ex)
             {
-                ConsoleMsg.Error("BotwInstaller.Lib.GameData.Query.VerifyLogic", new string[] { $"bC;{b}", $"uC;{u}", $"dC;{d}" }, ex.Message);
+                Prompt.Error("BotwInstaller.Lib.GameData.Query.VerifyLogic", new string[] { $"bC;{b}", $"uC;{u}", $"dC;{d}" }, ex.Message);
                 return new string[] { "Error", str };
             }
         }

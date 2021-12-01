@@ -806,7 +806,7 @@
                     CornerRadius="5" />
             <Border x:Name="installBar"
                     Height="35"
-                    MinWidth="0"
+                    MinWidth="6.8"
                     Margin="35,15"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"

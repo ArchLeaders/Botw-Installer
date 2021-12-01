@@ -4,7 +4,7 @@ using BotwInstaller.Lib;
 using BotwInstaller.Lib.GameData;
 using BotwInstaller.Lib.Operations;
 using BotwInstaller.Lib.Operations.Configure;
-using BotwInstaller.Lib.Prompts;
+using BotwInstaller.Lib.Exceptions;
 using BotwInstaller.Lib.Shell;
 using BotwInstaller.UI.Models;
 using BotwInstaller.UI.ViewThemes.ControlStyles;
@@ -368,7 +368,7 @@ namespace BotwInstaller.UI.Views
             }
             catch (Exception ex)
             {
-                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.Browse", new string[] { $"textBox;{textBox}", $"title;{title}" }, ex.Message);
+                Prompt.Error("BotwInstaller.UI.Views.ShellView.Browse", new string[] { $"textBox;{textBox}", $"title;{title}" }, ex.Message);
             }
         }
 
@@ -563,7 +563,7 @@ namespace BotwInstaller.UI.Views
             }
             catch (Exception ex)
             {
-                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.btnSearch_Click", new string[] { "" }, ex.Message);
+                Prompt.Error("BotwInstaller.UI.Views.ShellView.btnSearch_Click", new string[] { "" }, ex.Message);
             }
         }
 
@@ -611,7 +611,7 @@ namespace BotwInstaller.UI.Views
             }
             catch (Exception ex)
             {
-                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.SetGameConfig", new string[] { $"bC;{bC}", $"uC;{uC}", $"dC;{dC}", $"showComplete;{showComplete}" }, ex.Message);
+                Prompt.Error("BotwInstaller.UI.Views.ShellView.SetGameConfig", new string[] { $"bC;{bC}", $"uC;{uC}", $"dC;{dC}", $"showComplete;{showComplete}" }, ex.Message);
             }
         }
 
@@ -669,7 +669,7 @@ namespace BotwInstaller.UI.Views
             }
             catch (Exception ex)
             {
-                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.Setup", new string[] { "N/A;N/A" }, ex.Message);
+                Prompt.Error("BotwInstaller.UI.Views.ShellView.Setup", new string[] { "N/A;N/A" }, ex.Message);
             }
         }
 
@@ -688,7 +688,7 @@ namespace BotwInstaller.UI.Views
             }
             catch (Exception ex)
             {
-                ConsoleMsg.Error("BotwInstaller.UI.Views.ShellView.ControlSet", new string[] { $"isChecked;{isChecked}", $"checkBoxes;{checkBoxes}" }, ex.Message);
+                Prompt.Error("BotwInstaller.UI.Views.ShellView.ControlSet", new string[] { $"isChecked;{isChecked}", $"checkBoxes;{checkBoxes}" }, ex.Message);
             }
         }
 
@@ -750,7 +750,7 @@ namespace BotwInstaller.UI.Views
         /// <returns></returns>
         public async Task Watch(bool stop = false)
         {
-            if (stop) timer.Stop();
+            if (stop) { timer.Stop(); return; }
 
             var cache = 0;
 
@@ -861,15 +861,16 @@ namespace BotwInstaller.UI.Views
 
             // Write config
             await JsonData.ConfigWriter(c);
-            Interface.Update(1);
 
             // Download installer
-            Download.FromUrl("", $"{Initialize.temp}\\install.exe");
+            // await Download.FromUrl("https://github.com/ArchLeaders/Botw-Installer/raw/master/BotwInstaller.Res/Res/install.res", $"{Initialize.temp}\\install.exe");
+            // Interface.Update(2);
 
             // Call installer
             install.StartInfo.Arguments = "-d";
-            install.StartInfo.FileName = $"{Initialize.temp}\\install.exe";
+            install.StartInfo.FileName = @"D:\Visual Studio\Projects\- Botw Scripts\BotwInstaller\BotwInstaller.Console\bin\Debug\net6.0-windows\win-x64\BotwInstaller.Console.exe";
             install.StartInfo.CreateNoWindow = !isDebug;
+            install.StartInfo.Verb = "runas";
 
             install.Start();
             await install.WaitForExitAsync();
@@ -880,9 +881,9 @@ namespace BotwInstaller.UI.Views
             if (IPrompt.Warning("Are you sure you want to cancel installing?\nThis cannot be undone.", true))
             {
                 install.Kill(true);
-                Watch(true);
+                await Watch(true);
+                await Task.Run(() => Directory.Delete($"{c.cemu_path.EditPath()}\\local-temp", true));
                 Directory.Delete(Initialize.temp, true);
-                Directory.Delete($"{c.cemu_path.EditPath()}\\local-temp", true);
             }
         }
 

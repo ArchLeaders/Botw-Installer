@@ -1,6 +1,6 @@
 ﻿using BotwInstaller.Lib.GameData;
 using BotwInstaller.Lib.GameData.GameFiles;
-using BotwInstaller.Lib.Prompts;
+using BotwInstaller.Lib.Exceptions;
 using BotwInstaller.Lib.Shell;
 using System.Text.Json;
 

@@ -1,5 +1,5 @@
 ﻿using BotwInstaller.Lib.Operations;
-using BotwInstaller.Lib.Prompts;
+using BotwInstaller.Lib.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO.Compression;

@@ -35,7 +35,7 @@ namespace BotwInstaller.UI.ViewModels
 
             if (dv != null)
             {
-                await Dumpling.Start(dv);
+                await Dumpling.Setup(dv);
                 IPrompt.Show($"Dumping installed on {dv}");
             }
             else
@@ -47,7 +47,7 @@ namespace BotwInstaller.UI.ViewModels
 
                 if (save.ShowDialog() == true)
                 {
-                    await Dumpling.Start(save.FileName.EditPath());
+                    await Dumpling.Setup(save.FileName.EditPath());
                     IPrompt.Show($"Dumping installed in {save.FileName.EditPath()}");
                 }
                 else { IPrompt.Show("Dumping not installed."); }

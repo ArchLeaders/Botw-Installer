@@ -1,11 +1,23 @@
 ﻿#pragma warning disable CS8604
 
 using BotwInstaller.Lib.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BotwInstaller.Lib.Operations
 {
     internal class Folders
     {
+        /// <summary>
+        /// Copies the specified directory and all of it's contents to another directory.
+        /// </summary>
+        /// <param name="inputDir"></param>
+        /// <param name="outputDir"></param>
+        /// <param name="id"></param>
+        /// <param name="overwrite"></param>
+        /// <returns></returns>
         public static async Task CopyAsync(string inputDir, string outputDir, string id = "Unspecified", bool overwrite = true)
         {
             try
@@ -22,7 +34,7 @@ namespace BotwInstaller.Lib.Operations
                         await Task.Run(() => Directory.CreateDirectory(directoryInfo.FullName.Replace(inputDir, outputDir)));
                         tasks.Add(Task.Run(() => File.Copy(file, file.Replace(inputDir, outputDir), overwrite)));
 
-                        ConsoleMsg.Print($"{id} :: Copied {file} to {file.Replace(inputDir, outputDir)}", ConsoleColor.DarkCyan, true, false);
+                        Prompt.Log($"[{id}] Copied {file} > {file.Replace(inputDir, outputDir)}");
                     }
                 });
 
@@ -30,7 +42,7 @@ namespace BotwInstaller.Lib.Operations
             }
             catch (Exception e)
             {
-                ConsoleMsg.Error("BotwInstallerLite.Lib.Operations.CopyAsync", new string[] { $"inputDir;{inputDir}", $"outputDir;{outputDir}", $"id;{id}", $"overwrite;{overwrite.ToString()}" }, e.Message);
+                Prompt.Error("BotwInstallerLite.Lib.Operations.CopyAsync", new string[] { $"inputDir;{inputDir}", $"outputDir;{outputDir}", $"id;{id}", $"overwrite;{overwrite}" }, e.Message);
             }
         }
     }

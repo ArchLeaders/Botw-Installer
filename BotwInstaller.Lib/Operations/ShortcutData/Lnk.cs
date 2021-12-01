@@ -1,4 +1,4 @@
-﻿using BotwInstaller.Lib.Prompts;
+﻿using BotwInstaller.Lib.Exceptions;
 using BotwInstaller.Lib.Shell;
 using BotwInstaller.Res;
 using System;

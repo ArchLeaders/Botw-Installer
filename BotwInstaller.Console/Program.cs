@@ -3,11 +3,11 @@
 using BotwInstaller.Lib;
 using BotwInstaller.Lib.GameData;
 using BotwInstaller.Lib.Operations.Configure;
-using BotwInstaller.Lib.Prompts;
+using BotwInstaller.Lib.Exceptions;
 using BotwInstaller.Lib.Shell;
 using System.Text.Json;
 
-using static BotwInstaller.Lib.Prompts.ConsoleMsg;
+using static BotwInstaller.Lib.Exceptions.ConsoleMsg;
 
 namespace BotwInstaller.Shell
 {
@@ -15,6 +15,8 @@ namespace BotwInstaller.Shell
     {
         public static async Task Main(string[] args)
         {
+            Console.WriteLine("debug id = 3:27");
+
             if (args.Length >= 1)
             {
                 switch (args[0].ToLower())

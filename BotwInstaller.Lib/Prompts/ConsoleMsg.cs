@@ -3,7 +3,7 @@
 
 using BotwInstaller.Lib.Shell;
 
-namespace BotwInstaller.Lib.Prompts
+namespace BotwInstaller.Lib.Exceptions
 {
     public static class ConsoleMsg
     {

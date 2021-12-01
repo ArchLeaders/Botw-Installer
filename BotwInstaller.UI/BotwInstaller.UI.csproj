@@ -57,7 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BotwInstaller.Lib\BotwInstaller.Lib.csproj" />
+    <ProjectReference Include="..\BotwInstaller.Res\BotwInstaller.Res.csproj" />
   </ItemGroup>
 
 </Project>
