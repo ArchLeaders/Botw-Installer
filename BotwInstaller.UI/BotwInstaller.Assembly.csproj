@@ -7,13 +7,25 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>ViewThemes\Icons\app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<SignAssembly>False</SignAssembly>
+	<Authors>ArchLeaders</Authors>
+	<Product>BotwInstaller</Product>
+	<PackageId>BotwInstaller</PackageId>
+	<Version>2.0.0</Version>
+	<Description>Installs (does not download) ToZ: Breath of the Wild with Cemu.</Description>
+	<Copyright>MIT</Copyright>
+	<PackageIcon>app.png</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/ArchLeaders/Botw-Installer</RepositoryUrl>
+	<PackageTags>botw;botw on pc;cemu;botw installer;zelda;breath of the wild;yuzu;homebrew;botw modding</PackageTags>
+	<NeutralLanguage>en-001</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Lib\Res\bcml.ico.res" />
     <None Remove="Lib\Res\botw.ico.res" />
     <None Remove="ViewThemes\Fonts\Glyph.ttf" />
-    <None Remove="ViewThemes\Icons\app.png" />
     <None Remove="ViewThemes\Icons\back.png" />
     <None Remove="ViewThemes\Icons\ControllerProfile_Jap.svg" />
     <None Remove="ViewThemes\Icons\ControllerProfile_PE.svg" />
@@ -34,40 +46,48 @@
       <Lcid>0</Lcid>
       <Isolated>false</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
+		<ExludeFromSingleFile>True</ExludeFromSingleFile>
     </COMReference>
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ViewThemes\Fonts\Glyph.ttf">
+    <Resource Include="ViewThemes\Fonts\Glyph.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ViewThemes\Icons\app.ico" />
-    <Content Include="ViewThemes\Icons\app.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ViewThemes\Icons\back.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ViewThemes\Icons\ctrl_jp.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ViewThemes\Icons\ctrl_pe.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ViewThemes\Icons\ctrl_we.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ViewThemes\Icons\discord.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ViewThemes\Icons\install.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </Resource>
+    <Resource Include="ViewThemes\Icons\app.ico" />
+    <Resource Include="ViewThemes\Icons\app.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="ViewThemes\Icons\back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="ViewThemes\Icons\ctrl_jp.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="ViewThemes\Icons\ctrl_pe.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="ViewThemes\Icons\ctrl_we.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="ViewThemes\Icons\discord.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="ViewThemes\Icons\install.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Lib\Res\bcml.ico.res" />
     <EmbeddedResource Include="Lib\Res\botw.ico.res" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +98,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BotwInstaller.Res\BotwInstaller.Res.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ViewThemes\Icons\app.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

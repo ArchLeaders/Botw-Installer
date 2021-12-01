@@ -1,10 +1,7 @@
-﻿using BotwInstaller.Lib.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿#pragma warning disable CS8602
+
+using BotwInstaller.Lib.Exceptions;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace BotwInstaller.Lib.Operations
 {

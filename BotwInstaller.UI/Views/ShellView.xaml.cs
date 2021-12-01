@@ -32,6 +32,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
+using BotwInstaller.Lib.Setup;
+using BotwInstaller.Lib.SetupFiles;
+using BotwInstaller.Lib.Operations.ShortcutData;
+using System.IO.Compression;
 
 namespace BotwInstaller.Assembly.Views
 {
@@ -42,12 +46,19 @@ namespace BotwInstaller.Assembly.Views
     {
         private bool isVerified = false;
 
-        Config c = new Config();
+        Config config = new Config();
 
         public static int minHeight = 450;
         public static int minWidth = 750;
 
-        DispatcherTimer watch = new();
+        public static string root = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData";
+        public static string temp = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\BotwData\\Temp";
+
+        public List<Task> t1 = new();
+        public List<Task> t2 = new();
+        public List<Task> t3 = new();
+        public List<Task> t4 = new();
+
 
         #region Fix Window Sixe in fullscreen.
 
@@ -148,7 +159,7 @@ namespace BotwInstaller.Assembly.Views
                 if (this == Empty) { return "RECT {Empty}"; }
                 return "RECT { left : " + left + " / top : " + top + " / right : " + right + " / bottom : " + bottom + " }";
             }
-            public override bool Equals(object obj)
+            public override bool Equals(object? obj)
             {
                 if (!(obj is Rect)) { return false; }
                 return (this == (RECT)obj);
@@ -215,7 +226,6 @@ namespace BotwInstaller.Assembly.Views
                     isCancel = true;
                     await StartAnim();
                     await Install();
-                    await Watch();
                 }
                 else
                 {
@@ -345,7 +355,7 @@ namespace BotwInstaller.Assembly.Views
         private void RegisterEvents()
         {
             // Load window fix
-            SourceInitialized += async (s, e) =>
+            SourceInitialized += (s, e) =>
             {
                 IntPtr handle = new WindowInteropHelper(this).Handle;
                 HwndSource.FromHwnd(handle).AddHook(new HwndSourceHook(WindowProc));
@@ -406,7 +416,7 @@ namespace BotwInstaller.Assembly.Views
             tbAdv_GameBase.MouseDoubleClick += (s, e) =>
             {
                 string text = "";
-                if (c.base_game != "")
+                if (config.base_game != "")
                     text = "The base game files have already\nbeen found and verified in the\ncurrent location.\n" +
                            "\nIf you change them to something else it\ncould make them incorrect.\n\nContinue anyway?";
 
@@ -417,7 +427,7 @@ namespace BotwInstaller.Assembly.Views
             tbAdv_GameUpdate.MouseDoubleClick += (s, e) =>
             {
                 string text = "";
-                if (c.update != "")
+                if (config.update != "")
                     text = "The update files have already been found and verified in the current location." +
                            "\nIf you change them to something else it could make them incorrect.\n\nContinue anyway?";
 
@@ -427,7 +437,7 @@ namespace BotwInstaller.Assembly.Views
             tbAdv_GameDlc.MouseDoubleClick += (s, e) =>
             {
                 string text = "";
-                if (c.dlc != "")
+                if (config.dlc != "")
                     text = "The DLC files have already\nbeen found and verified in the\ncurrent location." +
                            "\n\nIf you change them to something else it\ncould make them incorrect.\n\nContinue anyway?";
 
@@ -489,9 +499,9 @@ namespace BotwInstaller.Assembly.Views
 
                 bool show = false;
 
-                c.base_game = "";
-                c.update = "";
-                c.dlc = "";
+                config.base_game = "";
+                config.update = "";
+                config.dlc = "";
 
                 // Find out if this is being called via button click or app launch
                 // null: App launch
@@ -503,7 +513,7 @@ namespace BotwInstaller.Assembly.Views
                 tbBsc_BotwPath.IsReadOnly = true;
 
                 // Call Search/Verify logic.
-                var check = await Query.VerifyLogic(c.base_game, c.update, c.dlc);
+                var check = await Query.VerifyLogic(config.base_game, config.update, config.dlc);
 
                 // Stop timer
                 timer.Stop();
@@ -541,9 +551,9 @@ namespace BotwInstaller.Assembly.Views
             try
             {
                 // Set game config
-                c.base_game = bC;
-                c.update = uC;
-                c.dlc = dC;
+                config.base_game = bC;
+                config.update = uC;
+                config.dlc = dC;
 
                 // Set TextBoxes
                 tbAdv_GameBase.Text = bC;
@@ -553,7 +563,7 @@ namespace BotwInstaller.Assembly.Views
                 // Make TextBoxes readonly
                 tbAdv_GameBase.IsReadOnly = true;
                 tbAdv_GameUpdate.IsReadOnly = true;
-                if (c.dlc != "") tbAdv_GameDlc.IsReadOnly = true;
+                if (config.dlc != "") tbAdv_GameDlc.IsReadOnly = true;
 
                 // Make cd N/A
                 if (dC == "") dC = "N/A";
@@ -691,54 +701,24 @@ namespace BotwInstaller.Assembly.Views
             anim_Controls.Visibility = Visibility.Hidden;
         }
 
-        /// <summary>
-        /// Moves the progress bar up <paramref name="inc"/> amount of times
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public async Task Increment(int inc = 1)
-        {
-            installBar.MinWidth = installBar.MinWidth + inc * 6.8;
-            installStatus.Text = $"{inc}% Complete";
-        }
-
-        /// <summary>
-        /// Watches the inc.p file to update the UI accordingly.
-        /// </summary>
-        /// <returns></returns>
-        public async Task Watch(bool stop = false)
-        {
-            var cache = 0;
-
-            watch.Interval = TimeSpan.FromMilliseconds(1000);
-            watch.Tick += async (s, e) =>
-            {
-                var length = await Task.Run(() => File.ReadAllLines($"{Initialize.temp}\\inc.p").Length);
-
-                if (length != cache)
-                {
-                    cache = length;
-                    await Increment(length);
-                }
-            };
-
-            watch.Start();
-        }
-
         #endregion
 
         #region Install / Config
 
+        /// <summary>
+        /// Initalizes the install thread(s)
+        /// </summary>
+        /// <returns></returns>
         private async Task Install()
         {
             // Game check
             if ((bool)cbAdv_InstallCemu.IsChecked)
             {
-                if (c.base_game == "" || c.update == "")
+                if (config.base_game == "" || config.update == "")
                 {
                     IPrompt.Error("Game files not set.\nMake sure you have dumped your game correctly.\n\nSee the log for more details.\n%localappdata%\\BotwData\\log.txt");
                 }
-                else c.install.botw = true;
+                else config.install.botw = true;
             }
 
             // Null checks
@@ -748,43 +728,43 @@ namespace BotwInstaller.Assembly.Views
             NullCheck(tbBsc_CemuPath, $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\Games\\Cemu");
 
             // TextBox setters
-            c.base_game = tbAdv_GameBase.Text;
-            c.update = tbAdv_GameUpdate.Text;
-            c.dlc = tbAdv_GameDlc.Text;
-            c.bcml_data = tbAdv_BcmlData.Text.Replace("%localappdata%", $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}");
-            c.betterjoy_path = Initialize.root + "\\BetterJoy";
-            c.cemu_path = tbBsc_CemuPath.Text;
-            c.ds4_path = Initialize.root + "\\DS4Windows";
-            c.mlc01 = tbAdv_Mlc01Path.Text.Replace("%cemupath%", c.cemu_path);
-            c.python_path = tbAdv_PythonPath.Text;
+            config.base_game = tbAdv_GameBase.Text;
+            config.update = tbAdv_GameUpdate.Text;
+            config.dlc = tbAdv_GameDlc.Text;
+            config.bcml_data = tbAdv_BcmlData.Text.Replace("%localappdata%", $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}");
+            config.betterjoy_path = Initialize.root + "\\BetterJoy";
+            config.cemu_path = tbBsc_CemuPath.Text;
+            config.ds4_path = Initialize.root + "\\DS4Windows";
+            config.mlc01 = tbAdv_Mlc01Path.Text.Replace("%cemupath%", config.cemu_path);
+            config.python_path = tbAdv_PythonPath.Text;
 
             // ComboBox setters
-            c.py_ver = cbAdv_PyVersion.Text;
+            config.py_ver = cbAdv_PyVersion.Text;
 
             // CheckBox setters
-            c.copy_base = (bool)cbAdv_CopyBase.IsChecked;
-            c.run = (bool)cbBsc_RunAfter.IsChecked;
-            c.install.bcml = (bool)cbAdv_InstallBcml.IsChecked;
-            c.install.betterjoy = (bool)cbBsc_InstallBjoy.IsChecked;
-            c.install.cemu = (bool)cbAdv_InstallCemu.IsChecked;
-            c.install.ds4 = (bool)cbBsc_InstallDs4.IsChecked;
-            c.install.python = (bool)cbAdv_InstallPython.IsChecked;
+            config.copy_base = (bool)cbAdv_CopyBase.IsChecked;
+            config.run = (bool)cbBsc_RunAfter.IsChecked;
+            config.install.bcml = (bool)cbAdv_InstallBcml.IsChecked;
+            config.install.betterjoy = (bool)cbBsc_InstallBjoy.IsChecked;
+            config.install.cemu = (bool)cbAdv_InstallCemu.IsChecked;
+            config.install.ds4 = (bool)cbBsc_InstallDs4.IsChecked;
+            config.install.python = (bool)cbAdv_InstallPython.IsChecked;
 
             // Shortcuts
-            c.shortcuts.bcml.dsk = (bool)cbLnkDsk_Bcml.IsChecked;
-            c.shortcuts.bcml.start = (bool)cbLnkSrt_Bcml.IsChecked;
+            config.shortcuts.bcml.dsk = (bool)cbLnkDsk_Bcml.IsChecked;
+            config.shortcuts.bcml.start = (bool)cbLnkSrt_Bcml.IsChecked;
 
-            c.shortcuts.botw.dsk = (bool)cbLnkDsk_Botw.IsChecked;
-            c.shortcuts.botw.start = (bool)cbLnkSrt_Botw.IsChecked;
+            config.shortcuts.botw.dsk = (bool)cbLnkDsk_Botw.IsChecked;
+            config.shortcuts.botw.start = (bool)cbLnkSrt_Botw.IsChecked;
 
-            c.shortcuts.betterjoy.dsk = (bool)cbLnkDsk_BetterJoy.IsChecked;
-            c.shortcuts.betterjoy.start = (bool)cbLnkSrt_BetterJoy.IsChecked;
+            config.shortcuts.betterjoy.dsk = (bool)cbLnkDsk_BetterJoy.IsChecked;
+            config.shortcuts.betterjoy.start = (bool)cbLnkSrt_BetterJoy.IsChecked;
 
-            c.shortcuts.cemu.dsk = (bool)cbLnkDsk_Cemu.IsChecked;
-            c.shortcuts.cemu.start = (bool)cbLnkSrt_Cemu.IsChecked;
+            config.shortcuts.cemu.dsk = (bool)cbLnkDsk_Cemu.IsChecked;
+            config.shortcuts.cemu.start = (bool)cbLnkSrt_Cemu.IsChecked;
 
-            c.shortcuts.ds4.dsk = (bool)cbLnkDsk_DS4Windows.IsChecked;
-            c.shortcuts.ds4.start = (bool)cbLnkSrt_DS4Windows.IsChecked;
+            config.shortcuts.ds4.dsk = (bool)cbLnkDsk_DS4Windows.IsChecked;
+            config.shortcuts.ds4.start = (bool)cbLnkSrt_DS4Windows.IsChecked;
 
             // Controler Profiles
             List<string> ctrl = new();
@@ -799,49 +779,287 @@ namespace BotwInstaller.Assembly.Views
             if (ctrl.Count == 0)
                 ctrl.Add("jp");
 
-            c.ctrl_profile = ctrl.ToArray();
+            config.ctrl_profile = ctrl.ToArray();
 
             // Write config
-            await JsonData.ConfigWriter(c);
+            await JsonData.ConfigWriter(config);
 
             // Start Install
-            await Initialize.Install(c);
-
-            watch.Stop();
-            IPrompt.Show("Botw Installed");
+            await StartThread(config);
         }
 
-        private void Cancel()
+        /// <summary>
+        /// Stops the install thread(s) and deletes the temporary files.
+        /// </summary>
+        private async Task Cancel()
         {
             if (IPrompt.Warning("Are you sure you want to cancel installing?", true))
             {
-                watch.Stop();
+                File.WriteAllText("clean.bat",
+                    "@echo off\n" +
+                    "SLEEP 1\n" +
+                    "echo Removing temp folders...\n" +
+                    $"rmdir \"{config.cemu_path.EditPath()}\\local-temp\" /s /q\n" +
+                    $"rmdir \"{config.mlc01.EditPath(2)}\\local-temp-mlc\" /s /q\n" +
+                    $"rmdir \"{root}\" /s /q\n" +
+                    "echo Cleaning registry...\n" +
+                    "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Cemu /f\n" +
+                    "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\BCML /f\n" +
+                    "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\BetterJoy /f\n" +
+                    "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\DS4Windows /f\n" +
+                    "echo Removing shortcuts...\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BotW.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BCML.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\Cemu.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\DS4Windows.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BetterJoy.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\BotW.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\BCML.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\Cemu.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\DS4Windows.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\BetterJoy.lnk\" /f\n" +
+                    "echo Unistalling BCML...\n" +
+                    "pip uninstall -y bcml\n" +
+                    $"rmdir \"{config.bcml_data}\\bcml\" /s /q\n" +
+                    "rmdir \"%LOCALAPPDATA%\\bcml\" /s /q\n" +
+                    "echo Rebooting...\n" +
+                    $"start \"BotwInstaller\" \"{Environment.GetCommandLineArgs()[0].Replace(".dll", ".exe")}\"\n" +
+                    $"del {Directory.GetCurrentDirectory()}\\clean.bat");
 
-                if (Directory.Exists($"{c.cemu_path.EditPath()}local-temp"))
-                    Directory.Delete($"{c.cemu_path.EditPath()}local-temp", true);
-                if (Directory.Exists($"{c.cemu_path.EditPath()}local-temp-mlc"))
-                    Directory.Delete($"{c.cemu_path.EditPath()}local-temp-mlc", true);
-                else foreach (var dir in Directory.EnumerateDirectories(c.mlc01))
-                        Directory.Delete(dir, true);
+                await Proc.Start("clean.bat", "", false, false, true);
 
-                Directory.Delete(Initialize.temp, true);
-
-                if (Directory.Exists($"{Initialize.root}\\DS4Windows"))
-                    Directory.Delete($"{Initialize.root}\\DS4Windows", true);
-
-                if (Directory.Exists($"{Initialize.root}\\BetterJoy"))
-                    Directory.Delete($"{Initialize.root}\\BetterJoy", true);
-
-                foreach (var file in Directory.EnumerateFiles(Initialize.root, "*.bat", SearchOption.TopDirectoryOnly))
-                    File.Delete(file);
-
-                return;
+                Environment.Exit(0);
             }
         }
 
+        /// <summary>
+        /// Checks if a string value is null then assign it a value.
+        /// </summary>
+        /// <param name="tb"></param>
+        /// <param name="defaulted"></param>
         private void NullCheck(TextBox tb, string defaulted)
         {
             if (tb.Text == "") tb.Text = defaulted;
+        }
+
+        private async Task StartThread(Config c)
+        {
+            string local = $"{c.cemu_path.EditPath()}local-temp";
+            string mlc = $"{c.mlc01.EditPath(2)}local-temp-mlc\\mlc01";
+
+            // UPDATE 4 | 5
+            Update(4, 5);
+
+            if (!c.mlc01.Contains(c.cemu_path) && !c.mlc01.EndsWith("mlc01"))
+                mlc = c.mlc01 + "\\mlc01";
+            else if (!c.mlc01.Contains(c.cemu_path) && c.mlc01.EndsWith("mlc01"))
+                mlc = c.mlc01;
+
+            /// 
+            /// Start threadOne =>
+            /// 
+
+            Directory.CreateDirectory(local);
+            Directory.CreateDirectory(mlc);
+
+            if (c.install.botw)
+            {
+                // Initialize Copy Base Game to mlc01 if copy_base is true
+                if (c.copy_base)
+                    t1.Add(Folders.CopyAsync(c.base_game.EditPath(), $"{mlc}\\usr\\title\\00050000\\{c.base_game.Get().Replace("00050000", "").ToLower()}\\"));
+
+                // Initialize Copy Base Game to mlc01 if install.cemu is true
+                t1.Add(Folders.CopyAsync(c.update.EditPath(), $"{mlc}\\usr\\title\\0005000e\\{c.base_game.Get().Replace("00050000", "").ToLower()}\\"));
+
+                // Initialize Copy Base Game to mlc01 if dlc is not null
+                if (c.dlc != "")
+                    t1.Add(Folders.CopyAsync(c.dlc.EditPath(), $"{mlc}\\usr\\title\\0005000c\\{c.base_game.Get().Replace("00050000", "").ToLower()}\\"));
+
+            }
+
+            // UPDATE 5 | 10
+            Update(5, 10);
+
+            ///
+            /// Start threadTwo =>
+            /// 
+
+            // Initialize Python Install
+            if (c.install.python == true)
+                t2.Add(Software.Python(c.py_ver, c.python_path, c.install.py_docs));
+
+            // Initialize WebView2 Runtime Install
+            if (c.install.bcml)
+                t2.Add(Software.WVRuntime());
+
+            // Initialize Visual C++ Runtime Install
+            if (c.install.cemu || c.install.bcml)
+                t2.Add(Software.VCRuntime());
+
+            // UPDATE 5 | 15
+            Update(5, 15);
+
+            ///
+            /// Start threadThree =>
+            /// 
+
+            if (c.install.cemu)
+            {
+                // Initialize Cemu Download
+                t3.Add(Download.FromUrl("https://cemu.info/api/cemu_latest.php", $"{temp}\\cemu.res"));
+
+                // Initialize GFX Download
+                t3.Add(Download.FromUrl(await "ActualMandM;cemu_graphic_packs".GetRelease(), $"{temp}\\gfx.res"));
+            }
+
+            // Initialize ViGEmBus Driver Download
+            if (c.install.ds4 || c.install.betterjoy)
+                t3.Add(Download.FromUrl(await "ViGEm;ViGEmBus".GetRelease(), $"{temp}\\vigem.msi"));
+
+            // Initialize DS4Windows Download
+            if (c.install.ds4)
+            {
+                t3.Add(Download.FromUrl("https://download.visualstudio.microsoft.com/download/pr/5303da13-69f7-407a-955a-788ec4ee269c/dc803f35ea6e4d831c849586a842b912/dotnet-sdk-5.0.403-win-x64.exe",
+                    $"{temp}\\net.res"));
+                t3.Add(Download.FromUrl(await "Ryochan7;DS4Windows".GetRelease(2), $"{temp}\\ds4.res"));
+            }
+
+            // Initialize BetterJoy Download
+            if (c.install.betterjoy)
+                t3.Add(Download.FromUrl(await "Davidobot;BetterJoy".GetRelease(), $"{temp}\\betterjoy.res"));
+
+            await Task.WhenAll(t3);
+
+            // UPDATE 20 | 35
+            Update(20, 35);
+
+            /// 
+            /// End threadThree =/
+            /// 
+
+            ///
+            /// Start threadFour =>
+            /// 
+
+            if (c.install.cemu)
+            {
+                // Initialize Cemu Extraction
+                t4.Add(Task.Run(() => ZipFile.ExtractToDirectory($"{temp}\\cemu.res", $"{local}\\cemu")));
+
+                // Initialize GFX Extraction
+                t4.Add(Task.Run(() => ZipFile.ExtractToDirectory($"{temp}\\gfx.res", $"{local}\\gfx")));
+            }
+
+            // Initialize ViGEmBus Driver Install
+            if (c.install.ds4 || c.install.betterjoy)
+                t4.Add(Proc.Start($"cmd.exe", $"/c \"{temp}\\vigem.msi\" /quiet & EXIT"));
+
+            // Initialize DS4Windows Install
+            if (c.install.ds4)
+            {
+                t4.Add(Proc.Start($"{temp}\\net.res", "/quiet"));
+                t4.Add(Task.Run(() => ZipFile.ExtractToDirectory($"{temp}\\ds4.res", $"{root}\\")));
+            }
+
+            // Initialize BetterJoy Install
+            if (c.install.betterjoy)
+                t4.Add(Task.Run(() => ZipFile.ExtractToDirectory($"{temp}\\betterjoy.res", $"{root}\\BetterJoy")));
+
+            // Create Profiles
+            t4.Add(Controller.Generate(c));
+
+            await Task.WhenAll(t4);
+
+            // UPDATE 15 | 50
+            Update(15, 50);
+
+            ///
+            /// End threadFour =>
+            /// 
+            await Task.WhenAll(t2);
+
+            // UPDATE 15 | 65
+            Update(15, 65);
+
+            // Install BCML
+            if (c.install.bcml)
+            {
+                t1.Add(Proc.Pip("bcml", $"{c.python_path}\\Scripts"));
+                t1.Add(Settings.Json(c));
+            }
+
+            ///
+            /// End threadTwo =>
+            /// 
+            await Task.WhenAll(t1);
+
+            // UPDATE 25 | 90
+            Update(25, 90);
+
+            ///
+            /// End threadOne =>
+            /// 
+            ///
+            /// Start threadFive =>
+            /// 
+
+            // Generate Shortcuts
+            await Lnk.Generate(c);
+
+            // Move cemu
+            if (c.install.cemu)
+                await Task.Run(() => Directory.Move($"{local}\\cemu".SubFolder(), c.cemu_path));
+
+            // Move controller profiles
+            if (c.install.cemu)
+                await Task.Run(() => Directory.Move($"{local}\\ctrl", $"{c.cemu_path}\\controllerProfiles"));
+
+            // Move mlc01
+            if (Directory.Exists($"{c.cemu_path.EditPath()}\\local-temp-mlc"))
+                await Task.Run(() => Directory.Move($"{mlc}", $"{c.cemu_path}\\mlc01"));
+
+            // Install GFX
+            if (c.install.cemu)
+            {
+                // Move new
+                await Task.Run(() => Directory.Move($"{local}\\gfx", $"{c.cemu_path}\\graphicPacks\\downloadedGraphicPacks"));
+
+                // Settings.xml
+                await Settings.Xml(c.cemu_path, c.base_game, c.mlc01);
+
+                // Game Profile
+                await Settings.Profile(c);
+
+            }
+
+            ///
+            /// End threadFive =>
+            /// 
+
+            // Delete local temps
+            if (Directory.Exists($"{c.cemu_path.EditPath()}local-temp"))
+                Directory.Delete($"{c.cemu_path.EditPath()}local-temp", true);
+            if (Directory.Exists($"{c.cemu_path.EditPath()}local-temp-mlc"))
+                Directory.Delete($"{c.cemu_path.EditPath()}local-temp-mlc", true);
+
+            // Delete global temp
+            Directory.Delete(temp, true);
+
+            // UPDATE 10 | 100
+            Update(10, 100);
+            installStatus.Text = "Done!";
+            IPrompt.Show("Botw Installed");
+
+            if (c.run)
+                await Proc.Start($"{root}\\botw.bat", "");
+
+            await StopAnim();
+        }
+
+        private void Update(int inc, int to)
+        {
+            Animation.DoubleAnim(anim_Controls, installBar.Name, Border.MinWidthProperty, to * 6.8, 400 * inc);
+            installStatus.Text = $"{to}% Complete";
         }
 
         #endregion

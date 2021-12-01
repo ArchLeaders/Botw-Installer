@@ -63,15 +63,6 @@ namespace BotwInstaller.Lib.GameData
         }
 
         /// <summary>
-        /// Searches for the DLC.
-        /// </summary>
-        /// <returns></returns>
-        public static async Task<string> DlcOnly()
-        {
-            return null;
-        }
-
-        /// <summary>
         /// Compares the given Botw contents with an embeded list.
         /// </summary>
         /// <param name="bC"></param>

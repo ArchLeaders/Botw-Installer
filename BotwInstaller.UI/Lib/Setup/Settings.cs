@@ -202,6 +202,7 @@ namespace BotwInstaller.Lib.SetupFiles
                 b.store_dir = c.bcml_data;
                 b.export_dir = $"{c.cemu_path}\\graphicPacks\\BreathOfTheWild_BCML";
 
+                Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\bcml");
                 await Task.Run(() => File.WriteAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\bcml\\settings.json", JsonSerializer.Serialize(b, new JsonSerializerOptions { WriteIndented = true })));
             }
             catch (Exception ex)

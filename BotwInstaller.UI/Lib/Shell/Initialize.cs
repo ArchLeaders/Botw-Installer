@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BotwInstaller.Assembly.Views;
 using System.IO;
+using System.Diagnostics;
+using System.Threading;
 
 namespace BotwInstaller.Lib.Shell
 {
@@ -29,7 +31,7 @@ namespace BotwInstaller.Lib.Shell
             string local = $"{c.cemu_path.EditPath()}local-temp";
             string mlc = $"{c.mlc01.EditPath(2)}local-temp-mlc\\mlc01";
 
-            Interface.Update(4);
+            // UPDATE 4 | 5
 
             if (!c.mlc01.Contains(c.cemu_path) && !c.mlc01.EndsWith("mlc01"))
                 mlc = c.mlc01 + "\\mlc01";
@@ -56,7 +58,7 @@ namespace BotwInstaller.Lib.Shell
                 if (c.dlc != "")
                     t1.Add(Folders.CopyAsync(c.dlc.EditPath(), $"{mlc}\\usr\\title\\0005000c\\{c.base_game.Get().Replace("00050000", "").ToLower()}\\"));
 
-                Interface.Update(15);
+                // UPDATE 5 | 10
             }
 
             ///
@@ -75,7 +77,7 @@ namespace BotwInstaller.Lib.Shell
             if (c.install.cemu || c.install.bcml)
                 t2.Add(Software.VCRuntime());
 
-            Interface.Update(10);
+            // UPDATE 5 | 15
 
             ///
             /// Start threadThree =>
@@ -108,7 +110,7 @@ namespace BotwInstaller.Lib.Shell
 
             await Task.WhenAll(t3);
 
-            Interface.Update(15);
+            // UPDATE 20 | 35
 
             /// 
             /// End threadThree =/
@@ -147,14 +149,14 @@ namespace BotwInstaller.Lib.Shell
 
             await Task.WhenAll(t4);
 
-            Interface.Update(15);
+            // UPDATE 15 | 50
 
             ///
             /// End threadFour =>
             /// 
             await Task.WhenAll(t2);
 
-            Interface.Update(15);
+            // UPDATE 15 | 65
 
             // Install BCML
             if (c.install.bcml)
@@ -168,7 +170,7 @@ namespace BotwInstaller.Lib.Shell
             /// 
             await Task.WhenAll(t1);
 
-            Interface.Update(15);
+            // UPDATE 25 | 90
 
             ///
             /// End threadOne =>
@@ -219,7 +221,7 @@ namespace BotwInstaller.Lib.Shell
             // Delete global temp
             Directory.Delete(temp, true);
 
-            Interface.Update(10);
+            // UPDATE 10 | 100
         }
     }
 }

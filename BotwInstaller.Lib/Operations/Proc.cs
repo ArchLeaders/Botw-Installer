@@ -45,7 +45,7 @@ namespace BotwInstaller.Lib.Operations
             }
         }
 
-        public static async Task Pip(string name, string? pyScripts = null, bool quiet = true, bool wait = true, bool shell = true)
+        public static async Task Pip(string name, string pyScripts = "", bool quiet = true, bool wait = true, bool shell = true)
         {
             if (name == null)
             {

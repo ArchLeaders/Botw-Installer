@@ -133,7 +133,6 @@ namespace BotW_Installer.Libraries
             if (Data.Check(vs[14]))
             {
                 lnk.Add(Batch.Write.Uninstaller.Cemu(vs[12]));
-                lnk.Add(Task.Run(() => Shortcuts.AddProgramEntry("Cemu", "?", $"{Data.root}\\uninstall_cemu.bat", $"{vs[12]}\\Cemu.exe", "Exzap", 9910000)));
                 lnk.Add(Shortcuts.Create("Cemu", $"{programsFolder}", $"{vs[12]}\\Cemu.exe", "", $"{vs[12]}\\Cemu.exe", "WiiU Emulator made by Exzap"));
             }
 
@@ -159,7 +158,6 @@ namespace BotW_Installer.Libraries
                 if (Data.Check(vs[17]))
                 {
                     lnk.Add(Batch.Write.Uninstaller.BCML(vs[10]));
-                    lnk.Add(Task.Run(() => Shortcuts.AddProgramEntry("BCML", "?", $"{Data.root}\\uninstall_bcml.bat", $"{Data.root}\\bcml.ico", "Caleb. S", -0)));
                 }
 
                 // Create desktop shortcut
@@ -191,7 +189,6 @@ namespace BotW_Installer.Libraries
                     ctrl = $"{Data.root}\\BetterJoy\\BetterJoyForCemu.exe";
 
                 lnk.Add(Batch.Write.Uninstaller.BotW(vs[0], vs[12], vs[10]));
-                lnk.Add(Task.Run(() => Shortcuts.AddProgramEntry("Breath of the Wild", "?", $"{Data.root}\\uninstall_botw.bat", $"{Data.root}\\botw.ico", "Nintendo", 22000000)));
 
                 lnk.Add(Batch.Write.Shortcuts.BotW($"{Edit.RemoveLast(vs[0])}\\code\\U-King.rpx\"", $"{vs[12]}\\Cemu.exe", ctrl));
                 lnk.Add(Shortcuts.Create("BotW", $"{programsFolder}", $"{Data.root}\\botw.bat", "",
@@ -236,8 +233,6 @@ namespace BotW_Installer.Libraries
             if (vs[8] == "oa1")
             {
                 lnk.Add(Batch.Write.Uninstaller.DS4Windows()); // Programs
-                lnk.Add(Task.Run(() => Shortcuts.AddProgramEntry("DS4Windows", "?",
-                    $"{Data.root}\\uninstall_ds4.bat", $"{Data.root}\\DS4Windows\\DS4Windows.exe", "ryochan7", 114000)));
 
                 lnk.Add(Shortcuts.Create("DS4Windows", $"{programsFolder}", $"{Data.root}\\DS4Windows\\DS4Windows.exe", "",
                     $"{Data.root}\\DS4Windows\\DS4Windows.exe", "DS4Windows"));
@@ -247,8 +242,6 @@ namespace BotW_Installer.Libraries
             if (vs[8] == "oa2")
             {
                 lnk.Add(Batch.Write.Uninstaller.BetterJoy()); // Programs
-                lnk.Add(Task.Run(() => Shortcuts.AddProgramEntry("BetterJoy", "?",
-                    $"{Data.root}\\uninstall_betterjoy.bat", $"{Data.root}\\BetterJoy\\BetterJoyForCemu.exe", "Davidobot", -0)));
 
                 lnk.Add(Shortcuts.Create("BetterJoy", $"{programsFolder}", $"{Data.root}\\BetterJoy\\BetterJoyForCemu.exe", "",
                     $"{Data.root}\\BetterJoy\\BetterJoyForCemu.exe", "BetterJoy"));

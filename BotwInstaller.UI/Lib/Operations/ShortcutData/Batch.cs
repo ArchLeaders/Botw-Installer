@@ -26,8 +26,8 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
                     "pip uninstall bcml\n" +
                     "echo Done!\n" +
                     "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\BCML /f\n" +
-                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BCML.lnk /f\n" +
-                    "del \"%appdata%\\Microsoft\\Windows\\Start Menu\\Programs\\BCML.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BCML.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\BCML.lnk\" /f\n" +
                     "PAUSE\n" +
                     $"del {root}\\uninstall_bcml.bat"));
             }
@@ -51,10 +51,10 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
                     "echo Removing BetterJoy\n" +
                     $"rmdir \"{root}\\BetterJoy\" /s /q\n" +
                     "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\BetterJoy /f\n" +
-                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BetterJoy.lnk /f\n" +
-                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\BetterJoy.lnk /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BetterJoy.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\BetterJoy.lnk\" /f\n" +
                     "echo Done!\n" +
-                    "pause" +
+                    "pause\n" +
                     $"del {root}\\uninstall_betterjoy.bat"));
             }
             catch (Exception ex)
@@ -77,10 +77,10 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
                     "echo Removing Cemu...\n" +
                     $"rmdir \"{c.cemu_path}\" /s /q\n" +
                     "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Cemu /f\n" +
-                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\Cemu.lnk /f\n" +
-                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\Cemu.lnk /f\n" +
-                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BotW.lnk /f\n" +
-                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\BotW.lnk /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\Cemu.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\Cemu.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BotW.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\BotW.lnk\" /f\n" +
                     "echo Done!\n" +
                     "pause\n" +
                     $"del /Q \"{root}\\uninstall_cemu.bat\""));
@@ -105,11 +105,11 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
                     "echo Removing DS4Windows\n" +
                     $"rmdir \"{root}\\DS4Windows\" /s /q\n" +
                     "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\DS4Windows /f\n" +
-                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\DS4Windows.lnk /f\n" +
-                    $"del {Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\DS4Windows.lnk /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\DS4Windows.lnk\" /f\n" +
+                    $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\\DS4Windows.lnk\" /f\n" +
                     "echo Done!\n" +
-                    "pause" +
-                    $"del {root}\\uninstall_ds4.bat"));
+                    "pause\n" +
+                    $"del {root}\\uninstall_ds4windows.bat"));
             }
             catch (Exception ex)
             {

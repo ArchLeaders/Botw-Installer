@@ -28,6 +28,7 @@ namespace BotwInstaller.Lib.Operations
                 pr.StartInfo.Arguments = args;
                 pr.StartInfo.UseShellExecute = shell;
                 pr.StartInfo.CreateNoWindow = quiet;
+                if (quiet) pr.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
 
                 pr.Start();
@@ -57,6 +58,7 @@ namespace BotwInstaller.Lib.Operations
                 pr.StartInfo.Arguments = $"install {name}";
                 pr.StartInfo.UseShellExecute = shell;
                 pr.StartInfo.CreateNoWindow = quiet;
+                if (quiet) pr.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
 
                 pr.Start();
