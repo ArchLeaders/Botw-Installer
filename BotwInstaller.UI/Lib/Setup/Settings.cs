@@ -1,7 +1,7 @@
 ﻿using BotwInstaller.Lib.Exceptions;
 using BotwInstaller.Lib.Operations;
 using BotwInstaller.Lib.Shell;
-using BotwInstaller.UI.Lib.Json;
+using BotwInstaller.Assembly.Lib.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +20,7 @@ namespace BotwInstaller.Lib.SetupFiles
         /// <param name="bC">Path to base game content</param>
         /// <param name="mlc01">Path to mlc01</param>
         /// <returns></returns>
-        public static async Task Xml(string bC, string mlc01)
+        public static async Task Xml(string cemu, string bC, string mlc01)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace BotwInstaller.Lib.SetupFiles
                 if (mlc01 == "mlc01 Path")
                     mlc01 = "mlc01";
 
-                await Task.Run(() => File.WriteAllText($"{Initialize.temp}\\settings.xml",
+                await Task.Run(() => File.WriteAllText($"{cemu}\\settings.xml",
                                     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                                     "<content>\n" +
                                     "    <logflag>0</logflag>\n" +
@@ -40,7 +40,7 @@ namespace BotwInstaller.Lib.SetupFiles
                                     "    <language>0</language>\n" +
                                     "    <use_discord_presence>true</use_discord_presence>\n" +
                                     "    <fullscreen_menubar>false</fullscreen_menubar>\n" +
-                                    "    <check_update>false</check_update>\n" +
+                                    "    <check_update>true</check_update>\n" +
                                     "    <save_screenshot>true</save_screenshot>\n" +
                                     "    <vk_warning>false</vk_warning>\n" +
                                     "    <steam_warning>false</steam_warning>\n" +
@@ -82,7 +82,7 @@ namespace BotwInstaller.Lib.SetupFiles
                                     "    <GameCache>\n" +
                                     "        <Entry>\n" +
                                     $"			<title_id>{titleId}</title_id>\n" +
-                                    "            <name>The Legend of Zelda - Breath of the Wild</name>\n" +
+                                    "            <name>The Legend of Zelda: Breath of the Wild</name>\n" +
                                     "            <custom_name></custom_name>\n" +
                                     $"			<region></region>\n" +
                                     "            <version>208</version>\n" +
@@ -161,13 +161,13 @@ namespace BotwInstaller.Lib.SetupFiles
                                     "        </Notification>\n" +
                                     "    </Graphic>\n" +
                                     "    <Audio>\n" +
-                                    "        <api>0</api>\n" +
+                                    "        <api>1</api>\n" +
                                     "        <delay>2</delay>\n" +
-                                    "        <TVChannels>1</TVChannels>\n" +
+                                    "        <TVChannels>2</TVChannels>\n" +
                                     "        <PadChannels>1</PadChannels>\n" +
-                                    "        <TVVolume>20</TVVolume>\n" +
+                                    "        <TVVolume>100</TVVolume>\n" +
                                     "        <PadVolume>0</PadVolume>\n" +
-                                    "        <TVDevice></TVDevice>\n" +
+                                    "        <TVDevice>default</TVDevice>\n" +
                                     "        <PadDevice></PadDevice>\n" +
                                     "    </Audio>\n" +
                                     "    <Account>\n" +
@@ -202,12 +202,37 @@ namespace BotwInstaller.Lib.SetupFiles
                 b.store_dir = c.bcml_data;
                 b.export_dir = $"{c.cemu_path}\\graphicPacks\\BreathOfTheWild_BCML";
 
-                await Task.Run(() => File.WriteAllText($"{Initialize.temp}\\settings.json", JsonSerializer.Serialize(b, new JsonSerializerOptions { WriteIndented = true })));
+                await Task.Run(() => File.WriteAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\bcml\\settings.json", JsonSerializer.Serialize(b, new JsonSerializerOptions { WriteIndented = true })));
             }
             catch (Exception ex)
             {
                 Prompt.Error("BotwInstaller.Lib.SetupFiles.Settings.Json", new string[] { $"Config;{c}" }, ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Writes the game profile for optimal preformance.
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static async Task Profile(Config c)
+        {
+            await Task.Run(() =>
+            {
+                File.WriteAllText($"{c.cemu_path}\\gameProfiles\\{Region.Get(c.base_game)}.ini",
+                    "[General]\n" +
+                    "loadSharedLibraries = true\n" +
+                    "startWithPadView = false\n\n" +
+                    "[CPU]\n" +
+                    "cpuMode = Multi-core recompiler\n" +
+                    "threadQuantum = 45000\n\n" +
+                    "[Graphics]\n" +
+                    "accurateShaderMul = true\n" +
+                    "precompileShaders = auto\n" +
+                    "graphics_api = 1\n\n" +
+                    "[Controller]\n" +
+                    $"controller1 = Controller_{c.ctrl_profile[0].ToUpper()}.txt");
+            });
         }
     }
 }

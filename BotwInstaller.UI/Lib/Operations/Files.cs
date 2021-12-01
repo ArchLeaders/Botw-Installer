@@ -15,27 +15,20 @@ namespace BotwInstaller.Lib.Operations
         /// <returns></returns>
         public static IEnumerable<string> GetSafeFiles(string path, string searchPattern = "*.*")
         {
-            try
-            {
-                // Get all files in the root folder.
-                foreach (string file in Directory.EnumerateFiles(path, searchPattern))
-                    yield return file;
-                // Get all files in the sub folders
-                foreach (string folder in Directory.EnumerateDirectories(path))
-                    if (!IsIgnorable(folder))
+            // Get all files in the root folder.
+            foreach (string file in Directory.EnumerateFiles(path, searchPattern))
+                yield return file;
+            // Get all files in the sub folders
+            foreach (string folder in Directory.EnumerateDirectories(path))
+                if (!IsIgnorable(folder))
+                {
+                    try
                     {
-                        try
-                        {
-                            foreach (var file in Directory.EnumerateFiles(folder, searchPattern, SearchOption.AllDirectories))
-                                yield return file;
-                        }
-                        finally { }
+                        foreach (var file in Directory.EnumerateFiles(folder, searchPattern, SearchOption.AllDirectories))
+                            yield return file;
                     }
-            }
-            finally
-            {
-                Prompt.Error("BotwInstaller.Lib.Operations.Files.GetSafeFile", new string[] { $"path;{path}", $"searchPattern;{searchPattern}" });
-            }
+                    finally { }
+                }
         }
 
         /// <summary>

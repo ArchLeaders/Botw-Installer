@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotwInstaller.UI.Lib.Json
+namespace BotwInstaller.Assembly.Lib.Json
 {
     public class BcmlSettings
     {

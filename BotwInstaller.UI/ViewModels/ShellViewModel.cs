@@ -1,8 +1,8 @@
 ﻿using BotwInstaller.Lib.Operations;
-using BotwInstaller.Lib.Setup;
-using BotwInstaller.UI.Models;
-using BotwInstaller.UI.Views;
-using BotwInstaller.UI.ViewThemes.ControlStyles;
+using BotwInstaller.Lib.SetupFiles;
+using BotwInstaller.Assembly.Models;
+using BotwInstaller.Assembly.Views;
+using BotwInstaller.Assembly.ViewThemes.ControlStyles;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using Stylet;
@@ -16,7 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace BotwInstaller.UI.ViewModels
+namespace BotwInstaller.Assembly.ViewModels
 {
     public class ShellViewModel : Screen
     {
@@ -36,7 +36,6 @@ namespace BotwInstaller.UI.ViewModels
             if (dv != null)
             {
                 await Dumpling.Setup(dv);
-                IPrompt.Show($"Dumping installed on {dv}");
             }
             else
             {
@@ -48,7 +47,6 @@ namespace BotwInstaller.UI.ViewModels
                 if (save.ShowDialog() == true)
                 {
                     await Dumpling.Setup(save.FileName.EditPath());
-                    IPrompt.Show($"Dumping installed in {save.FileName.EditPath()}");
                 }
                 else { IPrompt.Show("Dumping not installed."); }
             }

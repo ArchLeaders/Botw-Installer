@@ -21,7 +21,6 @@ namespace BotwInstaller.Lib.Operations
         {
             try
             {
-                Prompt.Log($"Downloading {url}...");
                 using (var client = new HttpClient())
                 {
                     var bytes = await client.GetByteArrayAsync(url);
@@ -52,7 +51,6 @@ namespace BotwInstaller.Lib.Operations
 
                 HttpClient client = new();
 
-                Prompt.Log($"Requesting {api}...");
                 client.DefaultRequestHeaders.Add("user-agent", "test");
                 var _json = await client.GetStringAsync(api);
                 var gitinfo = JsonSerializer.Deserialize<GitHubReleaseInfo>(_json);

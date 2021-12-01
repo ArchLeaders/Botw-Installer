@@ -6,8 +6,8 @@ using BotwInstaller.Lib.Operations;
 using BotwInstaller.Lib.Operations.Configure;
 using BotwInstaller.Lib.Exceptions;
 using BotwInstaller.Lib.Shell;
-using BotwInstaller.UI.Models;
-using BotwInstaller.UI.ViewThemes.ControlStyles;
+using BotwInstaller.Assembly.Models;
+using BotwInstaller.Assembly.ViewThemes.ControlStyles;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
@@ -33,7 +33,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
 
-namespace BotwInstaller.UI.Views
+namespace BotwInstaller.Assembly.Views
 {
     /// <summary>
     /// Interaction logic for ShellView.xaml
@@ -49,6 +49,7 @@ namespace BotwInstaller.UI.Views
         public static int minWidth = 750;
 
         DispatcherTimer timer = new();
+        DispatcherTimer watch = new();
         Process install = new();
 
         #region Fix Window Sixe in fullscreen.
@@ -254,7 +255,7 @@ namespace BotwInstaller.UI.Views
                 {
                     // Cancel Install
                     isCancel = false;
-                    await Cancel();
+                    Cancel();
                     await StopAnim();
                 }
             };
@@ -750,28 +751,21 @@ namespace BotwInstaller.UI.Views
         /// <returns></returns>
         public async Task Watch(bool stop = false)
         {
-            if (stop) { timer.Stop(); return; }
-
             var cache = 0;
 
-            DispatcherTimer check = new();
-            check.Interval = TimeSpan.FromMilliseconds(1000);
-            check.Tick += async (s, e) =>
+            watch.Interval = TimeSpan.FromMilliseconds(1000);
+            watch.Tick += async (s, e) =>
             {
-                try
-                {
-                    var length = await Task.Run(() => File.ReadAllLines($"{Initialize.temp}\\inc.p").Length);
+                var length = await Task.Run(() => File.ReadAllLines($"{Initialize.temp}\\inc.p").Length);
 
-                    if (length != cache)
-                    {
-                        cache = length;
-                        await Increment(length);
-                    }
+                if (length != cache)
+                {
+                    cache = length;
+                    await Increment(length);
                 }
-                catch { }
             };
 
-            check.Start();
+            watch.Start();
         }
 
         #endregion
@@ -780,21 +774,12 @@ namespace BotwInstaller.UI.Views
 
         private async Task Install()
         {
-            Install i = new();
-            Shortcuts s = new();
-
-            Bcml bc = new();
-            Bcml bo = new();
-            Bcml bj = new();
-            Bcml ce = new();
-            Bcml ds = new();
-
             // Game check
             if ((bool)cbAdv_InstallCemu.IsChecked)
             {
                 if (c.base_game == "" || c.update == "")
                 {
-                    IPrompt.Error("Game files not set.\nMake sure you have dumped your game correctly.\n\nSee the log for more details.\n%localappdata%\\BotwData\\install.txt");
+                    IPrompt.Error("Game files not set.\nMake sure you have dumped your game correctly.\n\nSee the log for more details.\n%localappdata%\\BotwData\\log.txt");
                 }
                 else c.install.botw = true;
             }
@@ -813,7 +798,7 @@ namespace BotwInstaller.UI.Views
             c.betterjoy_path = Initialize.root + "\\BetterJoy";
             c.cemu_path = tbBsc_CemuPath.Text;
             c.ds4_path = Initialize.root + "\\DS4Windows";
-            c.mlc01 = tbAdv_Mlc01Path.Text.Replace("%cemupath%", "");
+            c.mlc01 = tbAdv_Mlc01Path.Text.Replace("%cemupath%", c.cemu_path);
             c.python_path = tbAdv_PythonPath.Text;
 
             // ComboBox setters
@@ -862,28 +847,38 @@ namespace BotwInstaller.UI.Views
             // Write config
             await JsonData.ConfigWriter(c);
 
-            // Download installer
-            // await Download.FromUrl("https://github.com/ArchLeaders/Botw-Installer/raw/master/BotwInstaller.Res/Res/install.res", $"{Initialize.temp}\\install.exe");
-            // Interface.Update(2);
+            // Start Install
+            await Initialize.Install(c);
 
-            // Call installer
-            install.StartInfo.Arguments = "-d";
-            install.StartInfo.FileName = @"D:\Visual Studio\Projects\- Botw Scripts\BotwInstaller\BotwInstaller.Console\bin\Debug\net6.0-windows\win-x64\BotwInstaller.Console.exe";
-            install.StartInfo.CreateNoWindow = !isDebug;
-            install.StartInfo.Verb = "runas";
-
-            install.Start();
-            await install.WaitForExitAsync();
+            watch.Stop();
+            IPrompt.Show("Botw Installed");
         }
 
-        private async Task Cancel()
+        private void Cancel()
         {
-            if (IPrompt.Warning("Are you sure you want to cancel installing?\nThis cannot be undone.", true))
+            if (IPrompt.Warning("Are you sure you want to cancel installing?", true))
             {
-                install.Kill(true);
-                await Watch(true);
-                await Task.Run(() => Directory.Delete($"{c.cemu_path.EditPath()}\\local-temp", true));
+                watch.Stop();
+
+                if (Directory.Exists($"{c.cemu_path.EditPath()}local-temp"))
+                    Directory.Delete($"{c.cemu_path.EditPath()}local-temp", true);
+                if (Directory.Exists($"{c.cemu_path.EditPath()}local-temp-mlc"))
+                    Directory.Delete($"{c.cemu_path.EditPath()}local-temp-mlc", true);
+                else foreach (var dir in Directory.EnumerateDirectories(c.mlc01))
+                        Directory.Delete(dir, true);
+
                 Directory.Delete(Initialize.temp, true);
+
+                if (Directory.Exists($"{Initialize.root}\\DS4Windows"))
+                    Directory.Delete($"{Initialize.root}\\DS4Windows", true);
+
+                if (Directory.Exists($"{Initialize.root}\\BetterJoy"))
+                    Directory.Delete($"{Initialize.root}\\BetterJoy", true);
+
+                foreach (var file in Directory.EnumerateFiles(Initialize.root, "*.bat", SearchOption.TopDirectoryOnly))
+                    File.Delete(file);
+
+                return;
             }
         }
 

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace BotwInstaller.UI.ViewThemes.ControlStyles
+namespace BotwInstaller.Assembly.ViewThemes.ControlStyles
 {
     public class Texts
     {

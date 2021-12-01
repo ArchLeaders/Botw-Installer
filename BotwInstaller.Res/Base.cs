@@ -9,7 +9,7 @@ namespace BotwInstaller.Res
             await Task.Run(() => {
                 Assembly assembly = Assembly.GetCallingAssembly();
 
-                using (Stream stream = assembly.GetManifestResourceStream("BotwInstaller.Res.Res" + fileName))
+                using (Stream stream = assembly.GetManifestResourceStream("BotwInstaller.Res.Res." + fileName))
                 using (BinaryReader binaryReader = new(stream))
                 using (FileStream fileStream = new(output, FileMode.OpenOrCreate))
                 using (BinaryWriter binaryWriter = new(fileStream))

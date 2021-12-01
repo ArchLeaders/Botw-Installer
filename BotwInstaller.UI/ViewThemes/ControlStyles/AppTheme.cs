@@ -1,7 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System.Windows.Media;
 
-namespace BotwInstaller.UI.ViewThemes.ControlStyles
+namespace BotwInstaller.Assembly.ViewThemes.ControlStyles
 {
     public class AppTheme
     {

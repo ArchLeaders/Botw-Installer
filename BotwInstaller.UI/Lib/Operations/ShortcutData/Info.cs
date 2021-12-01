@@ -39,29 +39,33 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
             try
             {
                 botw.name = "BotW";
-                botw.target = $"{Initialize.root}\\run.bat";
+                botw.target = $"{Initialize.root}\\botw.bat";
                 botw.icon = $"{Initialize.root}\\botw.ico";
                 botw.description = "The Legend of Zelda: Breath of the Wild";
+                botw.uninstaller = c.Botw();
 
                 cemu.name = "Cemu";
                 cemu.target = $"{c.cemu_path}\\Cemu.exe";
+                cemu.icon = $"{c.cemu_path}\\Cemu.exe";
                 cemu.description = "WiiU Emulator Made By Exzap and Petergov";
                 cemu.uninstaller = c.Cemu();
 
                 bcml.name = "BCML";
-                bcml.target = $"{c.python_path}\\pythonw.exe";
                 bcml.args = "-m bcml.exe";
-                botw.icon = $"{Initialize.root}\\bcml.ico";
+                bcml.target = $"{c.python_path}\\pythonw.exe";
+                bcml.icon = $"{Initialize.root}\\bcml.ico";
                 bcml.description = "BotW Cross-Platform Mod Loader made by Nicene Nerd (C. Smith)";
                 bcml.uninstaller = c.Bcml();
 
                 ds4.name = "DS4Windows";
                 ds4.target = $"{c.ds4_path}\\DS4Windows.exe";
+                ds4.icon = $"{c.ds4_path}\\DS4Windows.exe";
                 ds4.description = "DS4Windows made by Ryochan7, Fork of Jays2Kings DS4Windows.";
                 ds4.uninstaller = c.DS4Windows();
 
                 better_joy.name = "BetterJoy";
                 better_joy.target = $"{c.betterjoy_path}\\BetterJoyForCemu.exe";
+                better_joy.icon = $"{c.betterjoy_path}\\BetterJoyForCemu.exe";
                 better_joy.description = "BetterJoy made by Davidobot. (D. Khachaturov)";
                 better_joy.uninstaller = c.BetterJoy();
             }

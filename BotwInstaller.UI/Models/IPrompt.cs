@@ -1,11 +1,11 @@
-﻿using BotwInstaller.UI.Views;
+﻿using BotwInstaller.Assembly.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotwInstaller.UI.Models
+namespace BotwInstaller.Assembly.Models
 {
     public class IPrompt
     {

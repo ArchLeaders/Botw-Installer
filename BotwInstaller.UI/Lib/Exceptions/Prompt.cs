@@ -2,9 +2,10 @@
 #pragma warning disable CS8603
 
 using BotwInstaller.Lib.Shell;
-using BotwInstaller.UI.Models;
+using BotwInstaller.Assembly.Models;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace BotwInstaller.Lib.Exceptions
 {
@@ -38,15 +39,15 @@ namespace BotwInstaller.Lib.Exceptions
                 if (str.Contains(";"))
                     strArgs = $"{strArgs}\n\t{str.Split(';')[0]} = {str.Split(';')[1]}";
                 else
-                    strArgs = $"{strArgs}\n\t{str}";
+                    strArgs = $"{strArgs}\t{str}\n";
             }
 
             if (partialReturn != "")
                 partialReturn = $"\nPartial Return: {partialReturn}";
 
-            Log($"\nFrom: {method}\nPassed - {{\n{strArgs}}}{partialReturn}\nError -{{\n{error}\n}}");
+            Log($"\n- - - - - - - - - - - - - - - - - - -\n\nFrom: {method}\nPassed: {{\n{strArgs}\n}}{partialReturn}\nError: {{\n\t{error}\n}}\n\n- - - - - - - - - - - - - - - - - - -\n\n");
 
-            if (!suppress) IPrompt.Show($"\nFrom: {method}\nPassed - {{\n{strArgs}}}{partialReturn}\nError -{{\n{error}\n}}", "Error");
+            if (!suppress) IPrompt.Show($"\nFrom: {method}\nPassed - {{\n{strArgs}}}{partialReturn}\nError -{{\n\t{error}\n}}", "Error");
         }
     }
 }

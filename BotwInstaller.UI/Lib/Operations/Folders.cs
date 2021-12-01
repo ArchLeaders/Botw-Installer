@@ -29,12 +29,10 @@ namespace BotwInstaller.Lib.Operations
                     foreach (var file in Directory.EnumerateFiles(inputDir, "*.*", SearchOption.AllDirectories))
                     {
                         FileInfo fileinfo = new(file);
-                        DirectoryInfo directoryInfo = new(fileinfo.DirectoryName); /// CS8604
+                        DirectoryInfo directoryInfo = new(fileinfo.DirectoryName);
 
                         await Task.Run(() => Directory.CreateDirectory(directoryInfo.FullName.Replace(inputDir, outputDir)));
                         tasks.Add(Task.Run(() => File.Copy(file, file.Replace(inputDir, outputDir), overwrite)));
-
-                        Prompt.Log($"[{id}] Copied {file} > {file.Replace(inputDir, outputDir)}");
                     }
                 });
 

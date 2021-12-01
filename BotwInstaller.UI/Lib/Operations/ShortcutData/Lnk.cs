@@ -1,6 +1,8 @@
 ﻿using BotwInstaller.Lib.Exceptions;
 using BotwInstaller.Lib.Shell;
 using BotwInstaller.Res;
+using IWshRuntimeLibrary;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,20 +28,36 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
 
                 List<Task> create = new();
 
-                create.Add(c.shortcuts.botw.dsk.Desktop(botw));
-                create.Add(c.shortcuts.botw.start.Start(botw));
+                if (c.install.bcml)
+                {
+                    create.Add(Download.FromUrl("", $"{Initialize.root}\\bcml.ico"));
+                    create.Add(c.shortcuts.botw.dsk.Desktop(botw));
+                    create.Add(c.shortcuts.botw.start.Start(botw));
+                }
 
-                create.Add(c.shortcuts.cemu.dsk.Desktop(cemu));
-                create.Add(c.shortcuts.cemu.start.Start(cemu));
+                if (c.install.cemu)
+                {
+                    create.Add(c.shortcuts.cemu.dsk.Desktop(cemu));
+                    create.Add(c.shortcuts.cemu.start.Start(cemu));
+                }
 
-                create.Add(c.shortcuts.botw.dsk.Desktop(bcml));
-                create.Add(c.shortcuts.botw.start.Start(bcml));
+                if (c.install.botw)
+                {
+                    create.Add(c.shortcuts.botw.dsk.Desktop(bcml));
+                    create.Add(c.shortcuts.botw.start.Start(bcml));
+                }
 
-                create.Add(c.shortcuts.ds4.dsk.Desktop(ds4));
-                create.Add(c.shortcuts.ds4.start.Start(ds4));
+                if (c.install.ds4)
+                {
+                    create.Add(c.shortcuts.ds4.dsk.Desktop(ds4));
+                    create.Add(c.shortcuts.ds4.start.Start(ds4));
+                }
 
-                create.Add(c.shortcuts.betterjoy.dsk.Desktop(better_joy));
-                create.Add(c.shortcuts.betterjoy.start.Start(better_joy));
+                if (c.install.betterjoy)
+                {
+                    create.Add(c.shortcuts.betterjoy.start.Start(better_joy));
+                    create.Add(c.shortcuts.betterjoy.dsk.Desktop(better_joy));
+                }
 
                 await Task.WhenAll(create);
             }
@@ -59,11 +77,11 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
         {
             try
             {
-                if (!create) return;
-
-                string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                await Write(desktop, info.name, info.target, info.icon, info.description);
-                if (info.uninstaller != null) info.uninstaller.Start();
+                if (create)
+                {
+                    string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    await Write(desktop, info.name, info.target, info.args, info.icon, info.description);
+                }
             }
             catch (Exception ex)
             {
@@ -81,11 +99,11 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
         {
             try
             {
-                if (!create) return;
-
-                string start = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-                await Write(start, info.name, info.args, info.target, info.icon, info.description);
-                if (info.uninstaller != null) info.uninstaller.Start();
+                if (create)
+                {
+                    string start = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
+                    await Write(start, info.name, info.target, info.args, info.icon, info.description);
+                }
             }
             catch (Exception ex)
             {
@@ -103,21 +121,42 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
         /// <param name="icon"></param>
         /// <param name="desc"></param>
         /// <returns></returns>
-        private static async Task Write(string location, string name, string args, string target, string icon, string desc = "")
+        private static async Task Write(string location, string name, string target, string args, string icon, string desc = "")
         {
             try
             {
-                // Extract Shortcuts.exe
-                if (!File.Exists($"{Initialize.temp}\\lnk.resource"))
-                    await Base.Extract("lnk.res", $"{Initialize.temp}\\lnk.resource");
+                WshShell wsh = new WshShell();
+                IWshShortcut shortcut = (IWshShortcut)wsh.CreateShortcut($"{location}\\{name}.lnk");
+                shortcut.Arguments = args;
+                shortcut.TargetPath = target;
+                shortcut.Description = desc;
+                shortcut.IconLocation = icon;
 
-                // Create lnk file.
-                await Proc.Start($"{Initialize.temp}\\lnk.resource", $"/F:\"{location}\\{name}.lnk\" /a:c /T:\"{target}\" /P:\"{args}\" /I:\"{icon}\" /D:\"{desc}\"");
+                await Task.Run(() => shortcut.Save());
+
+                if (location == Environment.GetFolderPath(Environment.SpecialFolder.StartMenu))
+                    if (name.ToUpper() != "BOTW")
+                        await Task.Run(() => AddProgramEntry(name, $"{Initialize.root}\\uninstall_{name}", icon));
             }
             catch (Exception e)
             {
-                Prompt.Error("BotwInstaller.Lib.Operations.ShortcutData.Lnk.Write", new string[] { $"name;{name}", $"target;{target}", $"icon;{icon}", $"desc;{desc}" }, e.Message);
+                Prompt.Error("BotwInstaller.Lib.Operations.ShortcutData.Lnk.Write", new string[] { $"location;{location}", $"name;{name}", $"args;{args}", $"target;{target}", $"icon;{icon}", $"desc;{desc}" }, e.Message, "", true);
             }
+        }
+
+        /// <summary>
+        /// Adds a program key to the registry.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="version"></param>
+        /// <param name="uninstall"></param>
+        /// <param name="icon"></param>
+        public static void AddProgramEntry(string name, string uninstall, string icon)
+        {
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "DisplayIcon", icon);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "DisplayName", name);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "NoModify", 1);
+            Registry.SetValue(@$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{name}", "UninstallString", uninstall);
         }
     }
 }

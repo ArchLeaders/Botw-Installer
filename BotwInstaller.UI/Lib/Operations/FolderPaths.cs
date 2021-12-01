@@ -1,5 +1,6 @@
 ﻿using BotwInstaller.Lib.Exceptions;
 using System;
+using System.IO;
 
 namespace BotwInstaller.Lib.Operations
 {
@@ -34,6 +35,17 @@ namespace BotwInstaller.Lib.Operations
                 Prompt.Error("BotwInstallerLite.Lib.Operations.FolderPaths.EditPath", new string[] { $"path;{path}", $"removeCount;{removeCount}" }, e.Message, rt);
                 return "";
             }
+        }
+
+        /// <summary>
+        /// Returns the sub folder of a givin folder at <paramref name="location"/>.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        public static string SubFolder(this string path, int location = 1)
+        {
+            return Directory.GetDirectories(path)[location - 1];
         }
     }
 }

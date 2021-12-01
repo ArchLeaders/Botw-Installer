@@ -1,9 +1,9 @@
-﻿using BotwInstaller.UI.Models;
+﻿using BotwInstaller.Assembly.Models;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace BotwInstaller.UI.Views
+namespace BotwInstaller.Assembly.Views
 {
     /// <summary>
     /// Interaction logic for Prompt.xaml
