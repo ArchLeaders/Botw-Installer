@@ -30,7 +30,7 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
 
                 if (c.install.bcml)
                 {
-                    create.Add(Download.FromUrl("", $"{Initialize.root}\\bcml.ico"));
+                    create.Add(Download.FromUrl("https://github.com/ArchLeaders/Botw-Installer/raw/master/BotwInstaller.UI/Lib/Res/bcml.ico.res", $"{Initialize.root}\\bcml.ico"));
                     create.Add(c.shortcuts.botw.dsk.Desktop(botw));
                     create.Add(c.shortcuts.botw.start.Start(botw));
                 }
@@ -43,6 +43,7 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
 
                 if (c.install.botw)
                 {
+                    create.Add(Download.FromUrl("https://github.com/ArchLeaders/Botw-Installer/raw/master/BotwInstaller.UI/Lib/Res/botw.ico.res", $"{Initialize.root}\\botw.ico"));
                     create.Add(c.shortcuts.botw.dsk.Desktop(bcml));
                     create.Add(c.shortcuts.botw.start.Start(bcml));
                 }

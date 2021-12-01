@@ -161,7 +161,7 @@ namespace BotwInstaller.Lib.SetupFiles
                                     "        </Notification>\n" +
                                     "    </Graphic>\n" +
                                     "    <Audio>\n" +
-                                    "        <api>1</api>\n" +
+                                    "        <api>0</api>\n" +
                                     "        <delay>2</delay>\n" +
                                     "        <TVChannels>2</TVChannels>\n" +
                                     "        <PadChannels>1</PadChannels>\n" +

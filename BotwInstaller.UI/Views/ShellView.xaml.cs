@@ -41,16 +41,13 @@ namespace BotwInstaller.Assembly.Views
     public partial class ShellView : Window
     {
         private bool isVerified = false;
-        private bool isDebug = false;
 
         Config c = new Config();
 
         public static int minHeight = 450;
         public static int minWidth = 750;
 
-        DispatcherTimer timer = new();
         DispatcherTimer watch = new();
-        Process install = new();
 
         #region Fix Window Sixe in fullscreen.
 
@@ -203,37 +200,6 @@ namespace BotwInstaller.Assembly.Views
             RegisterEvents();
 
             AssignTips();
-
-            #endregion
-
-            #region Inline Animations
-
-            timer.Interval = TimeSpan.FromMilliseconds(900);
-            timer.Tick += async (s, e) =>
-            {
-                // UP - EP1
-                Animation.ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 150), 300);
-                await Task.Run(() => Thread.Sleep(199));
-
-                // UP - EP2
-                Animation.ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 150), 300);
-                await Task.Run(() => Thread.Sleep(99));
-
-                // DOWN - EP1
-                Animation.ThicknessAnim(anim_Controls, nameof(ep1_trg), Ellipse.MarginProperty, new Thickness(0, 0, 140, 0), 300);
-                await Task.Run(() => Thread.Sleep(99));
-
-                // UP - EP3
-                Animation.ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 150), 300);
-                await Task.Run(() => Thread.Sleep(99));
-
-                // DOWN - EP2
-                Animation.ThicknessAnim(anim_Controls, nameof(ep2_trg), Ellipse.MarginProperty, new Thickness(0, 0, 0, 0), 300);
-                await Task.Run(() => Thread.Sleep(199));
-
-                // DOWN - EP3
-                Animation.ThicknessAnim(anim_Controls, nameof(ep3_trg), Ellipse.MarginProperty, new Thickness(140, 0, 0, 0), 300);
-            };
 
             #endregion
 
@@ -392,7 +358,6 @@ namespace BotwInstaller.Assembly.Views
             // Assign tab functions
             btnBasicTab.Click += (s, e) =>
             {
-                ocDebug.Visibility = Visibility.Hidden;
                 ocSearch.Visibility = Visibility.Hidden;
                 gridAdvTab.Visibility = Visibility.Hidden;
                 gridLnkTab.Visibility = Visibility.Hidden;
@@ -403,22 +368,17 @@ namespace BotwInstaller.Assembly.Views
             {
                 gridLnkTab.Visibility = Visibility.Hidden;
                 gridBasicTab.Visibility = Visibility.Hidden;
-                ocDebug.Visibility = Visibility.Visible;
                 ocSearch.Visibility = Visibility.Visible;
                 gridAdvTab.Visibility = Visibility.Visible;
             };
 
             btnLnkTab.Click += (s, e) =>
             {
-                ocDebug.Visibility = Visibility.Hidden;
                 ocSearch.Visibility = Visibility.Hidden;
                 gridAdvTab.Visibility = Visibility.Hidden;
                 gridBasicTab.Visibility = Visibility.Hidden;
                 gridLnkTab.Visibility = Visibility.Visible;
             };
-
-            // Assign debug click event
-            ocDebug.Click += (s, e) => isDebug = true;
 
             // Assign browse buttons | ShellView.Basic
             ocBrowseBotw.Click += (s, e) => BrowseEvent(tbBsc_BotwPath, "Browse For Botw /content");
@@ -703,7 +663,6 @@ namespace BotwInstaller.Assembly.Views
         /// <returns></returns>
         public async Task StartAnim()
         {
-            timer.Start();
             Animation.ThicknessAnim(parentGrid, "anim_LowerPanel", Grid.MarginProperty, new Thickness(0), 500);
             Animation.ThicknessAnim(_installParent, "_obscureBtn_Install", Grid.MarginProperty, new Thickness(0,60,0,0), 300);
             Animation.ThicknessAnim(parentGrid, "_obscureBtn_Cancel", Grid.MarginProperty, new Thickness(0), 300);
@@ -730,7 +689,6 @@ namespace BotwInstaller.Assembly.Views
             Animation.DoubleAnim(anim_LowerPanel, "anim_TopBar", Border.MaxWidthProperty, 1000, 500);
             await Task.Run(() => Thread.Sleep(500));
             anim_Controls.Visibility = Visibility.Hidden;
-            timer.Stop();
         }
 
         /// <summary>
@@ -740,8 +698,7 @@ namespace BotwInstaller.Assembly.Views
         /// <returns></returns>
         public async Task Increment(int inc = 1)
         {
-            Animation.DoubleAnim(anim_Controls, installBar.Name, Border.MinWidthProperty, inc * 6.8, inc * 10);
-            await Task.Run(() => Thread.Sleep(inc * 10));
+            installBar.MinWidth = installBar.MinWidth + inc * 6.8;
             installStatus.Text = $"{inc}% Complete";
         }
 

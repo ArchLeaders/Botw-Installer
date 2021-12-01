@@ -51,7 +51,7 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
                 cemu.uninstaller = c.Cemu();
 
                 bcml.name = "BCML";
-                bcml.args = "-m bcml.exe";
+                bcml.args = "-m bcml";
                 bcml.target = $"{c.python_path}\\pythonw.exe";
                 bcml.icon = $"{Initialize.root}\\bcml.ico";
                 bcml.description = "BotW Cross-Platform Mod Loader made by Nicene Nerd (C. Smith)";
