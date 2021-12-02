@@ -188,7 +188,7 @@
 2. Make sure that `Auto Power Off` is turned off in your WiiU's settings.
 3. From the WiiU Menu launch the `Internet Browser` and go to `wiiuexploit.xyz`. Click on `Run Homebrew Launcher`. *(If it freezes force restart your WiiU and try again.)*
 4. In the `Homebrew Launcher` locate `Mocha CFW` and load it. *(If you are sent to the WiiU menu, repeat step four.)*
-5. Back in the `Homebrew Launcher load `Dumpling` and click one of the first two options based on your game version. *(Digital/Disk)*
+5. Back in the `Homebrew Launcher` load `Dumpling` and click one of the first two options based on your game version. *(Digital/Disk)*
 6. If you selected `Digital` locate Botw and press `A` to select it then `+` to start dumping.
 7. Follow the on-screen instructions.
 8. Wait for the dump to complete. This will take a while.
