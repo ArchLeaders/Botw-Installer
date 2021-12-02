@@ -155,34 +155,44 @@
 ### Requirments
 
 - SD Card
-- Thumb drive with a capacity of 15GB or more. (Only required if your SD card is smaller than 15GB)
+- External drive to dump the game files to. (This can be your SD card if it's big enough.)
 - A WiiU with the Disc or Digital copy of Breath of the Wild.
 - [Botw Installer]()
 - A bit of patience.
 
 ---
 
-1. Insert your SD card and remove any wanted files. Right-click the drive in file explorer and click `Format...`.
-   Set the `File System` to `FAT32` as seen in the picture and click `Start`.
-   This will remove any files from the SD Card, make sure everything you need is off of it before formating.
-   If you are using a thumb drive to dump the game to, format that as FAT32 as well.
+### SD Card Setup
 
-![format](https://user-images.githubusercontent.com/80713508/144377601-9d67faa6-8ceb-4ef9-a842-d6816d38b1e1.png)
+1. Put your SD card and any drives you plan to use into your PC. You will need to format them as FAT32, if your SD card or drive is larger than 32GB you will need [this](http://ridgecrop.co.uk/guiformat.exe) tool.
 
-2. Download and run [Botw Installer](), bypass the SmartScreen warning, and allow admin permissions.
-   Now look to the bottom left of the window for the SD Card symbol ([button 8](https://github.com/ArchLeaders/Botw-Installer/new/master#controls-layout---basic-tab)).
-   Click it and wait a few seconds. Once you receive a prompt saying it's complete, verify there's a folder named `wiiu` at the root of your SD Card.
+Over 32GB | Open `guiformat.exe` and select the drive/sd card letter from the dropdown menu, then click start. ***Warning! Formating a drive will remove all of it's files forever, so make sure you have everything you wanted off!***
+
+![gui-format](https://user-images.githubusercontent.com/80713508/144481592-31514561-c136-4afc-8684-5898fcbddf81.png)
+
+Under/Equal 32GB | Right-click the drive(s)/sd card you want to use in File Explorer and click the `Format...` option. Set the `File system` to `FAT32` and click start. ***Warning! Formating a drive will remove all of it's files forever, so make sure you have everything you wanted off!***
+
+![format](https://user-images.githubusercontent.com/80713508/144484707-a2e6ee1f-bc3e-4658-917a-a4b206d07b37.png)
+
+2. Remove any external drives from your pc (leave the SD card in).
+
+3. Download and run [Botw Installer]() bypassing the SmartScreen warning and allowing admin permissions.
+   Click the Homebrew Install button (SD card icon, [button 8](https://github.com/ArchLeaders/Botw-Installer/new/master#controls-layout---basic-tab)).
+   Wait for the prompt saying it's complete, then verify there's a `wiiu` folder in your SD card.
    
 ![homebrew](https://user-images.githubusercontent.com/80713508/144382832-a7f647eb-09de-4f0d-844a-8b871c20d1bf.png)
-   
-3. Eject your SD Card and plug it into your WiiU. Before continuing, make sure that `Auto Power Off` is turned off in your WiiU's settings.
-4. From the WiiU Menu launch the `Internet Browser` and go to `wiiuexploit.xyz`. Click on `Run Homebrew Launcher`. *(If it freezes force restart your WiiU and try again.)*
-5. In the `Homebrew Launcher` locate `Mocha CFW` and load it. *(If you are sent to the WiiU menu, repeat step four.)*
-6. Back in the `Homebrew Launcher load `Dumpling` and click one of the first two options based on your game version. *(Digital/Disk)*
-7. If you selected `Digital` locate Botw and press `A` to select it then `+` to start dumping. Otherwise follow the on-screen instructions.
-8. Wait for the dump to complete. This will take a while.
-9. Once complete remove the device you dumped the game onto (thumb drive/SD card) and insert it into your pc.
-10. You should now have a copy of Botw on your PC. Congrats! **Don't move the files of your sd card/drive just yet.*
+
+### Homebrew / Dumping
+
+1. Eject your SD Card and plug it into your WiiU. Before continuing, make sure that `Auto Power Off` is turned off in your WiiU's settings.
+2. From the WiiU Menu launch the `Internet Browser` and go to `wiiuexploit.xyz`. Click on `Run Homebrew Launcher`. *(If it freezes force restart your WiiU and try again.)*
+3. In the `Homebrew Launcher` locate `Mocha CFW` and load it. *(If you are sent to the WiiU menu, repeat step four.)*
+4. Back in the `Homebrew Launcher load `Dumpling` and click one of the first two options based on your game version. *(Digital/Disk)*
+5. If you selected `Digital` locate Botw and press `A` to select it then `+` to start dumping.
+6. Follow the on-screen instructions.
+7. Wait for the dump to complete. This will take a while.
+8. Once complete remove the device you dumped the game onto (thumb drive/SD card) and insert it into your pc.
+9. You should now have a copy of Botw on your PC. Congrats! **Don't move the files of your sd card/drive just yet.*
  
     You can now continue to the [install step](https://github.com/ArchLeaders/Botw-Installer/new/master#quick-install---after-dump).
     
@@ -214,11 +224,12 @@
 
 ***If you encountered any errors or had any issues, please report them! More info [here](https://github.com/ArchLeaders/Botw-Installer/new/master#note)***
 
-# Credits
+## Credits
 
 Author: Marcus S.
 
-# Special Thanks
+## Special Thanks
 
 Torphedo: UI Design and Debugging
+
 Gabendo: UI Feedback
