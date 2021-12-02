@@ -75,9 +75,9 @@ namespace BotwInstaller.Lib.GameData
             {
                 await Task.Run(() =>
                     {
-                        Base.Set(bC.EditPath());
-                        Update.Set(uC.EditPath());
-                        Dlc.Set(dC.EditPath());
+                        Base.Set(bC.EditPath(), bC.Version());
+                        Update.Set(uC.EditPath(), bC.Version());
+                        Dlc.Set(dC.EditPath(), bC.Version());
                     });
 
                 IEnumerable<string>? b = null;
