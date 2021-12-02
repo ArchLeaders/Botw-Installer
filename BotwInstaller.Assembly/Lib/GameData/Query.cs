@@ -74,22 +74,37 @@ namespace BotwInstaller.Lib.GameData
             try
             {
                 await Task.Run(() =>
+                {
+                    if (bC.Get() == "00050000101C9500")
                     {
-                        Base.Set(bC.EditPath(), bC.Version());
-                        Update.Set(uC.EditPath(), bC.Version());
-                        Dlc.Set(dC.EditPath(), bC.Version());
-                    });
+                        BaseEU.Set(bC.EditPath());
+                        UpdateEU.Set(uC.EditPath());
+                        DlcEU.Set(dC.EditPath());
+                    }
+                    else if (bC.Get() == "00050000101C9400")
+                    {
+                        BaseUS.Set(bC.EditPath());
+                        UpdateUS.Set(uC.EditPath());
+                        DlcUS.Set(dC.EditPath());
+                    }
+                    else if (bC.Get() == "00050000101C9300")
+                    {
+                        BaseJP.Set(bC.EditPath());
+                        UpdateJP.Set(uC.EditPath());
+                        DlcJP.Set(dC.EditPath());
+                    }
+                });
 
-                IEnumerable<string>? b = null;
-                IEnumerable<string>? u = null;
-                IEnumerable<string>? d = new string[] { };
+                IEnumerable<string> b = new string[] { };
+                IEnumerable<string> u = new string[] { };
+                IEnumerable<string> d = new string[] { };
 
                 await Task.Run(() =>
                 {
-                    b = Base.Receive.Except(Directory.EnumerateFiles(bC.EditPath(), "*.*", SearchOption.AllDirectories));
-                    u = Update.Receive.Except(Directory.EnumerateFiles(uC.EditPath(), "*.*", SearchOption.AllDirectories));
+                    b = BaseEU.Receive.Except(Directory.EnumerateFiles(bC.EditPath(), "*.*", SearchOption.AllDirectories));
+                    u = UpdateEU.Receive.Except(Directory.EnumerateFiles(uC.EditPath(), "*.*", SearchOption.AllDirectories));
                     if (dC != "")
-                        d = Dlc.Receive.Except(Directory.EnumerateFiles(dC.EditPath(), "*.*", SearchOption.AllDirectories));
+                        d = DlcEU.Receive.Except(Directory.EnumerateFiles(dC.EditPath(), "*.*", SearchOption.AllDirectories));
                 });
 
                 if (b.Any())

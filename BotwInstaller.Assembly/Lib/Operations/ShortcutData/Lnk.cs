@@ -1,6 +1,5 @@
 ﻿using BotwInstaller.Lib.Exceptions;
 using BotwInstaller.Lib.Shell;
-using BotwInstaller.Res;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using System;

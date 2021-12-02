@@ -11,7 +11,7 @@ namespace BotwInstaller.Lib
 {
     public static class Region
     {
-        public static string? Get(this string pathToBase)
+        public static string Get(this string pathToBase)
         {
             string results = "";
             try
@@ -25,7 +25,7 @@ namespace BotwInstaller.Lib
             catch (Exception ex)
             {
                 Prompt.Error("BotwInstaller.Lib.Region.Get", new string[] { $"this pathToBase;{pathToBase}" }, ex.Message, results);
-                return null;
+                return "";
             }
         }
 

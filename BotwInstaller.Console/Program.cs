@@ -1,47 +1,28 @@
-﻿#pragma warning disable CS8604
+﻿File.AppendAllText($"./Base{args[3]}.cs", "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace BotwInstaller.Lib.GameData.GameFiles\n" +
+                    $"{{\n\tpublic class Base{args[3]}\n\t{{\n\t\tpublic static List<string> Receive = new();\n\n\t\tpublic static void Set(string baseGame)\n\t\t{{");
+File.AppendAllText($"./Update{args[3]}.cs", "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace BotwInstaller.Lib.GameData.GameFiles\n" +
+                    $"{{\n\tpublic class Update{args[3]}\n\t{{\n\t\tpublic static List<string> Receive = new();\n\n\t\tpublic static void Set(string update)\n\t\t{{");
+File.AppendAllText($"./Dlc{args[3]}.cs", "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace BotwInstaller.Lib.GameData.GameFiles\n" +
+                    $"{{\n\tpublic class Dlc{args[3]}\n\t{{\n\t\tpublic static List<string> Receive = new();\n\n\t\tpublic static void Set(string dlc)\n\t\t{{");
 
-using BotwInstaller.Lib;
-using BotwInstaller.Lib.GameData;
-using BotwInstaller.Lib.Operations.Configure;
-using BotwInstaller.Lib.Exceptions;
-using BotwInstaller.Lib.Shell;
-using System.Text.Json;
-
-using static BotwInstaller.Lib.Exceptions.ConsoleMsg;
-
-namespace BotwInstaller.Shell
+foreach (string arg in Directory.EnumerateFiles(args[0], "*.*", SearchOption.AllDirectories))
 {
-    public static class Program
-    {
-        public static async Task Main(string[] args)
-        {
-            Console.WriteLine("debug id = 3:27");
-
-            if (args.Length >= 1)
-            {
-                switch (args[0].ToLower())
-                {
-                    case "-v":
-                    case "--verify":
-                        PrintLine("Verifying game files...");
-                        var rt = await Query.VerifyLogic("", "", "");
-                        if (rt[0] == null) PrintLine("Files not found.");
-                        else if (rt[0] == "Error") PrintLine(rt[1]);
-                        else PrintLine($"Verified:\n\tBase: {rt[0]}\n\tUpdate: {rt[1]}\n\tDLC: {rt[2]}");
-                        break;
-                    case "-d":
-                        Config? config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Initialize.temp}\\config.json"));
-                        await Initialize.Install(config);
-                        Console.ReadLine();
-                        break;
-
-                }
-            }
-            else
-            {
-                Config? config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Initialize.temp}\\config.json"));
-                await Initialize.Install(config);
-            }
-        }
-    }
+    File.AppendAllText($"./Base{args[3]}.cs", $"\n\t\t\tRecieve.Add($\"{{baseGame}}{arg.Replace($"{args[0]}\\", "")}\");");
+    Console.WriteLine(arg);
 }
+
+foreach (string arg in Directory.EnumerateFiles(args[1], "*.*", SearchOption.AllDirectories))
+{
+    File.AppendAllText($"./Update{args[3]}.cs", $"\n\t\t\tRecieve.Add($\"{{update}}{arg.Replace($"{args[1]}\\", "")}\");");
+    Console.WriteLine(arg);
+}
+
+foreach (string arg in Directory.EnumerateFiles(args[2], "*.*", SearchOption.AllDirectories))
+{
+    File.AppendAllText($"./Dlc{args[3]}.cs", $"\n\t\t\tRecieve.Add($\"{{dlc}}{arg.Replace($"{args[2]}\\", "")}\");");
+    Console.WriteLine(arg);
+}
+
+File.AppendAllText($"./Base{args[3]}.cs", "\n\t\t}\n\t}\n}");
+File.AppendAllText($"./Update{args[3]}.cs", "\n\t\t}\n\t}\n}");
+File.AppendAllText($"./Dlc{args[3]}.cs", "\n\t\t}\n\t}\n}");

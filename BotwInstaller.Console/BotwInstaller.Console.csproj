@@ -9,8 +9,4 @@
 	  <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BotwInstaller.Lib\BotwInstaller.Lib.csproj" />
-  </ItemGroup>
-
 </Project>
