@@ -6,6 +6,7 @@ using BotwInstaller.Assembly.Models;
 using System;
 using System.IO;
 using System.Linq;
+using BotwInstaller.Lib.Operations;
 
 namespace BotwInstaller.Lib.Exceptions
 {
@@ -22,6 +23,7 @@ namespace BotwInstaller.Lib.Exceptions
         public static void Log(string msg, string file = "")
         {
             if (file == "") file = $"{Initialize.root}\\log.txt";
+            Directory.CreateDirectory(file.EditPath());
             File.AppendAllText(file, $"\n{msg}");
         }
 

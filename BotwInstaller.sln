@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Lib", "BotwIn
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other Projects", "Other Projects", "{5AE7354A-4EB0-4EE7-A333-63C38F5AB9C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Assembly", "BotwInstaller.UI\BotwInstaller.Assembly.csproj", "{502D971E-E314-42C3-BEA8-69DA36A43A61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Assembly", "BotwInstaller.Assembly\BotwInstaller.Assembly.csproj", "{502D971E-E314-42C3-BEA8-69DA36A43A61}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwInstaller.Wiz", "BotwInstaller.Wiz\BotwInstaller.Wiz.csproj", "{657B8210-BFF7-436E-94F5-1AB2AE8EB14A}"
 EndProject
