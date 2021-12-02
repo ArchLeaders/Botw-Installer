@@ -166,15 +166,15 @@
 
 1. Put your SD card and any drives you plan to use into your PC. You will need to format them as FAT32, if your SD card or drive is larger than 32GB you will need [this](http://ridgecrop.co.uk/guiformat.exe) tool.
 
-Over 32GB | Open `guiformat.exe` and select the drive/sd card letter from the dropdown menu, then click start. ***Warning! Formating a drive will remove all of it's files forever, so make sure you have everything you wanted off!***
+   Over 32GB | Open `guiformat.exe` and select the drive/sd card letter from the dropdown menu, then click start. ***Warning! Formating a drive will remove all of it's files forever, so make sure you have everything you wanted off!***
 
-![gui-format](https://user-images.githubusercontent.com/80713508/144481592-31514561-c136-4afc-8684-5898fcbddf81.png)
+![gui-format](https://user-images.githubusercontent.com/80713508/144486531-84df7abb-0c40-43ed-9e23-65dc5ffeef96.png)
 
-Under/Equal 32GB | Right-click the drive(s)/sd card you want to use in File Explorer and click the `Format...` option. Set the `File system` to `FAT32` and click start. ***Warning! Formating a drive will remove all of it's files forever, so make sure you have everything you wanted off!***
+   Under/Equal 32GB | Right-click the drive(s)/sd card you want to use in File Explorer and click the `Format...` option. Set the `File system` to `FAT32` and click start. ***Warning! Formating a drive will remove all of it's files forever, so make sure you have everything you wanted off!***
 
 ![format](https://user-images.githubusercontent.com/80713508/144484707-a2e6ee1f-bc3e-4658-917a-a4b206d07b37.png)
 
-2. Remove any external drives from your pc (leave the SD card in).
+2. Remove any extra drives you chose to use from your pc (leave the SD card in).
 
 3. Download and run [Botw Installer]() bypassing the SmartScreen warning and allowing admin permissions.
    Click the Homebrew Install button (SD card icon, [button 8](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#controls-layout---basic-tab)).
@@ -184,15 +184,16 @@ Under/Equal 32GB | Right-click the drive(s)/sd card you want to use in File Expl
 
 ### Homebrew / Dumping
 
-1. Eject your SD Card and plug it into your WiiU. Before continuing, make sure that `Auto Power Off` is turned off in your WiiU's settings.
-2. From the WiiU Menu launch the `Internet Browser` and go to `wiiuexploit.xyz`. Click on `Run Homebrew Launcher`. *(If it freezes force restart your WiiU and try again.)*
-3. In the `Homebrew Launcher` locate `Mocha CFW` and load it. *(If you are sent to the WiiU menu, repeat step four.)*
-4. Back in the `Homebrew Launcher load `Dumpling` and click one of the first two options based on your game version. *(Digital/Disk)*
-5. If you selected `Digital` locate Botw and press `A` to select it then `+` to start dumping.
-6. Follow the on-screen instructions.
-7. Wait for the dump to complete. This will take a while.
-8. Once complete remove the device you dumped the game onto (thumb drive/SD card) and insert it into your pc.
-9. You should now have a copy of Botw on your PC. Congrats! **Don't move the files of your sd card/drive just yet.*
+1. Eject your SD Card and plug it into your WiiU as well as any drives you are dumping to.
+2. Make sure that `Auto Power Off` is turned off in your WiiU's settings.
+3. From the WiiU Menu launch the `Internet Browser` and go to `wiiuexploit.xyz`. Click on `Run Homebrew Launcher`. *(If it freezes force restart your WiiU and try again.)*
+4. In the `Homebrew Launcher` locate `Mocha CFW` and load it. *(If you are sent to the WiiU menu, repeat step four.)*
+5. Back in the `Homebrew Launcher load `Dumpling` and click one of the first two options based on your game version. *(Digital/Disk)*
+6. If you selected `Digital` locate Botw and press `A` to select it then `+` to start dumping.
+7. Follow the on-screen instructions.
+8. Wait for the dump to complete. This will take a while.
+9. Once complete remove the device you dumped the game onto (thumb drive/SD card) and insert it into your pc.
+10. You should now have a copy of Botw on your PC. Congrats! **Don't move the files of your sd card/drive just yet.*
  
     You can now continue to the [install step](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#quick-install---after-dump).
     
@@ -201,7 +202,7 @@ Under/Equal 32GB | Right-click the drive(s)/sd card you want to use in File Expl
 ### Requirments
 
 - Windows x64 PC
-- *Botw installer executable and game files, but presumably you have followed the Dumping Guide and already and have these.)
+- *Botw installer and the game files, but presumably you have followed the Dumping Guide and already and have these.*
 
 1. Assuming Botw installer is open, navigate to the `Advanced` tab and click the `Search and Verify` button (Magnifying glass, [button 14](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#controls-layout---advanced-tab))
 2. While it searches check the `Copy Base Game` option ([button 9](https://github.com/ArchLeaders/Botw-Installer/new/master#controls-layout---advanced-tab)) and change any other options you would like.
