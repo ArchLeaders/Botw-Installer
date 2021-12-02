@@ -28,18 +28,5 @@ namespace BotwInstaller.Lib
                 return "";
             }
         }
-
-        public static string Version(this string pathToBase)
-        {
-            var id = pathToBase.Get();
-            if (id == "00050000101C9500")
-                return "EU";
-            else if (id == "00050000101C9400")
-                return "US";
-            else if (id == "00050000101C9300")
-                return "JP";
-            else
-                return "US";
-        }
     }
 }

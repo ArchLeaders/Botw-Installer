@@ -193,6 +193,15 @@ namespace BotwInstaller.Lib.SetupFiles
         {
             try
             {
+                var lang = "USen";
+
+                if (c.base_game.Get() == "00050000101C9500")
+                    lang = "EUen";
+                else if (c.base_game.Get() == "00050000101C9400")
+                    lang = "USen";
+                else if (c.base_game.Get() == "00050000101C9300")
+                    lang = "JPja";
+
                 BcmlSettings b = new();
 
                 b.cemu_dir = c.cemu_path;
@@ -201,6 +210,7 @@ namespace BotwInstaller.Lib.SetupFiles
                 b.dlc_dir = $"{c.dlc}\\0010";
                 b.store_dir = c.bcml_data;
                 b.export_dir = $"{c.cemu_path}\\graphicPacks\\BreathOfTheWild_BCML";
+                b.lang = lang;
 
                 Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\bcml");
                 await Task.Run(() => File.WriteAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\bcml\\settings.json", JsonSerializer.Serialize(b, new JsonSerializerOptions { WriteIndented = true })));
