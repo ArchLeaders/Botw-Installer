@@ -1,6 +1,6 @@
 # Install Breath of the Wild with Botw Installer.
 
-### [Controls Layout](https://github.com/ArchLeaders/Botw-Installer/new/master#controls-layout---basic-tab)  |  [Dumping Botw](https://github.com/ArchLeaders/Botw-Installer/new/master#dumping-botw)  |  [Quick Install](https://github.com/ArchLeaders/Botw-Installer/new/master#quick-install)
+### [Controls Layout](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#controls-layout---basic-tab)  |  [Dumping Botw](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#dumping-botw)  |  [Quick Install](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#quick-install)
 #
 
 > \*Disclaimer
@@ -177,7 +177,7 @@ Under/Equal 32GB | Right-click the drive(s)/sd card you want to use in File Expl
 2. Remove any external drives from your pc (leave the SD card in).
 
 3. Download and run [Botw Installer]() bypassing the SmartScreen warning and allowing admin permissions.
-   Click the Homebrew Install button (SD card icon, [button 8](https://github.com/ArchLeaders/Botw-Installer/new/master#controls-layout---basic-tab)).
+   Click the Homebrew Install button (SD card icon, [button 8](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#controls-layout---basic-tab)).
    Wait for the prompt saying it's complete, then verify there's a `wiiu` folder in your SD card.
    
 ![homebrew](https://user-images.githubusercontent.com/80713508/144382832-a7f647eb-09de-4f0d-844a-8b871c20d1bf.png)
@@ -194,7 +194,7 @@ Under/Equal 32GB | Right-click the drive(s)/sd card you want to use in File Expl
 8. Once complete remove the device you dumped the game onto (thumb drive/SD card) and insert it into your pc.
 9. You should now have a copy of Botw on your PC. Congrats! **Don't move the files of your sd card/drive just yet.*
  
-    You can now continue to the [install step](https://github.com/ArchLeaders/Botw-Installer/new/master#quick-install---after-dump).
+    You can now continue to the [install step](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#quick-install---after-dump).
     
 # Quick Install - After Dump
 
@@ -203,26 +203,26 @@ Under/Equal 32GB | Right-click the drive(s)/sd card you want to use in File Expl
 - Windows x64 PC
 - *Botw installer executable and game files, but presumably you have followed the Dumping Guide and already and have these.)
 
-1. Assuming Botw installer is open, navigate to the `Advanced` tab and click the `Search and Verify` button (Magnifying glass, [button 14](https://github.com/ArchLeaders/Botw-Installer/new/master#controls-layout---advanced-tab))
+1. Assuming Botw installer is open, navigate to the `Advanced` tab and click the `Search and Verify` button (Magnifying glass, [button 14](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#controls-layout---advanced-tab))
 2. While it searches check the `Copy Base Game` option ([button 9](https://github.com/ArchLeaders/Botw-Installer/new/master#controls-layout---advanced-tab)) and change any other options you would like.
 3. Once the search has been complete and you are satisfied with your settings, click `Install`.
 4. Wait for it to complete. And that's it. Have fun playing Botw!
 
-***If you encountered any errors or had any issues, please report them! More info [here](https://github.com/ArchLeaders/Botw-Installer/new/master#note)***
+***If you encountered any errors or had any issues, please report them! More info [here](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#note)***
 
 # Quick Install
 
 ### Requirments
 
 - Windows x64 PC
-- Botw Game Files (See [Dumping Guide](https://github.com/ArchLeaders/Botw-Installer/new/master#dumping-botw))
+- Botw Game Files (See [Dumping Guide](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#dumping-botw))
 - Botw Installer
 
 1. Run BotwInstaller bypassing the SmartScreen and allowing admin permissions.
 2. Change any settings you would like and click install.
 3. Wait for it to complete. And that's it. Have fun playing Botw!
 
-***If you encountered any errors or had any issues, please report them! More info [here](https://github.com/ArchLeaders/Botw-Installer/new/master#note)***
+***If you encountered any errors or had any issues, please report them! More info [here](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#note)***
 
 ## Credits
 
