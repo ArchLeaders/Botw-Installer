@@ -239,25 +239,9 @@
                                FontWeight="Bold"
                                Text="Path to Botw:" />
                     <TextBox x:Name="tbBsc_BotwPath"
-                             Margin="150,5,60,5"
+                             Margin="150,5,0,5"
                              Padding="5,8"
                              Style="{StaticResource Filled}" />
-                    <Button x:Name="ocBrowseBotw"
-                            Width="50"
-                            Height="40"
-                            Padding="2,0,0,0"
-                            HorizontalAlignment="Right"
-                            HorizontalContentAlignment="Left"
-                            VerticalContentAlignment="Top"
-                            Style="{StaticResource Global}">
-                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                              Fill="{DynamicResource MaterialDesignBody}"
-                              StrokeThickness="0.0372541">
-                            <Path.Data>
-                                <PathGeometry Figures="m 9.070066 6.7379049 c -1.2549167 0 -2.2936247 1.0387858 -2.2936247 2.2937024 V 29.468892 c 0 2.083103 1.7101006 3.793203 3.7932037 3.793203 h 1.747415 4.861913 15.494112 c 2.407299 0 4.612645 -1.364117 5.687621 -3.51807 l 4.637004 -9.291243 c 0.722365 -1.447417 -0.380399 -3.230305 -1.998061 -3.230305 H 19.325674 c -1.599633 0 -3.066802 0.907491 -3.781116 2.338778 l -4.51909 9.055103 c -0.180657 0.386692 -0.370681 0.544666 -0.530923 0.619904 -0.165449 0.07768 -0.340262 0.0898 -0.5675771 0.01981 C 9.4860669 29.120311 8.9424757 28.600284 8.7728641 27.860369 V 9.0316073 c 0 -0.1759708 0.1212311 -0.2972798 0.2972019 -0.2972798 h 9.265272 c 0.75852 0 1.498445 0.2326452 2.120499 0.6666961 l 4.248949 2.9647654 c 1.018405 0.710613 2.230627 1.091793 3.472449 1.091793 h 8.955282 c 0.14604 0 0.24308 0.09696 0.24308 0.243003 v 0.965301 a 0.99821131 0.99821131 0 0 0 0.998211 0.998212 0.99821131 0.99821131 0 0 0 0.998211 -0.998212 v -0.965301 c 0 -1.224987 -1.014516 -2.239424 -2.239502 -2.239425 h -8.955282 c -0.833448 1e-6 -1.64654 -0.255665 -2.330043 -0.732593 L 21.598242 7.763801 C 20.641286 7.0960655 19.502231 6.7379049 18.335338 6.7379049 Z" FillRule="NonZero" />
-                            </Path.Data>
-                        </Path>
-                    </Button>
 
                 </Grid>
                 <Grid Grid.Row="2" Margin="0,5,0,0">
@@ -306,7 +290,7 @@
                                Background="{DynamicResource PrimaryHueDarkBrush}"
                                FontSize="14"
                                Foreground="{DynamicResource SecondaryHueLightBrush}"
-                               Text="Controler Profiles" />
+                               Text="Controller Profiles" />
                 </Grid>
             </Grid>
         </Grid>

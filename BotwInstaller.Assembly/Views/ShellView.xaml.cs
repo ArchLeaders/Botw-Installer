@@ -391,7 +391,6 @@ namespace BotwInstaller.Assembly.Views
             };
 
             // Assign browse buttons | ShellView.Basic
-            ocBrowseBotw.Click += (s, e) => BrowseEvent(tbBsc_BotwPath, "Browse For Botw /content");
             ocBrowseCemu.Click += (s, e) => BrowseEvent(tbBsc_CemuPath, "Browse For Cemu Folder");
 
             // Assign textBox double click events

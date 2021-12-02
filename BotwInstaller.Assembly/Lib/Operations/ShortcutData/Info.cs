@@ -39,7 +39,8 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
             try
             {
                 botw.name = "BotW";
-                botw.target = $"{Initialize.root}\\botw.bat";
+                botw.target = "cmd.exe";
+                botw.args = $"\"{Initialize.root}\\botw.bat\"";
                 botw.icon = $"{Initialize.root}\\botw.ico";
                 botw.description = "The Legend of Zelda: Breath of the Wild";
                 botw.uninstaller = c.Botw();
