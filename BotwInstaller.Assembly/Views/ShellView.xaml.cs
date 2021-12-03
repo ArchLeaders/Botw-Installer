@@ -802,7 +802,7 @@ namespace BotwInstaller.Assembly.Views
             {
                 File.WriteAllText("clean.bat",
                     "@echo off\n" +
-                    "SLEEP 1\n" +
+                    "TIMEOUT 1\n" +
                     "echo Removing temp folders...\n" +
                     $"rmdir \"{config.cemu_path.EditPath()}\\local-temp\" /s /q\n" +
                     $"rmdir \"{config.mlc01.EditPath(2)}\\local-temp-mlc\" /s /q\n" +

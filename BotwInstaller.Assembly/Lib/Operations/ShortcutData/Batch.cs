@@ -23,7 +23,7 @@ namespace BotwInstaller.Lib.Operations.ShortcutData
                     $"rmdir \"{c.bcml_data}\\bcml\" /s /q\n" +
                     "rmdir \"%LOCALAPPDATA%\\bcml\" /s /q\n" +
                     "echo Unistalling PIP package...\n" +
-                    "pip uninstall bcml\n" +
+                    "pip uninstall -y bcml\n" +
                     "echo Done!\n" +
                     "reg delete HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\BCML /f\n" +
                     $"del \"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\BCML.lnk\" /f\n" +
