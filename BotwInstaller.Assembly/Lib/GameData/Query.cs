@@ -29,27 +29,57 @@ namespace BotwInstaller.Lib.GameData
                 {
                     foreach (var drive in DriveInfo.GetDrives().Reverse())
                     {
-                        foreach (var item in await Task.Run(() => Files.GetSafeFiles(drive.Name, "U-King.rpx")))
+                        // This code is messy. But I don't really care.
+                        try
                         {
-                            foreach (var dir in Directory.EnumerateDirectories(item.EditPath(3)))
+                            // Try the quick method.
+                            foreach (var item in await Task.Run(() => Files.GetSafeFiles(drive.Name, "U-King.rpx")))
                             {
-                                if (File.Exists($"{dir}\\content\\Actor\\Pack\\TwnObj_TempleOfTime_A_01.sbactorpack"))
-                                    update = $"{dir}\\content";
-                                if (File.Exists($"{dir}\\content\\Movie\\Demo101_0.mp4"))
-                                    game = $"{dir}\\content";
-                                if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
-                                    dlc = $"{dir}\\content";
+                                foreach (var dir in Directory.EnumerateDirectories(item.EditPath(3)))
+                                {
+                                    if (File.Exists($"{dir}\\content\\Actor\\Pack\\TwnObj_TempleOfTime_A_01.sbactorpack"))
+                                        update = $"{dir}\\content";
+                                    if (File.Exists($"{dir}\\content\\Movie\\Demo101_0.mp4"))
+                                        game = $"{dir}\\content";
+                                    if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
+                                        dlc = $"{dir}\\content";
+                                }
+
+                                if (dlc == "")
+                                    foreach (var pdir in Directory.EnumerateDirectories(item.EditPath(4)))
+                                        foreach (var dir in Directory.EnumerateDirectories(pdir))
+                                            if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
+                                                dlc = $"{dir}\\content";
+
+                                if (game != "" && update != "") break;
                             }
-
-                            if (dlc == "")
-                                foreach (var pdir in Directory.EnumerateDirectories(item.EditPath(4)))
-                                    foreach (var dir in Directory.EnumerateDirectories(pdir))
-                                        if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
-                                            dlc = $"{dir}\\content";
-
                             if (game != "" && update != "") break;
                         }
-                        if (game != "" && update != "") break;
+                        catch
+                        {
+                            // If access is denied somewhere try the safe method.
+                            foreach (var item in await Task.Run(() => Files.GetSafeFilesNoYield(drive.Name, "U-King.rpx")))
+                            {
+                                foreach (var dir in Directory.EnumerateDirectories(item.EditPath(3)))
+                                {
+                                    if (File.Exists($"{dir}\\content\\Actor\\Pack\\TwnObj_TempleOfTime_A_01.sbactorpack"))
+                                        update = $"{dir}\\content";
+                                    if (File.Exists($"{dir}\\content\\Movie\\Demo101_0.mp4"))
+                                        game = $"{dir}\\content";
+                                    if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
+                                        dlc = $"{dir}\\content";
+                                }
+
+                                if (dlc == "")
+                                    foreach (var pdir in Directory.EnumerateDirectories(item.EditPath(4)))
+                                        foreach (var dir in Directory.EnumerateDirectories(pdir))
+                                            if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
+                                                dlc = $"{dir}\\content";
+
+                                if (game != "" && update != "") break;
+                            }
+                            if (game != "" && update != "") break;
+                        }
                     }
                 });
 
@@ -57,7 +87,7 @@ namespace BotwInstaller.Lib.GameData
             }
             catch (Exception ex)
             {
-                Prompt.Error("BotwInstaller.Lib.Operations.Configure.Query.GameFiles", new string[] { game, update, dlc}, ex.Message, $"{game}, {update}, {dlc}", true);
+                Prompt.Error("BotwInstaller.Lib.Operations.Configure.Query.GameFiles", new string[] { game, update, dlc}, ex.Message, $"{game}, {update}, {dlc}");
                 return new string[] { "", "", ""};
             }
         }
