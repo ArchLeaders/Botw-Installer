@@ -51,7 +51,7 @@ namespace BotwInstaller.Lib.GameData
                                             if (File.Exists($"{dir}\\content\\0010\\UI\\StaffRollDLC\\RollpictDLC001.sbstftex"))
                                                 dlc = $"{dir}\\content";
 
-                                if (game != "" && update != "") break;
+                                else if (game != "" && update != "") break;
                             }
                             if (game != "" && update != "") break;
                         }
@@ -103,6 +103,12 @@ namespace BotwInstaller.Lib.GameData
         {
             try
             {
+                if (bC.Contains("DATA"))
+                {
+                    Prompt.Print("Hrmm, your game paths look suspicious...\n\nThis tool doesn't support pirated files.\nTo legally play Botw, buy the game on your WiiU and dump it.", "☠ ☠ ☠ ☠");
+                    await Proc.Start("explorer.exe", "https://github.com/ArchLeaders/Botw-Installer#dumping-botw");
+                    Environment.Exit(0);
+                }
                 await Task.Run(() =>
                 {
                     if (bC.Get() == "00050000101C9500")

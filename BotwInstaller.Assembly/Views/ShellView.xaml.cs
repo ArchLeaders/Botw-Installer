@@ -522,9 +522,15 @@ namespace BotwInstaller.Assembly.Views
                 // return[0] == error: Missing files
                 // else: All good.
                 if (check == null)
+                {
+                    tbAdv_GameBase.Text = "Not Found";
                     IPrompt.Error("Game files not found.");
+                }
                 else if (check[0] == "Error")
+                {
+                    tbAdv_GameBase.Text = "Invalid";
                     IPrompt.Error(check[1], false, check[0]);
+                }
                 else SetGameConfig(check[0], check[1], check[2], show);
 
                 // Revert readonly state
