@@ -15,7 +15,7 @@
 ## Notice
 
 ***Because this is only tested by myself, bugs and errors will most likely occur on various other machines until I clean up all of them.***
-***So if you can, please report any errors as either a GitHub issue on this repo or a post in my [Discord Channel](https://discord.gg/cbA3AWwfJj)!***
+***So if you can, please report any errors as either a GitHub issue on this repo or a post in my [Discord Server](https://discord.gg/cbA3AWwfJj)!***
 > Ping Marcus *`ArchLeaders#0903`*
 
 # Controls Layout - Basic Tab
