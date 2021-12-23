@@ -2,640 +2,809 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BotW_Installer"
-        mc:Ignorable="d"
-        Title="BotW Installer" Height="500" Width="800"
-        WindowStyle="None" AllowsTransparency="True"
-        Background="Transparent" ResizeMode="CanMinimize">
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="BotW Installer"
+        Width="800"
+        Height="500"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="CanMinimize"
+        WindowStyle="None"
+        mc:Ignorable="d">
 
-    <Border Background="#c0171717" Margin="15"
-            CornerRadius="8" x:Name="background">
+    <Border x:Name="background"
+            Margin="15"
+            Background="#c0171717"
+            CornerRadius="8">
 
         <Border.Effect>
-            <DropShadowEffect BlurRadius="15" ShadowDepth="5"
-                              Color="#213033" Opacity="1"
-                              x:Name="masterDropShadow"/>
+            <DropShadowEffect x:Name="masterDropShadow"
+                              BlurRadius="15"
+                              Opacity="1"
+                              ShadowDepth="5"
+                              Color="#213033" />
         </Border.Effect>
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="320"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="25" />
+                <ColumnDefinition Width="320" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="25" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="25" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.ColumnSpan="5" WindowChrome.IsHitTestVisibleInChrome="True"
-                  MouseDown="Grid_MouseDown" Background="Transparent">
+            <Grid Grid.ColumnSpan="5"
+                  Background="Transparent"
+                  MouseDown="Grid_MouseDown"
+                  WindowChrome.IsHitTestVisibleInChrome="True">
 
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal"
+                <StackPanel HorizontalAlignment="Left"
+                            Orientation="Horizontal"
                             WindowChrome.IsHitTestVisibleInChrome="False">
 
-                    <Image Source="Images/Icon.png" Height="65"
-                           Margin="25, 25, 0, 5"/>
+                    <Image Height="65"
+                           Margin="25,25,0,5"
+                           Source="Images/Icon.png" />
 
-                    <TextBlock Text="Breath of the Wild Installer"
-                               VerticalAlignment="Top" FontSize="35"
-                               Margin="15, 15, 0, 0" FontFamily="Tajawal"
-                               Foreground="White"/>
+                    <TextBlock Margin="15,15,0,0"
+                               VerticalAlignment="Top"
+                               FontFamily="Tajawal"
+                               FontSize="35"
+                               Foreground="White"
+                               Text="Breath of the Wild Installer" />
                 </StackPanel>
 
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0, 20, 20, 0">
-                    <Button x:Name="btnDropShadow" Content=" ⃣" Width="45"
-                            FontSize="25" VerticalAlignment="Top" Height="45"
+                <StackPanel Margin="0,20,20,0"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                    <Button x:Name="btnDropShadow"
+                            Width="45"
+                            Height="45"
+                            VerticalAlignment="Top"
+                            Content=" ⃣"
                             FontFamily="{StaticResource NotoSansSymbol}"
-                            Style="{StaticResource btnExit}"
+                            FontSize="25"
                             Foreground="White"
-                            ToolTip="Disable window DropShadow."/>
-                    <Button x:Name="btnMinimize" Content="!"
-                            Width="45" FontSize="30" VerticalAlignment="Top" Height="45"
-                            FontFamily="{StaticResource WindowsBasic}"
                             Style="{StaticResource btnExit}"
-                            Foreground="White"/>
-                    <Button x:Name="btnExit" Content=","
-                            Width="45" FontSize="30" VerticalAlignment="Top" Height="45"
+                            ToolTip="Disable window DropShadow." />
+                    <Button x:Name="btnMinimize"
+                            Width="45"
+                            Height="45"
+                            VerticalAlignment="Top"
+                            Content="!"
                             FontFamily="{StaticResource WindowsBasic}"
-                            Style="{StaticResource btnExit}"
-                            Foreground="White"/>
+                            FontSize="30"
+                            Foreground="White"
+                            Style="{StaticResource btnExit}" />
+                    <Button x:Name="btnExit"
+                            Width="45"
+                            Height="45"
+                            VerticalAlignment="Top"
+                            Content=","
+                            FontFamily="{StaticResource WindowsBasic}"
+                            FontSize="30"
+                            Foreground="White"
+                            Style="{StaticResource btnExit}" />
                 </StackPanel>
             </Grid>
-            <!--WindowChrome/Icon etc...-->
+            <!--  WindowChrome/Icon etc...  -->
 
-            <Grid Grid.Row="0" Grid.Column="1" Height="25"
-                  VerticalAlignment="Bottom" Margin="80, 0, 0, 5" WindowChrome.IsHitTestVisibleInChrome="True">
+            <Grid Grid.Row="0"
+                  Grid.Column="1"
+                  Height="25"
+                  Margin="80,0,0,5"
+                  VerticalAlignment="Bottom"
+                  WindowChrome.IsHitTestVisibleInChrome="True">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Style="{DynamicResource BtnTab_Basic}"
-                          Content="Basic" x:Name="tabBasic"
-                          Background="#2f2f2f" FontSize="18"
+                <CheckBox x:Name="tabBasic"
+                          Background="#2f2f2f"
+                          BorderThickness="0"
+                          Click="tabBasic_Click"
+                          Content="Basic"
                           FontFamily="Artifakt Element"
-                          BorderThickness="0" Foreground="White"
+                          FontSize="18"
+                          Foreground="White"
                           IsChecked="True"
-                          Click="tabBasic_Click"/>
+                          Style="{DynamicResource BtnTab_Basic}" />
 
-                <CheckBox Style="{DynamicResource BtnTab_Adv}"
-                          Content="Advanced" x:Name="tabAdv"
-                          Background="#1f1f1f" FontSize="18"
-                          FontFamily="Artifakt Element" Grid.Column="2"
-                          BorderThickness="0" Foreground="White"
+                <CheckBox x:Name="tabAdv"
+                          Grid.Column="2"
+                          Background="#1f1f1f"
+                          BorderThickness="0"
+                          Click="tabAdv_Click"
+                          Content="Advanced"
+                          FontFamily="Artifakt Element"
+                          FontSize="18"
+                          Foreground="White"
                           IsChecked="False"
-                          Click="tabAdv_Click"/>
+                          Style="{DynamicResource BtnTab_Adv}" />
             </Grid>
-            <!--Tabs-->
+            <!--  Tabs  -->
 
-            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                  x:Name="grid_BasicPanel" Visibility="Visible">
+            <Grid x:Name="grid_BasicPanel"
+                  Grid.Row="1"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="2"
+                  Visibility="Visible">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="320"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="320" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="1" Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="1.4*"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="1.4*" />
                     </Grid.RowDefinitions>
 
-                    <CheckBox Content="Use Mods" Margin="0, 10, 0, 0"
-                              Background="#104673" FontSize="30"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <CheckBox x:Name="cbBasic_UseMods"
+                              Margin="0,10,0,0"
+                              Padding="20,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="20, 0, 0, 0" x:Name="cbBasic_UseMods"
+                              Background="#104673"
                               Click="cbBasic_Click"
-                              ToolTip="Installs the required sofware to use mods with Cemu."/>
+                              Content="Use Mods"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="30"
+                              Foreground="White"
+                              ToolTip="Installs the required sofware to use mods with Cemu." />
 
-                    <CheckBox Content="Create Shortcuts" Margin="0, 10, 0, 0"
-                              Background="#104673" FontSize="30" Grid.Row="1"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <CheckBox x:Name="cbBasic_CreateShortcuts"
+                              Grid.Row="1"
+                              Margin="0,10,0,0"
+                              Padding="20,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="20, 0, 0, 0" x:Name="cbBasic_CreateShortcuts"
+                              Background="#104673"
                               Click="cbBasic_Click"
-                              ToolTip="Creates the default set of shortcuts for Cemu, BCML, and Botw.&#x0a;Customize which are installed in the advanced tab."/>
+                              Content="Create Shortcuts"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="30"
+                              Foreground="White"
+                              ToolTip="Creates the default set of shortcuts for Cemu, BCML, and Botw.&#x0a;Customize which are installed in the advanced tab." />
 
-                    <CheckBox Content="Run After Install" Margin="0, 10, 0, 0"
-                              Background="#104673" FontSize="30" Grid.Row="2"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <CheckBox x:Name="cbBasic_RunAfterInstall"
+                              Grid.Row="2"
+                              Margin="0,10,0,0"
+                              Padding="20,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="20, 0, 0, 0" x:Name="cbBasic_RunAfterInstall"
-                              ToolTip="Launches Botw after it's been installed."/>
+                              Background="#104673"
+                              Content="Run After Install"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="30"
+                              Foreground="White"
+                              ToolTip="Launches Botw after it's been installed." />
 
-                    <ComboBox Margin="0, 10, 0, 0"
-                              Background="#104673" FontSize="30" Grid.Row="3"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <ComboBox x:Name="cbBasic_InstallDS4Windows"
+                              Grid.Row="3"
+                              Margin="0,10,0,0"
+                              Padding="20,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="20, 0, 0, 0" x:Name="cbBasic_InstallDS4Windows"
-                              VerticalContentAlignment="Center" SelectedIndex="0"
+                              VerticalContentAlignment="Center"
+                              Background="#104673"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="30"
+                              Foreground="White"
+                              SelectedIndex="0"
                               ToolTip="Installs the software required to connect certain controlers to Windows.">
-                        <ComboBoxItem Content="None" ToolTip="Don't install software"/>
-                        <ComboBoxItem Content="DS4 Windows" ToolTip="Install DS4Windows. (Required for Dualshock controllers.)"/>
-                        <ComboBoxItem Content="BetterJoy" ToolTip="Install BetterJoy. (Required for Switch controllers.)"/>
+                        <ComboBoxItem Content="None" ToolTip="Don't install software" />
+                        <ComboBoxItem Content="DS4 Windows" ToolTip="Install DS4Windows. (Required for Dualshock controllers.)" />
+                        <ComboBoxItem Content="BetterJoy" ToolTip="Install BetterJoy. (Required for Switch controllers.)" />
                     </ComboBox>
 
-                    <Button Content="Install" Margin="0, 10, 0, 0"
-                            Background="#1f1f1f" FontSize="34" Grid.Row="4"
-                            Foreground="White" FontFamily="Artifakt Element Book"
+                    <Button x:Name="btnBasic_Install"
+                            Grid.Row="4"
+                            Margin="0,10,0,0"
+                            Background="#1f1f1f"
                             BorderThickness="0"
-                            Style="{DynamicResource btnInstall}" x:Name="btnBasic_Install"
                             Click="btnBasic_Install_Click"
-                            ToolTip="Installs Botw with your chosen settings"/>
+                            Content="Install"
+                            FontFamily="Artifakt Element Book"
+                            FontSize="34"
+                            Foreground="White"
+                            Style="{DynamicResource btnInstall}"
+                            ToolTip="Installs Botw with your chosen settings" />
 
                 </Grid>
-                <!--Basic Options-->
+                <!--  Basic Options  -->
 
                 <Grid Grid.Row="1" Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="1.4*"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="1.4*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2"/>
-                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="60" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBox Style="{DynamicResource TextBox_Paths}" Grid.Column="1"
-                             VerticalAlignment="Stretch" Margin="0, 10, 0, 0"
+                    <TextBox x:Name="tbBasic_CemuPath"
+                             Grid.Column="1"
+                             Margin="0,10,0,0"
+                             Padding="15,0,0,0"
+                             VerticalAlignment="Stretch"
                              VerticalContentAlignment="Center"
-                             Padding="15, 0, 0, 0" FontSize="20"
-                             FontFamily="Artifakt Element"
                              Background="#1f1f1f"
+                             FontFamily="Artifakt Element"
+                             FontSize="20"
                              Foreground="#7f7f7f"
-                             x:Name="tbBasic_CemuPath"
-                             TextChanged="tbBasic_CemuPath_TextChanged"
-                             Text="Cemu Path"
                              GotFocus="tbBasic_CemuPath_GotFocus"
                              LostFocus="tbBasic_CemuPath_LostFocus"
-                             ToolTip="Path to the existing or new Cemu folder.&#x0a;Avoid making this folder inside your Documents folder.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\Cemu'">
-                    </TextBox>
+                             Style="{DynamicResource TextBox_Paths}"
+                             Text="Cemu Path"
+                             TextChanged="tbBasic_CemuPath_TextChanged"
+                             ToolTip="Path to the existing or new Cemu folder.&#x0a;Avoid making this folder inside your Documents folder.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\Cemu'" />
 
-                    <TextBox Style="{DynamicResource TextBox_Paths}" Grid.Column="1" Grid.Row="1"
+                    <TextBox x:Name="tbBasic_DumpPath"
+                             Grid.Row="1"
+                             Grid.Column="1"
+                             Margin="0,10,0,0"
+                             Padding="15,0,0,0"
                              VerticalAlignment="Stretch"
-                             Margin="0, 10, 0, 0"
                              VerticalContentAlignment="Center"
-                             Text="Dump Path"
-                             Padding="15, 0, 0, 0"
-                             FontSize="20"
-                             FontFamily="Artifakt Element"
                              Background="#1f1f1f"
+                             FontFamily="Artifakt Element"
+                             FontSize="20"
                              Foreground="#7f7f7f"
-                             x:Name="tbBasic_DumpPath"
                              GotFocus="tbBasic_DumpPath_GotFocus"
                              LostFocus="tbBasic_DumpPath_LostFocus"
+                             Style="{DynamicResource TextBox_Paths}"
+                             Text="Dump Path"
                              TextChanged="tbBasic_DumpPath_TextChanged"
-                             ToolTip="Path to your game dump.&#x0a;This needs to contain the Update, BaseGame and DLC.&#x0a;&#x0a;DLC is optional.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW'">
-                    </TextBox>
+                             ToolTip="Path to your game dump.&#x0a;This needs to contain the Update, BaseGame and DLC.&#x0a;&#x0a;DLC is optional.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW'" />
 
-                    <Button x:Name="btnBasic_CemuPath_Browse" Content="&#xe903;" Grid.Column="3"
-                        Style="{StaticResource btnBrowse}" Background="#104673"
-                        Margin="0, 10, 0, 0" BorderThickness="0" FontSize="20"
-                        Foreground="White" Click="btnBasic_Browse_Click"
-                            ToolTip="Browse for Cemu Path"/>
-
-                    <Button x:Name="btnBasic_DumpPath_Browse" Content="&#xe903;" Grid.Column="3" Grid.Row="1"
-                        Style="{StaticResource btnBrowse}" Background="#104673"
-                        Margin="0, 10, 0, 0" BorderThickness="0" FontSize="20"
-                        Foreground="White" Click="btnBasic_Browse_Click"
-                            ToolTip="Browse for Dump Path"/>
-
-                    <Button x:Name="btnBasic_DumpPath_Search" Content="&#xe903;"
-                            Grid.Column="3" Grid.Row="2"
-                            Style="{StaticResource btnSearch}" Background="#104673"
-                            Margin="0, 10, 0, 0" BorderThickness="0" FontSize="20"
+                    <Button x:Name="btnBasic_CemuPath_Browse"
+                            Grid.Column="3"
+                            Margin="0,10,0,0"
+                            Background="#104673"
+                            BorderThickness="0"
+                            Click="btnBasic_Browse_Click"
+                            Content="&#xe903;"
+                            FontSize="20"
                             Foreground="White"
-                            ToolTip="Search for game files. [Not Recomended]&#x0a;&#x0a;This process can take several minutes&#x0a;depending on the speed of your drive&#x0a;and the amount of files on it."/>
+                            Style="{StaticResource btnBrowse}"
+                            ToolTip="Browse for Cemu Path" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="1" Grid.RowSpan="2"
-                               Margin="0, 5, 0, 0" FontSize="19"
-                               FontFamily="Calibri" Foreground="White"
+                    <Button x:Name="btnBasic_DumpPath_Browse"
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Margin="0,10,0,0"
+                            Background="#104673"
+                            BorderThickness="0"
+                            Click="btnBasic_Browse_Click"
+                            Content="&#xe903;"
+                            FontSize="20"
+                            Foreground="White"
+                            Style="{StaticResource btnBrowse}"
+                            ToolTip="Browse for Dump Path" />
+
+                    <Button x:Name="btnBasic_DumpPath_Search"
+                            Grid.Row="2"
+                            Grid.Column="3"
+                            Margin="0,10,0,0"
+                            Background="#104673"
+                            BorderThickness="0"
+                            Content="&#xe903;"
+                            FontSize="20"
+                            Foreground="White"
+                            Style="{StaticResource btnSearch}"
+                            ToolTip="Search for game files. [Not Recomended]&#x0a;&#x0a;This process can take several minutes&#x0a;depending on the speed of your drive&#x0a;and the amount of files on it." />
+
+                    <TextBlock Grid.Row="3"
+                               Grid.RowSpan="2"
+                               Grid.Column="1"
+                               Margin="0,5,0,0"
+                               FontFamily="Calibri"
+                               FontSize="19"
+                               Foreground="White"
                                LineHeight="14">
                         <Run FontWeight="Bold">*Disclaimer</Run>
-                        <LineBreak/>
-                        This tool does not download
-                        <LineBreak/>
-                        The Legend of Zelda: Breath of the Wild
-                        <LineBreak/>
-                        or ANY of it's contents.
-                        <LineBreak/>
-                        To obtain the game you must dump it
-                        <LineBreak/>
-                        from your WiiU console.
-                    </TextBlock>
+                        <LineBreak />
+                        This tool does not download<LineBreak />
+                        The Legend of Zelda: Breath of the Wild<LineBreak />
+                        or ANY of it's contents.<LineBreak />
+                        To obtain the game you must dump it<LineBreak />
+                        from your WiiU console.</TextBlock>
                 </Grid>
             </Grid>
-            <!--Basic Options-->
+            <!--  Basic Options  -->
 
-            <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"
-                  Grid.ColumnSpan="2" x:Name="grid_AdvPanel" Visibility="Hidden">
+            <Grid x:Name="grid_AdvPanel"
+                  Grid.Row="1"
+                  Grid.RowSpan="2"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="2"
+                  Visibility="Hidden">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="320"/>
-                    <ColumnDefinition Width="20"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="320" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <Grid x:Name="gridAdv_Shortcuts" Visibility="Hidden">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <CheckBox Content="Add Cemu To Programs" Margin="5, 5, 5, 0"
-                              Background="#104673" FontSize="20" Grid.Row="1"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <CheckBox x:Name="cbAdv_AddCemuToPrograms"
+                              Grid.Row="1"
+                              Margin="5,5,5,0"
+                              Padding="15,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_AddCemuToPrograms"
-                              ToolTip="Creates Cemu Uninstaller"/>
+                              Background="#104673"
+                              Content="Add Cemu To Programs"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="20"
+                              Foreground="White"
+                              ToolTip="Creates Cemu Uninstaller" />
 
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="172"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="172" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox Content="Start Menu" Margin="5, 5, 2.5, 0"
-                                  Background="#104673" FontSize="20"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_CemuStartShortcut"
+                                  Margin="5,5,2.5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_CemuStartShortcut"
-                                  ToolTip="Creates Cemu Start Menu Shortcut"/>
+                                  Background="#104673"
+                                  Content="Start Menu"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Creates Cemu Start Menu Shortcut" />
 
-                        <CheckBox Content="Desktop" Margin="2.5, 5, 5, 0"
-                                  Background="#104673" FontSize="20" Grid.Column="1"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_CemuDesktopShortcut"
+                                  Grid.Column="1"
+                                  Margin="2.5,5,5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_CemuDesktopShortcut"
-                                  ToolTip="Creates Cemu Desktop Shortcut"/>
+                                  Background="#104673"
+                                  Content="Desktop"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Creates Cemu Desktop Shortcut" />
                     </Grid>
 
-                    <CheckBox Content="Add Bcml To Programs" Margin="5, 5, 5, 0"
-                              Background="#104673" FontSize="20" Grid.Row="3"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <CheckBox x:Name="cbAdv_AddBcmlToPrograms"
+                              Grid.Row="3"
+                              Margin="5,5,5,0"
+                              Padding="15,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_AddBcmlToPrograms"
-                              ToolTip="Creates BCML Uninstaller"/>
+                              Background="#104673"
+                              Content="Add Bcml To Programs"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="20"
+                              Foreground="White"
+                              ToolTip="Creates BCML Uninstaller" />
 
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="170"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox Content="Start Menu" Margin="5, 5, 2.5, 0"
-                                  Background="#104673" FontSize="20"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_BcmlStartShortcut"
+                                  Margin="5,5,2.5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_BcmlStartShortcut"
-                                  ToolTip="Creates BCML Start Menu Shortcut"/>
+                                  Background="#104673"
+                                  Content="Start Menu"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Creates BCML Start Menu Shortcut" />
 
-                        <CheckBox Content="Desktop" Margin="2.5, 5, 5, 0"
-                                  Background="#104673" FontSize="20" Grid.Column="1"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_BcmlDesktopShortcut"
+                                  Grid.Column="1"
+                                  Margin="2.5,5,5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_BcmlDesktopShortcut"
-                                  ToolTip="Creates BCML Desktop Shortcut"/>
+                                  Background="#104673"
+                                  Content="Desktop"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Creates BCML Desktop Shortcut" />
                     </Grid>
 
-                    <CheckBox Content="Add BotW To Programs" Margin="5, 5, 5, 0"
-                              Background="#104673" FontSize="20" Grid.Row="5"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <CheckBox x:Name="cbAdv_AddBotwToPrograms"
+                              Grid.Row="5"
+                              Margin="5,5,5,0"
+                              Padding="15,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_AddBotwToPrograms"
-                              ToolTip="Creates Botw Uninstaller."/>
+                              Background="#104673"
+                              Content="Add BotW To Programs"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="20"
+                              Foreground="White"
+                              ToolTip="Creates Botw Uninstaller." />
 
                     <Grid Grid.Row="6">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="170"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox Content="Start Menu" Margin="5, 5, 2.5, 0"
-                                  Background="#104673" FontSize="20"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_BotwStartShortcut"
+                                  Margin="5,5,2.5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_BotwStartShortcut"
-                                  ToolTip="Creates Botw Start Menu Shortcut"/>
+                                  Background="#104673"
+                                  Content="Start Menu"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Creates Botw Start Menu Shortcut" />
 
-                        <CheckBox Content="Desktop" Margin="2.5, 5, 5, 0"
-                                  Background="#104673" FontSize="20" Grid.Column="1"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_BotwDesktopShortcut"
+                                  Grid.Column="1"
+                                  Margin="2.5,5,5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_BotwDesktopShortcut"
-                                  ToolTip="Creates Botw Desktop Shortcut"/>
+                                  Background="#104673"
+                                  Content="Desktop"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Creates Botw Desktop Shortcut" />
                     </Grid>
                 </Grid>
 
                 <Grid x:Name="gridAdv_Python" Visibility="Visible">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <CheckBox Content="Install Python" Margin="5, 5, 5, 0"
-                              Background="#104673" FontSize="20" Grid.Row="1"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <CheckBox x:Name="cbAdv_InstallPython"
+                              Grid.Row="1"
+                              Margin="5,5,5,0"
+                              Padding="15,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_InstallPython"
-                              ToolTip="Installs Python.&#x0a;Required for BCML."/>
+                              Background="#104673"
+                              Content="Install Python"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="20"
+                              Foreground="White"
+                              ToolTip="Installs Python.&#x0a;Required for BCML." />
 
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="172"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="172" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox Content="3.8 (x64)" Margin="5, 5, 2.5, 0"
-                                  Background="#104673" FontSize="20"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_Py8"
+                                  Margin="5,5,2.5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_Py8"
+                                  Background="#104673"
                                   Click="cbAdv_PyVersion_Click"
-                                  ToolTip="Installs Python 3.8.10 64 Bit if Install Python is checked."/>
+                                  Content="3.8 (x64)"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Installs Python 3.8.10 64 Bit if Install Python is checked." />
 
-                        <CheckBox Content="3.7 (x64)" Margin="2.5, 5, 5, 0"
-                                  Background="#104673" FontSize="20" Grid.Column="1"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_Py7"
+                                  Grid.Column="1"
+                                  Margin="2.5,5,5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_Py7"
+                                  Background="#104673"
                                   Click="cbAdv_PyVersion_Click"
-                                  ToolTip="Installs Python 3.7.8 64 Bit if Install Python is checked."/>
+                                  Content="3.7 (x64)"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Installs Python 3.7.8 64 Bit if Install Python is checked." />
                     </Grid>
 
                     <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="172"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="172" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox Content="Visual C++" Margin="5, 5, 2.5, 0"
-                                  Background="#104673" FontSize="20"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_CPlusPlus"
+                                  Margin="5,5,2.5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_CPlusPlus"
-                                  ToolTip="Installs Visual C++&#x0a;Required for Cemu and BCML."/>
+                                  Background="#104673"
+                                  Content="Visual C++"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Installs Visual C++&#x0a;Required for Cemu and BCML." />
 
-                        <CheckBox Content="Py Docs" Margin="2.5, 5, 5, 0"
-                                  Background="#104673" FontSize="20" Grid.Column="1"
-                                  Foreground="White" FontFamily="Artifakt Element Book"
+                        <CheckBox x:Name="cbAdv_PythonDocs"
+                                  Grid.Column="1"
+                                  Margin="2.5,5,5,0"
+                                  Padding="15,0,0,0"
                                   HorizontalContentAlignment="Left"
-                                  Padding="15, 0, 0, 0"
-                                  x:Name="cbAdv_PythonDocs"
-                                  ToolTip="Install the Python documentaion."/>
+                                  Background="#104673"
+                                  Content="Py Docs"
+                                  FontFamily="Artifakt Element Book"
+                                  FontSize="20"
+                                  Foreground="White"
+                                  ToolTip="Install the Python documentaion." />
                     </Grid>
 
-                    <CheckBox Content="Install BCML" Margin="5, 5, 5, 0"
-                              Background="#104673" FontSize="20" Grid.Row="5"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <CheckBox x:Name="cbAdv_InstallBcml"
+                              Grid.Row="5"
+                              Margin="5,5,5,0"
+                              Padding="15,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_InstallBcml"
-                              ToolTip="Installs Botw Cross-Platform Mod Loader (BCML)&#x0a;Requirments&#x0a;   - Python&#x0a;   - Visual C++&#x0a;   - WebView2 Runtime (Auto installed)"/>
+                              Background="#104673"
+                              Content="Install BCML"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="20"
+                              Foreground="White"
+                              ToolTip="Installs Botw Cross-Platform Mod Loader (BCML)&#x0a;Requirments&#x0a;   - Python&#x0a;   - Visual C++&#x0a;   - WebView2 Runtime (Auto installed)" />
 
-                    <CheckBox Content="Copy Base To mlc01" Margin="5, 5, 5, 0"
-                              Background="#104673" FontSize="20" Grid.Row="6"
-                              Foreground="White" FontFamily="Artifakt Element Book"
+                    <CheckBox x:Name="cbAdv_CopyBase"
+                              Grid.Row="6"
+                              Margin="5,5,5,0"
+                              Padding="15,0,0,0"
                               HorizontalContentAlignment="Left"
-                              Padding="15, 0, 0, 0"
-                              x:Name="cbAdv_CopyBase"
-                              ToolTip="Copies the Base Game files to the mlc01 folder.&#x0a;Good to use if you are copying the game off an SD card."/>
+                              Background="#104673"
+                              Content="Copy Base To mlc01"
+                              FontFamily="Artifakt Element Book"
+                              FontSize="20"
+                              Foreground="White"
+                              ToolTip="Copies the Base Game files to the mlc01 folder.&#x0a;Good to use if you are copying the game off an SD card." />
                 </Grid>
 
                 <Grid VerticalAlignment="Bottom">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="25" />
                     </Grid.RowDefinitions>
 
-                    <Button Content="▶" BorderThickness="0"
+                    <Button x:Name="btnAdv_MenuRight"
+                            Width="25"
+                            HorizontalAlignment="Right"
                             Background="Transparent"
-                            FontSize="12" FontFamily="Adobe Fan Heiti Std B"
-                            HorizontalAlignment="Right" Width="25"
-                            Foreground="White"
-                            x:Name="btnAdv_MenuRight"
+                            BorderThickness="0"
                             Click="btnAdv_Menu_Click"
-                            ToolTip="Slide panel right."/>
+                            Content="▶"
+                            FontFamily="Adobe Fan Heiti Std B"
+                            FontSize="12"
+                            Foreground="White"
+                            ToolTip="Slide panel right." />
 
-                    <Button Content="◀" BorderThickness="0"
+                    <Button x:Name="btnAdv_MenuLeft"
+                            Width="25"
+                            HorizontalAlignment="Left"
                             Background="Transparent"
-                            FontSize="12" FontFamily="Adobe Fan Heiti Std B"
-                            HorizontalAlignment="Left" Width="25"
-                            Foreground="White"
-                            x:Name="btnAdv_MenuLeft"
+                            BorderThickness="0"
                             Click="btnAdv_Menu_Click"
-                            ToolTip="Slide panel left."/>
+                            Content="◀"
+                            FontFamily="Adobe Fan Heiti Std B"
+                            FontSize="12"
+                            Foreground="White"
+                            ToolTip="Slide panel left." />
 
                 </Grid>
 
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
 
-                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="1"
+                    <TextBox x:Name="tbAdvBase_Game_Path"
+                             Grid.Row="1"
+                             Margin="5,5,5,0"
+                             Padding="15,0,15,0"
                              VerticalAlignment="Stretch"
-                             Margin="5, 5, 5, 0"
                              VerticalContentAlignment="Center"
+                             Background="#1f1f1f"
+                             FontFamily="Artifakt Element"
+                             FontSize="20"
+                             Foreground="#7f7f7f"
+                             GotFocus="tbGotFocus"
+                             LostFocus="tbLostFocus"
+                             MouseDoubleClick="TextBox_Browse"
+                             Style="{DynamicResource TextBox_Paths_NB}"
                              Text="Base Game Path"
-                             Padding="15, 0, 15, 0"
-                             FontSize="20"
-                             FontFamily="Artifakt Element"
+                             TextChanged="PathTextBox_Check"
+                             ToolTip="Path to your base game dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Breath of the Wild [101c9#00]\content'&#x0a;&#x0a;(Double click text box to browse)" />
+
+                    <TextBox x:Name="tbAdvUpdate_Path"
+                             Grid.Row="2"
+                             Margin="5,5,5,0"
+                             Padding="15,0,15,0"
+                             VerticalAlignment="Stretch"
+                             VerticalContentAlignment="Center"
                              Background="#1f1f1f"
+                             FontFamily="Artifakt Element"
+                             FontSize="20"
                              Foreground="#7f7f7f"
-                             x:Name="tbAdvBase_Game_Path"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
-                             TextChanged="PathTextBox_Check"
-                             ToolTip="Path to your base game dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Breath of the Wild [101c9#00]\content'&#x0a;&#x0a;(Double click text box to browse)"/>
-
-                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="2"
-                             VerticalAlignment="Stretch"
-                             Margin="5, 5, 5, 0"
-                             VerticalContentAlignment="Center"
+                             Style="{DynamicResource TextBox_Paths_NB}"
                              Text="Update Path"
-                             Padding="15, 0, 15, 0"
-                             FontSize="20"
-                             FontFamily="Artifakt Element"
+                             TextChanged="PathTextBox_Check"
+                             ToolTip="Path to your update dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Update v208\content'&#x0a;&#x0a;(Double click text box to browse)" />
+
+                    <TextBox x:Name="tbAdvDLC_Path"
+                             Grid.Row="3"
+                             Margin="5,5,5,0"
+                             Padding="15,0,15,0"
+                             VerticalAlignment="Stretch"
+                             VerticalContentAlignment="Center"
                              Background="#1f1f1f"
+                             FontFamily="Artifakt Element"
+                             FontSize="20"
                              Foreground="#7f7f7f"
-                             x:Name="tbAdvUpdate_Path"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
-                             TextChanged="PathTextBox_Check"
-                             ToolTip="Path to your update dump.&#x0a;This will end in 'content'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\Update v208\content'&#x0a;&#x0a;(Double click text box to browse)"/>
-
-                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="3"
-                             VerticalAlignment="Stretch"
-                             Margin="5, 5, 5, 0"
-                             VerticalContentAlignment="Center"
+                             Style="{DynamicResource TextBox_Paths_NB}"
                              Text="DLC Path"
-                             Padding="15, 0, 15, 0"
-                             FontSize="20"
-                             FontFamily="Artifakt Element"
-                             Background="#1f1f1f"
-                             Foreground="#7f7f7f"
-                             x:Name="tbAdvDLC_Path"
-                             GotFocus="tbGotFocus"
-                             LostFocus="tbLostFocus"
-                             MouseDoubleClick="TextBox_Browse"
                              TextChanged="PathTextBox_Check"
-                             ToolTip="Path to your DLC dump. [Optional]&#x0a;This will end in 'content\0010'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\DLC\content\0010'&#x0a;&#x0a;(Double click text box to browse)"/>
+                             ToolTip="Path to your DLC dump. [Optional]&#x0a;This will end in 'content\0010'&#x0a;&#x0a;E.g. 'C:\Users\username\Games\BotW\DLC\content\0010'&#x0a;&#x0a;(Double click text box to browse)" />
 
-                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="4"
+                    <TextBox x:Name="tbAdvPython_Path"
+                             Grid.Row="4"
+                             Margin="5,5,5,0"
+                             Padding="15,0,15,0"
                              VerticalAlignment="Stretch"
-                             Margin="5, 5, 5, 0"
                              VerticalContentAlignment="Center"
+                             Background="#1f1f1f"
+                             FontFamily="Artifakt Element"
+                             FontSize="20"
+                             Foreground="#7f7f7f"
+                             GotFocus="tbGotFocus"
+                             LostFocus="tbLostFocus"
+                             MouseDoubleClick="TextBox_Browse"
+                             Style="{DynamicResource TextBox_Paths_NB}"
                              Text="Python Path"
-                             Padding="15, 0, 15, 0"
-                             FontSize="20"
-                             FontFamily="Artifakt Element"
-                             Background="#1f1f1f"
-                             Foreground="#7f7f7f"
-                             x:Name="tbAdvPython_Path"
                              TextChanged="tbBasic_CemuPath_TextChanged"
+                             ToolTip="Path to new/existing Python.&#x0a;This is where python and python scripts will be stored.&#x0a;&#x0a;E.g. 'C:\Python 3.7-64'&#x0a;&#x0a;(Double click text box to browse)" />
+
+                    <TextBox x:Name="tbAdvmlc01_Path"
+                             Grid.Row="5"
+                             Margin="5,5,5,0"
+                             Padding="15,0,15,0"
+                             VerticalAlignment="Stretch"
+                             VerticalContentAlignment="Center"
+                             Background="#1f1f1f"
+                             FontFamily="Artifakt Element"
+                             FontSize="20"
+                             Foreground="#7f7f7f"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
-                             ToolTip="Path to new/existing Python.&#x0a;This is where python and python scripts will be stored.&#x0a;&#x0a;E.g. 'C:\Python 3.7-64'&#x0a;&#x0a;(Double click text box to browse)"/>
-
-                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="5"
-                             VerticalAlignment="Stretch"
-                             Margin="5, 5, 5, 0"
-                             VerticalContentAlignment="Center"
+                             Style="{DynamicResource TextBox_Paths_NB}"
                              Text="mlc01 Path"
-                             Padding="15, 0, 15, 0"
-                             FontSize="20"
-                             FontFamily="Artifakt Element"
-                             Background="#1f1f1f"
-                             Foreground="#7f7f7f"
-                             x:Name="tbAdvmlc01_Path"
-                             GotFocus="tbGotFocus"
-                             LostFocus="tbLostFocus"
-                             MouseDoubleClick="TextBox_Browse"
-                             ToolTip="Path to mlc01.&#x0a;Folder where Cemu stores games and save files.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\Cemu\mlc01'&#x0a;&#x0a;(Double click text box to browse)"/>
+                             ToolTip="Path to mlc01.&#x0a;Folder where Cemu stores games and save files.&#x0a;&#x0a;E.g. 'C:\Users\username\Games\Cemu\mlc01'&#x0a;&#x0a;(Double click text box to browse)" />
 
-                    <TextBox Style="{DynamicResource TextBox_Paths_NB}" Grid.Row="6"
+                    <TextBox x:Name="tbAdvBCML_Data_Path"
+                             Grid.Row="6"
+                             Margin="5,5,5,0"
+                             Padding="15,0,15,0"
                              VerticalAlignment="Stretch"
-                             Margin="5, 5, 5, 0"
                              VerticalContentAlignment="Center"
-                             Text="BCML Data Path"
-                             Padding="15, 0, 15, 0"
-                             FontSize="20"
-                             FontFamily="Artifakt Element"
                              Background="#1f1f1f"
+                             FontFamily="Artifakt Element"
+                             FontSize="20"
                              Foreground="#7f7f7f"
-                             x:Name="tbAdvBCML_Data_Path"
                              GotFocus="tbGotFocus"
                              LostFocus="tbLostFocus"
                              MouseDoubleClick="TextBox_Browse"
-                             ToolTip="Path to BCML Data.&#x0a;Folder where BCML stores mods and cache.&#x0a;&#x0a;E.g. 'C:\Users\username\AppData\Local\bcml'&#x0a;&#x0a;(Double click text box to browse)"/>
+                             Style="{DynamicResource TextBox_Paths_NB}"
+                             Text="BCML Data Path"
+                             ToolTip="Path to BCML Data.&#x0a;Folder where BCML stores mods and cache.&#x0a;&#x0a;E.g. 'C:\Users\username\AppData\Local\bcml'&#x0a;&#x0a;(Double click text box to browse)" />
                 </Grid>
 
             </Grid>
-            <!--Advanced Options-->
+            <!--  Advanced Options  -->
 
-            <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                  Visibility="Hidden" x:Name="gridLogInfo">
+            <Grid x:Name="gridLogInfo"
+                  Grid.Row="1"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="2"
+                  Visibility="Hidden">
 
                 <TextBlock x:Name="tbFilePass"
-                           Text="Searching . . ." Foreground="White"
-                           Margin="30, 20, 0, 30"
-                           FontSize="45" FontFamily="{StaticResource Tajawal}"
-                           HorizontalAlignment="Center"/>
+                           Margin="30,20,0,30"
+                           HorizontalAlignment="Center"
+                           FontFamily="{StaticResource Tajawal}"
+                           FontSize="45"
+                           Foreground="White"
+                           Text="Searching . . ." />
                 <Grid x:Name="animParent">
-                    <Ellipse x:Name="ep1" StrokeThickness="4"
-                             Height="200" Width="200" Margin="0, 70, 0, 0">
+                    <Ellipse x:Name="ep1"
+                             Width="200"
+                             Height="200"
+                             Margin="0,70,0,0"
+                             StrokeThickness="4">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#1993D6"/>
-                                <GradientStop Color="Transparent" Offset="0.6"
-                                              x:Name="ep1_grad"/>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#1993D6" />
+                                <GradientStop x:Name="ep1_grad" Offset="0.6" Color="Transparent" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.RenderTransform>
-                            <RotateTransform Angle="90" CenterX="100" CenterY="100"
-                                             x:Name="ep1_angle"/>
+                            <RotateTransform x:Name="ep1_angle" Angle="90" CenterX="100" CenterY="100" />
                         </Ellipse.RenderTransform>
                     </Ellipse>
-                    <Ellipse x:Name="ep2" StrokeThickness="4"
-                             Height="170" Width="170" Margin="0, 70, 0, 0">
+                    <Ellipse x:Name="ep2"
+                             Width="170"
+                             Height="170"
+                             Margin="0,70,0,0"
+                             StrokeThickness="4">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#1993D6"/>
-                                <GradientStop Color="Transparent" Offset="0.6"
-                                              x:Name="ep2_grad"/>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#1993D6" />
+                                <GradientStop x:Name="ep2_grad" Offset="0.6" Color="Transparent" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.RenderTransform>
-                            <RotateTransform Angle="60" CenterX="85" CenterY="85"
-                                             x:Name="ep2_angle"/>
+                            <RotateTransform x:Name="ep2_angle" Angle="60" CenterX="85" CenterY="85" />
                         </Ellipse.RenderTransform>
                     </Ellipse>
-                    <Ellipse x:Name="ep3" StrokeThickness="4"
-                             Height="140" Width="140" Margin="0, 70, 0, 0">
+                    <Ellipse x:Name="ep3"
+                             Width="140"
+                             Height="140"
+                             Margin="0,70,0,0"
+                             StrokeThickness="4">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#1993D6"/>
-                                <GradientStop Color="Transparent" Offset="0.6"
-                                              x:Name="ep3_grad"/>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#1993D6" />
+                                <GradientStop x:Name="ep3_grad" Offset="0.6" Color="Transparent" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.RenderTransform>
-                            <RotateTransform Angle="30" CenterX="70" CenterY="70"
-                                             x:Name="ep3_angle"/>
+                            <RotateTransform x:Name="ep3_angle" Angle="30" CenterX="70" CenterY="70" />
                         </Ellipse.RenderTransform>
                     </Ellipse>
                 </Grid>

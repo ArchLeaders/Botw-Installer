@@ -5,8 +5,14 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<ApplicationManifest>app.manifest</ApplicationManifest>
 	  <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BotwScripts.Lib.Common\BotwScripts.Lib.Common.csproj" />
+    <ProjectReference Include="..\..\v3\BotwInstaller.Lib\BotwInstaller.Lib.csproj" />
+  </ItemGroup>
 
 </Project>

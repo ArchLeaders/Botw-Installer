@@ -1,0 +1,619 @@
+﻿<Window x:Class="BotwInstaller.Wizard.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:effects="http://gu.se/Geometry"
+        xmlns:local="clr-namespace:BotwInstaller.Wizard.Views"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        x:Name="shellView"
+        Title="Botw Installer"
+        Width="600"
+        Height="380"
+        FontFamily="Calibri"
+        FontSize="18"
+        FontWeight="Bold"
+        ResizeMode="CanMinimize"
+        Style="{StaticResource MaterialDesignWindow}"
+        TextOptions.TextFormattingMode="Display"
+        mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" />
+    </WindowChrome.WindowChrome>
+
+    <Grid x:Name="gridParent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="panelStartupPage"
+              Grid.Row="1"
+              Margin="15">
+            <StackPanel Orientation="Horizontal">
+                <Image Width="140"
+                       Height="140"
+                       Margin="0,0,15,0"
+                       VerticalAlignment="Top"
+                       Source="../ViewResources/Images/highres_icon.png">
+                    <Image.Effect>
+                        <DropShadowEffect BlurRadius="15"
+                                          Opacity="0.5"
+                                          ShadowDepth="3" />
+                    </Image.Effect>
+                </Image>
+                <StackPanel>
+                    <TextBlock FontFamily="{DynamicResource Signika}"
+                               FontSize="32"
+                               FontWeight="Bold"
+                               Text="Breath of the Wild Installer"
+                               TextOptions.TextRenderingMode="ClearType" />
+                    <TextBlock FontFamily="{DynamicResource Signika}"
+                               FontSize="26"
+                               FontWeight="Light"
+                               Text="Play Botw on PC in minutes!"
+                               TextOptions.TextRenderingMode="ClearType" />
+                    <TextBlock Margin="0,38,0,0"
+                               FontFamily="{DynamicResource Signika}"
+                               FontSize="12"
+                               FontStyle="Italic"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource PrimaryHueLightBrush}"
+                               Style="{DynamicResource MaterialDesignBody2TextBlock}"
+                               TextOptions.TextRenderingMode="ClearType">
+                        <Run>*Disclaimer - This tool does NOT include, use, or download any part of</Run>
+                        <LineBreak />
+                        <Run FontWeight="Bold">The Legend of Zelda: Breath of the Wild. ——</Run>
+                        <Hyperlink FontSize="12"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource SecondaryHueDarkBrush}"
+                                   NavigateUri="https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md"
+                                   RequestNavigate="Hyperlink_RequestNavigate"
+                                   Style="{DynamicResource MaterialDesignBody2Hyperlink}"
+                                   ToolTip="https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md">
+                            Full Disclaimer
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,0" VerticalAlignment="Bottom">
+                <Button x:Name="qbtnInstall"
+                        Height="45"
+                        Margin="0,10"
+                        Content="Quick Install BotW"
+                        FontSize="25"
+                        FontWeight="Bold" />
+                <Button x:Name="qbtnAdvanced"
+                        Height="45"
+                        Margin="0,10"
+                        Content="Custom Install&#032;&#032;&gt;"
+                        FontSize="25"
+                        FontWeight="Bold" />
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="panelBasicOptions"
+              Grid.Row="1"
+              Margin="15"
+              Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width=".25*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Height="30"
+                           Margin="0,0,0,15"
+                           FontSize="28"
+                           Text="Basic Options" />
+
+                <!--  Cemu Directory  -->
+                <TextBlock Height="25"
+                           Margin="5,0,5,0"
+                           Text="Cemu Directory"
+                           ToolTip="Cemu is a WiiU emulator developed by Exzap and Petergov.&#x0a;It's required to play Botw on pc." />
+                <TextBox x:Name="tbPathToCemu"
+                         Margin="5,5,5,15"
+                         ToolTip="This is the directory in which Cemu will be installed.&#x0a;It should NOT be in your Documents folder or a subfolder of Documents." />
+
+                <!--  Python Directory  -->
+                <TextBlock Height="25"
+                           Margin="5,0,5,0"
+                           Text="Python Directory"
+                           ToolTip="Python (in this context) is a set of libraries and packages that are required for many Botw tools." />
+                <TextBox x:Name="tbPathToPython"
+                         Margin="5,5,5,15"
+                         ToolTip="This is the directory in which Python will be installed.&#x0a;It should be somewhere that does not require admin permisions." />
+
+                <!--  Install Options  -->
+                <TextBlock Height="25"
+                           Margin="5,0,5,0"
+                           Text="Install Options" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="15" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="15" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="5" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox x:Name="btnRunAfterInstall"
+                              Grid.Column="1"
+                              Margin="0,5,0,10"
+                              Content="Run After Install"
+                              FontWeight="Bold"
+                              IsChecked="True" />
+                    <CheckBox x:Name="btnInstallBaseGame"
+                              Grid.Column="3"
+                              Margin="0,5,0,10"
+                              Content="Install Base Game"
+                              FontWeight="Bold" />
+                    <CheckBox x:Name="btnUseMods"
+                              Grid.Column="5"
+                              Margin="0,5,0,10"
+                              Content="Use Mods"
+                              FontWeight="Bold"
+                              IsChecked="True" />
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="15,0,0,0">
+                <!--  Cemu Directory  -->
+                <Button x:Name="btnPathToCemu"
+                        Margin="0,75,0,0"
+                        Content="Browse" />
+                <Button x:Name="btnPathToPython"
+                        Margin="0,45,0,0"
+                        Content="Browse" />
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="panelControllerOptions"
+              Grid.Row="1"
+              Visibility="Hidden">
+            <StackPanel Margin="15,15,15,0">
+
+                <!--  Controller Settings  -->
+                <TextBlock Height="30"
+                           FontSize="28"
+                           Text="Controller" />
+
+                <!--  Hardware  -->
+                <TextBlock Height="25"
+                           Margin="5,15,0,0"
+                           Text="Hardware" />
+                <ComboBox x:Name="cbController"
+                          Margin="5,5,0,15"
+                          FontWeight="Bold"
+                          ToolTip="Select the controller you will use to play Botw.">
+                    <ComboBoxItem Content="Microsoft XBox Controller" IsSelected="True" />
+                    <ComboBoxItem Content="Nintendo Switch Controller" />
+                    <ComboBoxItem Content="Play Stations DualShock Controller" />
+                    <ComboBoxItem Content="Keyboard (Not Recomended)" />
+                    <ComboBoxItem Content="Support All Controllers/Keyboard" />
+                </ComboBox>
+
+                <!--  Controller Profiles  -->
+                <TextBlock Height="25"
+                           Margin="5,0,0,0"
+                           Text="Cemu Profile(s)" />
+                <Grid Margin="5,5,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="15" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="15" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox x:Name="btnCtrlJp"
+                              Content="Japanese (JP)"
+                              FontWeight="Bold"
+                              IsChecked="True"
+                              ToolTip="A &gt; B | B &gt; A | X &gt; Y | Y &gt; X" />
+                    <CheckBox x:Name="btnCtrlUs"
+                              Grid.Column="2"
+                              Content="Western (US)"
+                              FontWeight="Bold"
+                              ToolTip="A &gt; A | B &gt; B | X &gt; Y | Y &gt; X" />
+                    <CheckBox x:Name="btnCtrlPe"
+                              Grid.Column="4"
+                              Content="Mapped (PE)"
+                              FontWeight="Bold"
+                              ToolTip="A &gt; A | B &gt; B | X &gt; X | Y &gt; Y" />
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel x:Name="panelShortcutOptions"
+                    Grid.Row="1"
+                    Margin="15"
+                    Visibility="Hidden">
+            <TextBlock Height="30"
+                       Margin="0,0,0,15"
+                       FontSize="28"
+                       Text="Shortcuts" />
+
+            <!--  Start Menu  -->
+            <TextBlock Height="25"
+                       Margin="5,0,0,0"
+                       Text="Start Menu" />
+            <Grid Margin="5,5,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox x:Name="btnLnkSrtBotw"
+                          Content="BotW"
+                          FontWeight="Bold"
+                          IsChecked="True" />
+                <CheckBox x:Name="btnLnkSrtCemu"
+                          Grid.Column="2"
+                          Content="Cemu"
+                          FontWeight="Bold"
+                          IsChecked="True" />
+                <CheckBox x:Name="btnLnkSrtBcml"
+                          Grid.Column="4"
+                          Content="BCML"
+                          FontWeight="Bold"
+                          IsChecked="True" />
+                <CheckBox x:Name="btnLnkSrtDs4"
+                          Grid.Column="6"
+                          Content="DS4Win"
+                          FontWeight="Bold"
+                          IsChecked="True"
+                          ToolTip="DS4Windows" />
+                <CheckBox x:Name="btnLnkSrtBJoy"
+                          Grid.Column="8"
+                          Content="BetterJoy"
+                          FontWeight="Bold"
+                          IsChecked="True" />
+            </Grid>
+
+            <!--  Desktop  -->
+            <TextBlock Height="25"
+                       Margin="5,0,0,0"
+                       Text="Desktop" />
+            <Grid Margin="5,5,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox x:Name="btnLnkDskBotw"
+                          Content="BotW"
+                          FontWeight="Bold"
+                          IsChecked="True" />
+                <CheckBox x:Name="btnLnkDskCemu"
+                          Grid.Column="2"
+                          Content="Cemu"
+                          FontWeight="Bold"
+                          IsChecked="True" />
+                <CheckBox x:Name="btnLnkDskBcml"
+                          Grid.Column="4"
+                          Content="BCML"
+                          FontWeight="Bold"
+                          IsChecked="True" />
+                <CheckBox x:Name="btnLnkDskDs4"
+                          Grid.Column="6"
+                          Content="DS4Win"
+                          FontWeight="Bold"
+                          IsChecked="True"
+                          ToolTip="DS4Windows" />
+                <CheckBox x:Name="btnLnkDskBJoy"
+                          Grid.Column="8"
+                          Content="BetterJoy"
+                          FontWeight="Bold"
+                          IsChecked="True" />
+            </Grid>
+        </StackPanel>
+
+        <Grid x:Name="panelInstallPaths"
+              Grid.Row="1"
+              Visibility="Hidden">
+            <ScrollViewer Margin="15,15,5,5" CanContentScroll="False">
+                <StackPanel Margin="0,0,10,0">
+                    <TextBlock Height="30"
+                               FontSize="28"
+                               Text="Directories" />
+                    <Grid Margin="5,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="0.25*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel x:Name="advTextBoxes" />
+                        <StackPanel x:Name="advBrowseButtons" Grid.Column="1" />
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid x:Name="windowChrome" Background="{DynamicResource PrimaryHueDarkBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="120" />
+            </Grid.ColumnDefinitions>
+
+            <Image x:Name="icon"
+                   Margin="2"
+                   Source="../ViewResources/Images/icon.png" />
+            <TextBlock Grid.Column="1"
+                       Margin="10,0,0,0"
+                       VerticalAlignment="Center"
+                       FontWeight="Bold"
+                       Text="Botw Installer - v3" />
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button x:Name="btnMin"
+                        Width="40"
+                        Style="{DynamicResource WindowChromeSimple}"
+                        WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Grid>
+                        <Rectangle Width="13"
+                                   Height="2"
+                                   Fill="{DynamicResource MaterialDesignBody}"
+                                   StrokeThickness="0" />
+                    </Grid>
+                </Button>
+                <Button x:Name="btnReSize"
+                        Width="40"
+                        IsEnabled="False"
+                        Style="{DynamicResource WindowChromeSimple}"
+                        WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Grid>
+                        <Border x:Name="rectMaximize"
+                                Width="13"
+                                Height="12"
+                                BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                                BorderThickness="2"
+                                CornerRadius="2"
+                                Opacity="1" />
+                        <Grid x:Name="rectCascade" Opacity="0">
+                            <Border Width="11"
+                                    Height="9"
+                                    Margin="2,0,0,3"
+                                    BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                                    BorderThickness="2"
+                                    CornerRadius="1" />
+                            <Border Width="11"
+                                    Height="9"
+                                    Margin="0,2,3,0"
+                                    Background="{DynamicResource PrimaryHueMidBrush}"
+                                    CornerRadius="2" />
+                        </Grid>
+                    </Grid>
+                </Button>
+                <Button x:Name="btnExit"
+                        Width="40"
+                        Style="{DynamicResource WindowChromeSimple}"
+                        WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Grid>
+                        <Rectangle Width="16"
+                                   Height="2"
+                                   Fill="{DynamicResource MaterialDesignBody}"
+                                   StrokeThickness="0">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="45" CenterX="8" CenterY="1" />
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Width="16"
+                                   Height="2"
+                                   Fill="{DynamicResource MaterialDesignBody}"
+                                   StrokeThickness="0">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="-45" CenterX="8" CenterY="1" />
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="footer"
+              Grid.Row="2"
+              Background="{DynamicResource PrimaryHueDarkBrush}">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="15"
+                                  Direction="90"
+                                  Opacity="0.2"
+                                  ShadowDepth="2" />
+            </Grid.Effect>
+            <StackPanel x:Name="panelNextBackBtns"
+                        Margin="0,40,5,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                <Button x:Name="btnGoBack"
+                        Width="70"
+                        Height="32"
+                        HorizontalAlignment="Right"
+                        Content="Back"
+                        FontWeight="Bold"
+                        Foreground="{DynamicResource SecondaryHueLightBrush}" />
+                <Button x:Name="btnGoForward"
+                        Width="70"
+                        Height="32"
+                        Margin="6,0,0,0"
+                        HorizontalAlignment="Right"
+                        Content="Next"
+                        FontWeight="Bold"
+                        Foreground="{DynamicResource SecondaryHueLightBrush}" />
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <Button x:Name="footerRequestHelp"
+                        Width="32"
+                        Height="32"
+                        Margin="5,3,3,3"
+                        Padding="0"
+                        HorizontalAlignment="Right"
+                        ToolTip="Help (F1)">
+                    <Grid>
+                        <Ellipse Width="24"
+                                 Height="24"
+                                 Opacity="1"
+                                 Stroke="{DynamicResource SecondaryHueLightBrush}"
+                                 StrokeThickness="1.5" />
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="22"
+                                   FontWeight="Black"
+                                   Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                   Text="?" />
+                    </Grid>
+                </Button>
+                <Button x:Name="footerChangeAppTheme"
+                        Width="32"
+                        Height="32"
+                        Margin="3"
+                        Padding="0"
+                        HorizontalAlignment="Right">
+                    <Grid x:Name="footerChangeAppTheme_GridParent">
+                        <Grid x:Name="footerChangeAppTheme_IsLight"
+                              Margin="0,0,0,32"
+                              Background="Transparent"
+                              ToolTip="Dark Mode">
+                            <Path Fill="{DynamicResource SecondaryHueLightBrush}">
+                                <Path.Data>
+                                    <CombinedGeometry GeometryCombineMode="Exclude">
+                                        <CombinedGeometry.Geometry1>
+                                            <EllipseGeometry Center="13,13"
+                                                             RadiusX="10"
+                                                             RadiusY="10" />
+                                        </CombinedGeometry.Geometry1>
+                                        <CombinedGeometry.Geometry2>
+                                            <EllipseGeometry Center="17,9"
+                                                             RadiusX="9"
+                                                             RadiusY="9" />
+                                        </CombinedGeometry.Geometry2>
+                                    </CombinedGeometry>
+                                </Path.Data>
+                            </Path>
+                        </Grid>
+                        <Grid x:Name="footerChangeAppTheme_IsDark"
+                              Margin="0,32,0,0"
+                              Background="Transparent"
+                              ToolTip="Light Mode">
+                            <Ellipse Width="14"
+                                     Height="14"
+                                     Fill="{DynamicResource SecondaryHueLightBrush}"
+                                     Opacity="1"
+                                     StrokeThickness="0" />
+                            <Border Width="3"
+                                    Height="2"
+                                    Margin="22,0,0,0"
+                                    Background="{DynamicResource SecondaryHueLightBrush}" />
+                            <Border Width="3"
+                                    Height="2"
+                                    Margin="0,0,22,0"
+                                    Background="{DynamicResource SecondaryHueLightBrush}" />
+                            <Border Width="2"
+                                    Height="3"
+                                    Margin="0,22,0,0"
+                                    Background="{DynamicResource SecondaryHueLightBrush}" />
+                            <Border Width="2"
+                                    Height="3"
+                                    Margin="0,0,0,22"
+                                    Background="{DynamicResource SecondaryHueLightBrush}" />
+                            <Grid>
+                                <Grid.RenderTransform>
+                                    <RotateTransform Angle="45" CenterX="13" CenterY="13" />
+                                </Grid.RenderTransform>
+                                <Border Width="3"
+                                        Height="2"
+                                        Margin="22,0,0,0"
+                                        Background="{DynamicResource SecondaryHueLightBrush}" />
+                                <Border Width="3"
+                                        Height="2"
+                                        Margin="0,0,22,0"
+                                        Background="{DynamicResource SecondaryHueLightBrush}" />
+                                <Border Width="2"
+                                        Height="3"
+                                        Margin="0,22,0,0"
+                                        Background="{DynamicResource SecondaryHueLightBrush}" />
+                                <Border Width="2"
+                                        Height="3"
+                                        Margin="0,0,0,22"
+                                        Background="{DynamicResource SecondaryHueLightBrush}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Button>
+                <CheckBox x:Name="btnConsoleMode"
+                          Width="32"
+                          Height="32"
+                          Margin="3"
+                          Padding="0"
+                          HorizontalAlignment="Right"
+                          ToolTip="Show console window when installing">
+                    <Grid>
+                        <Border Width="22"
+                                Height="20"
+                                BorderBrush="{DynamicResource SecondaryHueLightBrush}"
+                                BorderThickness="2"
+                                CornerRadius="4">
+                            <TextBlock Margin="0,0,2,2"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="Calibri"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                       Text="&gt;_" />
+                        </Border>
+                    </Grid>
+                </CheckBox>
+                <CheckBox x:Name="btnSaveJson"
+                          Width="32"
+                          Height="32"
+                          Margin="3"
+                          HorizontalAlignment="Right"
+                          ToolTip="Save configuration file before installing">
+                    <Grid>
+                        <Border Width="18"
+                                Height="20"
+                                Background="{DynamicResource SecondaryHueLightBrush}"
+                                CornerRadius="2,2,2,2">
+                            <StackPanel VerticalAlignment="Bottom">
+                                <Border Height="2"
+                                        Margin="2,1,8,1"
+                                        Background="{DynamicResource PrimaryHueDarkBrush}" />
+                                <Border Height="2"
+                                        Margin="2,1,4,1"
+                                        Background="{DynamicResource PrimaryHueDarkBrush}" />
+                                <Border Height="2"
+                                        Margin="2,1,7,1"
+                                        Background="{DynamicResource PrimaryHueDarkBrush}" />
+                                <Border Height="2"
+                                        Margin="2,1,5,2"
+                                        Background="{DynamicResource PrimaryHueDarkBrush}" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </CheckBox>
+            </StackPanel>
+            <TextBlock x:Name="footerBasicErrorReport"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="Consolas"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Text="" />
+        </Grid>
+
+    </Grid>
+</Window>

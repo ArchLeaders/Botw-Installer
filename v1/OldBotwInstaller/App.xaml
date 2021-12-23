@@ -11,9 +11,9 @@
             <FontFamily x:Key="NotoSansSymbol">pack://application:,,,/Fonts/#Noto Sans Symbols</FontFamily>
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme/GlobalOverride.xaml"/>
-                <ResourceDictionary Source="Theme/ContextMenuOverride.xaml"/>
-                <ResourceDictionary Source="Theme/ComboBox.xaml"/>
+                <ResourceDictionary Source="Theme/GlobalOverride.xaml" />
+                <ResourceDictionary Source="Theme/ContextMenuOverride.xaml" />
+                <ResourceDictionary Source="Theme/ComboBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

@@ -1,0 +1,36 @@
+﻿<Application x:Class="BotwInstaller.Wizard.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:BotwInstaller.Wizard"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:s="https://github.com/canton7/Stylet">
+    <Application.Resources>
+        <ResourceDictionary>
+            <FontFamily x:Key="Signika">pack://application:,,,/ViewResources/Fonts/Signika-VariableFont_wght.ttf#Signika</FontFamily>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <s:ApplicationLoader x:Key="Bootstrapper">
+                        <s:ApplicationLoader.Bootstrapper>
+                            <local:AppBootstrapper />
+                        </s:ApplicationLoader.Bootstrapper>
+                    </s:ApplicationLoader>
+                </ResourceDictionary>
+
+                <md:BundledTheme BaseTheme="Dark"
+                                 PrimaryColor="Grey"
+                                 SecondaryColor="Blue" />
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ViewThemes/Styles/Buttons/WindowChromeSimple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ViewThemes/Styles/Buttons/DefaultButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ViewThemes/Styles/ContextMenus/DefaultContextMenu.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ViewThemes/Styles/TextBoxes/DefaultTextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ViewThemes/Styles/ComboBoxes/DefaultComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ViewThemes/Styles/CheckBoxes/DefaultCheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ViewThemes/Styles/TextEditor/FloatingTextEditor.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ViewThemes/Styles/ScrollViewer/DefaultScrollBar.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ViewThemes/Styles/ScrollViewer/DefaultScrollViewer.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
