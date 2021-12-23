@@ -1,6 +1,6 @@
 # Install Breath of the Wild with Botw Installer.
 
-### [Controls Layout](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#controls-layout---basic-tab)  |  [Dumping Botw](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#dumping-botw)  |  [Quick Install](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#quick-install)
+### [Controls Layout](https://github.com/ArchLeaders/Botw-Installer/blob/master/v2/README.md#controls-layout---basic-tab)  |  [Dumping Botw](https://github.com/ArchLeaders/Botw-Installer/blob/master/v2/README.md#dumping-botw)  |  [Quick Install](https://github.com/ArchLeaders/Botw-Installer/blob/master/v2/README.md#quick-install)
 #
 
 > \*Disclaimer
