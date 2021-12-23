@@ -18,5 +18,6 @@
 ***So if you can, please report any errors as either a GitHub issue on this repo or a post in my [Discord Server](https://discord.gg/cbA3AWwfJj)!***
 > Ping Marcus *`ArchLeaders#0903`*
 
-### [Version 2 Source Code](https://github.com/ArchLeaders/Botw-Installer/blob/master/v2)
-### [Version 3 Source Code]()
+### [Version 1](https://github.com/ArchLeaders/Botw-Installer/blob/master/v1)
+### [Version 2](https://github.com/ArchLeaders/Botw-Installer/blob/master/v2)
+### [Version 3](https://github.com/ArchLeaders/Botw-Installer/blob/master/v3)
