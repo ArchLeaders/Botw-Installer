@@ -1,4 +1,4 @@
-# Install Breath of the Wild with Botw Installer.
+# Install Breath of the Wild on PC with Botw Installer.
 
 ### [Controls Layout](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#controls-layout---basic-tab)  |  [Dumping Botw](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#dumping-botw)  |  [Quick Install](https://github.com/ArchLeaders/Botw-Installer/blob/master/README.md#quick-install)
 #
