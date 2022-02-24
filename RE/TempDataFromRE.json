@@ -1,6 +1,6 @@
 {
   "wiiu": {
-    "none": [],
+    "None": [],
     "Linkle Mod": [
       "download_link (bnp)"
     ],
@@ -8,11 +8,11 @@
       "download_link (bnp)"
     ],
     "Second Wind": [
-      "download_link (bnp)"
+      "git|"
     ]
   },
   "switch": {
-    "none": [],
+    "None": [],
     "Linkle Mod": [
       "download_link (bnp)"
     ],
