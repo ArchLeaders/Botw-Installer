@@ -20,5 +20,6 @@ $dlc: Path to the BotW DLC files
 
 **Apps -**
 ```
+$cemu: Path to the Cemu install directory
 $ds4: Path to the DS4Windows executable
 ```
