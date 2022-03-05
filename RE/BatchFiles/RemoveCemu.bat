@@ -1,14 +1,14 @@
-﻿@ECHO off
+@ECHO off
 
 :: Delete Cemu Directory
 ECHO Removing Cemu . . .
 FOR %%F IN ("$cemu") DO (
 	DEL "%%F" /Q /F
 )
-FOR /D %%D IN "$cemu" DO (
+FOR /D %%D IN ("$cemu") DO (
 	:: Skip mlc01 folder
 	IF NOT "%%D"=="$cemu\mlc01" (
-		RMDIR "%%D" /Q
+		RMDIR "%%D" /Q /S
 	)
 )
 
