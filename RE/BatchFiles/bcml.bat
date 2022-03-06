@@ -1,4 +1,4 @@
-﻿@ECHO OFF
+@ECHO OFF
 
 :: Remove BCML Data
 ECHO Removing BCML . . .
@@ -11,6 +11,7 @@ START "PIP" "$python\Scripts\pip.exe" uninstall -y bcml
 ECHO Removing shortcuts . . .
 DEL "$desktop\BCML.lnk" /Q /F
 DEL "$start\BCML.lnk" /Q /F
+DEL "$root\bcml.ico" /Q /F
 
 :: Remove Registry Key
 ECHO Removing registry keys . . .
