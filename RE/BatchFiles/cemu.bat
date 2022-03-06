@@ -20,6 +20,8 @@ DEL "$desktop\Cemu.lnk" /Q /F
 DEL "$start\Cemu.lnk" /Q /F
 DEL "$desktop\BOTW.lnk" /Q /F
 DEL "$start\BOTW.lnk" /Q /F
+DEL "$root\botw.ico" /Q /F
+DEL "$root\botw.bat" /Q /F
 
 :: Remove Registry Key
 ECHO "Removing registry keys . . ."
